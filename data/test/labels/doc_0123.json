@@ -1,0 +1,36 @@
+{
+  "doc_id": "doc_0123",
+  "file": "doc_0123.docx",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Acme Supplies",
+    "invoice_number": "INV-5254",
+    "invoice_date": "11/24/2024",
+    "due_date": "12/24/2024",
+    "currency": "GBP",
+    "subtotal": 1528.2,
+    "tax": 122.26,
+    "total": 1650.46,
+    "line_items": [
+      {
+        "description": "Service",
+        "quantity": 10,
+        "unit_price": 152.82,
+        "amount": 1528.2
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": true,
+    "odd_number": false,
+    "multipage": false,
+    "layout": "footer_total"
+  }
+}

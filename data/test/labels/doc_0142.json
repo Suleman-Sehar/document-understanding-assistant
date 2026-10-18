@@ -1,0 +1,48 @@
+{
+  "doc_id": "doc_0142",
+  "file": "doc_0142.pdf",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Initech LLC",
+    "invoice_number": "INV-6736",
+    "invoice_date": "December 08, 2024",
+    "due_date": "January 07, 2025",
+    "currency": "GBP",
+    "subtotal": 1467.25,
+    "tax": 117.38,
+    "total": 1584.63,
+    "line_items": [
+      {
+        "description": "Service",
+        "quantity": 5,
+        "unit_price": 68.79,
+        "amount": 343.95
+      },
+      {
+        "description": "Gadget",
+        "quantity": 6,
+        "unit_price": 148.35,
+        "amount": 890.1
+      },
+      {
+        "description": "Service",
+        "quantity": 2,
+        "unit_price": 116.6,
+        "amount": 233.2
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": false,
+    "multipage": true,
+    "layout": "table"
+  }
+}

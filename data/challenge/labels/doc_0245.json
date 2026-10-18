@@ -1,0 +1,48 @@
+{
+  "doc_id": "doc_0245",
+  "file": "doc_0245.docx",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Acme Supplies",
+    "invoice_number": "INV-7035",
+    "invoice_date": "2024-08-23",
+    "due_date": "2024-09-22",
+    "currency": "EUR",
+    "subtotal": 2182.29,
+    "tax": 174.58,
+    "total": 2356.87,
+    "line_items": [
+      {
+        "description": "Widget",
+        "quantity": 9,
+        "unit_price": 100.61,
+        "amount": 905.49
+      },
+      {
+        "description": "Service",
+        "quantity": 4,
+        "unit_price": 138.36,
+        "amount": 553.44
+      },
+      {
+        "description": "Service",
+        "quantity": 8,
+        "unit_price": 90.42,
+        "amount": 723.36
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": true,
+    "odd_date": false,
+    "odd_number": true,
+    "multipage": false,
+    "layout": "heldout_b"
+  }
+}

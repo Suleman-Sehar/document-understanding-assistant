@@ -1,0 +1,36 @@
+{
+  "doc_id": "doc_0082",
+  "file": "doc_0082.docx",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Initech LLC",
+    "invoice_number": "INV-9010",
+    "invoice_date": "03/20/2025",
+    "due_date": "04/19/2025",
+    "currency": "USD",
+    "subtotal": 1285.12,
+    "tax": 102.81,
+    "total": 1387.93,
+    "line_items": [
+      {
+        "description": "Gadget",
+        "quantity": 8,
+        "unit_price": 160.64,
+        "amount": 1285.12
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": true,
+    "odd_number": false,
+    "multipage": false,
+    "layout": "narrative"
+  }
+}

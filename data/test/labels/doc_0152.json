@@ -1,0 +1,36 @@
+{
+  "doc_id": "doc_0152",
+  "file": "doc_0152.docx",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Globex Corp",
+    "invoice_number": "INV-8113",
+    "invoice_date": "09/04/2025",
+    "due_date": "10/04/2025",
+    "currency": "GBP",
+    "subtotal": 587.4,
+    "tax": 46.99,
+    "total": 634.39,
+    "line_items": [
+      {
+        "description": "Gadget",
+        "quantity": 3,
+        "unit_price": 195.8,
+        "amount": 587.4
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": true,
+    "odd_number": true,
+    "multipage": true,
+    "layout": "kv_block"
+  }
+}

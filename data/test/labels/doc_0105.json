@@ -1,0 +1,36 @@
+{
+  "doc_id": "doc_0105",
+  "file": "doc_0105.pdf",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Acme Supplies",
+    "invoice_number": "INV-8659",
+    "invoice_date": "2025-06-26",
+    "due_date": "2025-07-26",
+    "currency": "GBP",
+    "subtotal": 67.71,
+    "tax": 5.42,
+    "total": 73.13,
+    "line_items": [
+      {
+        "description": "Service",
+        "quantity": 1,
+        "unit_price": 67.71,
+        "amount": 67.71
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": false,
+    "multipage": true,
+    "layout": "narrative"
+  }
+}

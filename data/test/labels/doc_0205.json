@@ -1,0 +1,18 @@
+{
+  "doc_id": "doc_0205",
+  "file": "doc_0205.pdf",
+  "doc_type": "non_business",
+  "fields": {},
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": true,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": true,
+    "multipage": false,
+    "layout": null
+  }
+}

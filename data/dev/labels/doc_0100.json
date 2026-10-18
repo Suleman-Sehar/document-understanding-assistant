@@ -1,0 +1,42 @@
+{
+  "doc_id": "doc_0100",
+  "file": "doc_0100.docx",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Initech LLC",
+    "invoice_number": "INV-2305",
+    "invoice_date": "February 07, 2024",
+    "due_date": "March 08, 2024",
+    "currency": "GBP",
+    "subtotal": 670.24,
+    "tax": 53.62,
+    "total": 723.86,
+    "line_items": [
+      {
+        "description": "Gadget",
+        "quantity": 4,
+        "unit_price": 66.96,
+        "amount": 267.84
+      },
+      {
+        "description": "Service",
+        "quantity": 8,
+        "unit_price": 50.3,
+        "amount": 402.4
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": false,
+    "multipage": false,
+    "layout": "kv_block"
+  }
+}

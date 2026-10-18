@@ -1,0 +1,36 @@
+{
+  "doc_id": "doc_0083",
+  "file": "doc_0083.pdf",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Initech LLC",
+    "invoice_number": "INV-4192",
+    "invoice_date": "June 23, 2025",
+    "due_date": "July 23, 2025",
+    "currency": "GBP",
+    "subtotal": 175.52,
+    "tax": 14.04,
+    "total": 189.56,
+    "line_items": [
+      {
+        "description": "Gadget",
+        "quantity": 1,
+        "unit_price": 175.52,
+        "amount": 175.52
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": true,
+    "multipage": false,
+    "layout": "kv_block"
+  }
+}

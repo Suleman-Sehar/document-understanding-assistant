@@ -1,0 +1,48 @@
+{
+  "doc_id": "doc_0030",
+  "file": "doc_0030.pdf",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Globex Corp",
+    "invoice_number": "INV-1909",
+    "invoice_date": "March 20, 2025",
+    "due_date": "April 19, 2025",
+    "currency": "EUR",
+    "subtotal": 1860.8400000000001,
+    "tax": 148.87,
+    "total": 2009.71,
+    "line_items": [
+      {
+        "description": "Widget",
+        "quantity": 9,
+        "unit_price": 84.78,
+        "amount": 763.02
+      },
+      {
+        "description": "Widget",
+        "quantity": 6,
+        "unit_price": 5.61,
+        "amount": 33.66
+      },
+      {
+        "description": "Gadget",
+        "quantity": 9,
+        "unit_price": 118.24,
+        "amount": 1064.16
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": true,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": true,
+    "multipage": false,
+    "layout": "table"
+  }
+}

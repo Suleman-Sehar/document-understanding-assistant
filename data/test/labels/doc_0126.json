@@ -1,0 +1,48 @@
+{
+  "doc_id": "doc_0126",
+  "file": "doc_0126.pdf",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Acme Supplies",
+    "invoice_number": "INV-4618",
+    "invoice_date": "05/02/2025",
+    "due_date": "07/03/2025",
+    "currency": "GBP",
+    "subtotal": 1923.7,
+    "tax": 153.9,
+    "total": 2077.6,
+    "line_items": [
+      {
+        "description": "Service",
+        "quantity": 5,
+        "unit_price": 34.25,
+        "amount": 171.25
+      },
+      {
+        "description": "Service",
+        "quantity": 5,
+        "unit_price": 178.03,
+        "amount": 890.15
+      },
+      {
+        "description": "Service",
+        "quantity": 10,
+        "unit_price": 86.23,
+        "amount": 862.3
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": true,
+    "odd_number": true,
+    "multipage": false,
+    "layout": "kv_block"
+  }
+}

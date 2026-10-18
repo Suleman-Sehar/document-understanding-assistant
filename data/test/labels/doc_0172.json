@@ -1,0 +1,54 @@
+{
+  "doc_id": "doc_0172",
+  "file": "doc_0172.docx",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Initech LLC",
+    "invoice_number": "INV-7190",
+    "invoice_date": "January 20, 2024",
+    "due_date": "February 19, 2024",
+    "currency": "EUR",
+    "subtotal": 4463.25,
+    "tax": 357.06,
+    "total": 4820.31,
+    "line_items": [
+      {
+        "description": "Service",
+        "quantity": 9,
+        "unit_price": 189.67,
+        "amount": 1707.03
+      },
+      {
+        "description": "Gadget",
+        "quantity": 10,
+        "unit_price": 83.76,
+        "amount": 837.6
+      },
+      {
+        "description": "Widget",
+        "quantity": 5,
+        "unit_price": 121.9,
+        "amount": 609.5
+      },
+      {
+        "description": "Gadget",
+        "quantity": 8,
+        "unit_price": 163.64,
+        "amount": 1309.12
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": true,
+    "multipage": true,
+    "layout": "footer_total"
+  }
+}

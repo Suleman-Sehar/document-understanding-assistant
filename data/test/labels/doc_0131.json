@@ -1,0 +1,58 @@
+{
+  "doc_id": "doc_0131",
+  "file": "doc_0131.pdf",
+  "doc_type": "purchase_order",
+  "fields": {
+    "buyer_name": "Arrowstack Corp",
+    "po_number": "PO-9576",
+    "issue_date": "May 20, 2025",
+    "vendor_name": "Globex Corp",
+    "currency": "EUR",
+    "total": 5501.58,
+    "line_items": [
+      {
+        "description": "Consulting",
+        "quantity": 3,
+        "unit_price": 26.15,
+        "amount": 78.45
+      },
+      {
+        "description": "Consulting",
+        "quantity": 4,
+        "unit_price": 77.02,
+        "amount": 308.08
+      },
+      {
+        "description": "Cables",
+        "quantity": 12,
+        "unit_price": 141.76,
+        "amount": 1701.12
+      },
+      {
+        "description": "Cables",
+        "quantity": 11,
+        "unit_price": 141.3,
+        "amount": 1554.3
+      },
+      {
+        "description": "Consulting",
+        "quantity": 17,
+        "unit_price": 109.39,
+        "amount": 1859.63
+      }
+    ],
+    "delivery_date": "June 03, 2025"
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": true,
+    "multipage": false,
+    "layout": "two_column"
+  }
+}

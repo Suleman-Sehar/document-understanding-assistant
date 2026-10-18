@@ -1,0 +1,54 @@
+{
+  "doc_id": "doc_0145",
+  "file": "doc_0145.pdf",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Initech LLC",
+    "invoice_number": "INV-7809",
+    "invoice_date": "01/05/2025",
+    "due_date": "31/05/2025",
+    "currency": "EUR",
+    "subtotal": 2541.52,
+    "tax": 203.32,
+    "total": 2744.84,
+    "line_items": [
+      {
+        "description": "Widget",
+        "quantity": 3,
+        "unit_price": 108.23,
+        "amount": 324.69
+      },
+      {
+        "description": "Widget",
+        "quantity": 1,
+        "unit_price": 90.81,
+        "amount": 90.81
+      },
+      {
+        "description": "Gadget",
+        "quantity": 10,
+        "unit_price": 145.77,
+        "amount": 1457.7
+      },
+      {
+        "description": "Service",
+        "quantity": 8,
+        "unit_price": 83.54,
+        "amount": 668.32
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": true,
+    "odd_number": false,
+    "multipage": false,
+    "layout": "table"
+  }
+}

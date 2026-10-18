@@ -1,0 +1,36 @@
+{
+  "doc_id": "doc_0096",
+  "file": "doc_0096.docx",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Globex Corp",
+    "invoice_number": "INV-5232",
+    "invoice_date": "December 20, 2024",
+    "due_date": "January 19, 2025",
+    "currency": "GBP",
+    "subtotal": 1681.47,
+    "tax": 134.52,
+    "total": 1815.99,
+    "line_items": [
+      {
+        "description": "Widget",
+        "quantity": 9,
+        "unit_price": 186.83,
+        "amount": 1681.47
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": true,
+    "multipage": false,
+    "layout": "two_column"
+  }
+}

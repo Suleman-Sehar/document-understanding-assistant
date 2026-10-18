@@ -1,0 +1,8 @@
+{
+  "seed": 20261018,
+  "counts": {
+    "dev": 100,
+    "test": 120,
+    "challenge": 30
+  }
+}

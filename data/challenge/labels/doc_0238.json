@@ -1,0 +1,40 @@
+{
+  "doc_id": "doc_0238",
+  "file": "doc_0238.pdf",
+  "doc_type": "purchase_order",
+  "fields": {
+    "buyer_name": "Arrowstack Corp",
+    "po_number": "PO-5152",
+    "issue_date": "2025-11-02",
+    "vendor_name": null,
+    "currency": "USD",
+    "total": 3364.13,
+    "line_items": [
+      {
+        "description": "Cables",
+        "quantity": 9,
+        "unit_price": 67.57,
+        "amount": 608.13
+      },
+      {
+        "description": "Cables",
+        "quantity": 20,
+        "unit_price": 137.8,
+        "amount": 2756.0
+      }
+    ],
+    "delivery_date": "2025-11-16"
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": true,
+    "odd_date": false,
+    "odd_number": false,
+    "multipage": false,
+    "layout": "heldout_a"
+  }
+}

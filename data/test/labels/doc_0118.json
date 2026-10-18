@@ -1,0 +1,48 @@
+{
+  "doc_id": "doc_0118",
+  "file": "doc_0118.pdf",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Globex Corp",
+    "invoice_number": "INV-6566",
+    "invoice_date": "23 February 2024",
+    "due_date": "24 March 2024",
+    "currency": "EUR",
+    "subtotal": 357.6,
+    "tax": 28.61,
+    "total": 386.21,
+    "line_items": [
+      {
+        "description": "Gadget",
+        "quantity": 2,
+        "unit_price": 12.14,
+        "amount": 24.28
+      },
+      {
+        "description": "Widget",
+        "quantity": 7,
+        "unit_price": 40.64,
+        "amount": 284.48
+      },
+      {
+        "description": "Service",
+        "quantity": 4,
+        "unit_price": 12.21,
+        "amount": 48.84
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": false,
+    "multipage": false,
+    "layout": "footer_total"
+  }
+}

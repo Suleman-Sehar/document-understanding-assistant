@@ -1,0 +1,36 @@
+{
+  "doc_id": "doc_0085",
+  "file": "doc_0085.pdf",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Initech LLC",
+    "invoice_number": "INV-3629",
+    "invoice_date": "July 23, 2025",
+    "due_date": "August 22, 2025",
+    "currency": "USD",
+    "subtotal": 505.35,
+    "tax": 40.43,
+    "total": 545.78,
+    "line_items": [
+      {
+        "description": "Gadget",
+        "quantity": 9,
+        "unit_price": 56.15,
+        "amount": 505.35
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": false,
+    "multipage": false,
+    "layout": "table"
+  }
+}

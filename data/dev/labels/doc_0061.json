@@ -1,0 +1,42 @@
+{
+  "doc_id": "doc_0061",
+  "file": "doc_0061.docx",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Acme Supplies",
+    "invoice_number": "INV-8741",
+    "invoice_date": "01/05/2025",
+    "due_date": "02/04/2025",
+    "currency": "EUR",
+    "subtotal": 919.91,
+    "tax": 73.59,
+    "total": 993.5,
+    "line_items": [
+      {
+        "description": "Widget",
+        "quantity": 2,
+        "unit_price": 28.63,
+        "amount": 57.26
+      },
+      {
+        "description": "Gadget",
+        "quantity": 5,
+        "unit_price": 172.53,
+        "amount": 862.65
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": true,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": true,
+    "odd_number": true,
+    "multipage": true,
+    "layout": "narrative"
+  }
+}

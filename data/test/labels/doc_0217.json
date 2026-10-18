@@ -1,0 +1,18 @@
+{
+  "doc_id": "doc_0217",
+  "file": "doc_0217.docx",
+  "doc_type": "short_contract",
+  "fields": {},
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": true,
+    "garbled": true,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": false,
+    "multipage": false,
+    "layout": null
+  }
+}

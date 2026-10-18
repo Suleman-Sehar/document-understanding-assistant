@@ -1,0 +1,54 @@
+{
+  "doc_id": "doc_0163",
+  "file": "doc_0163.docx",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Acme Supplies",
+    "invoice_number": "INV-5665",
+    "invoice_date": "June 07, 2025",
+    "due_date": "July 07, 2025",
+    "currency": "USD",
+    "subtotal": 1388.1100000000001,
+    "tax": 111.05,
+    "total": 1499.16,
+    "line_items": [
+      {
+        "description": "Widget",
+        "quantity": 2,
+        "unit_price": 114.42,
+        "amount": 228.84
+      },
+      {
+        "description": "Widget",
+        "quantity": 4,
+        "unit_price": 157.22,
+        "amount": 628.88
+      },
+      {
+        "description": "Widget",
+        "quantity": 9,
+        "unit_price": 23.1,
+        "amount": 207.9
+      },
+      {
+        "description": "Gadget",
+        "quantity": 7,
+        "unit_price": 46.07,
+        "amount": 322.49
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": true,
+    "multipage": false,
+    "layout": "footer_total"
+  }
+}

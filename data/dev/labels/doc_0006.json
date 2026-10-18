@@ -1,0 +1,54 @@
+{
+  "doc_id": "doc_0006",
+  "file": "doc_0006.docx",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Globex Corp",
+    "invoice_number": "INV-7268",
+    "invoice_date": "December 15, 2024",
+    "due_date": "January 14, 2025",
+    "currency": "GBP",
+    "subtotal": 3625.24,
+    "tax": 290.02,
+    "total": 3915.26,
+    "line_items": [
+      {
+        "description": "Widget",
+        "quantity": 4,
+        "unit_price": 15.99,
+        "amount": 63.96
+      },
+      {
+        "description": "Gadget",
+        "quantity": 10,
+        "unit_price": 138.1,
+        "amount": 1381.0
+      },
+      {
+        "description": "Widget",
+        "quantity": 10,
+        "unit_price": 157.17,
+        "amount": 1571.7
+      },
+      {
+        "description": "Widget",
+        "quantity": 9,
+        "unit_price": 67.62,
+        "amount": 608.58
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": false,
+    "multipage": false,
+    "layout": "narrative"
+  }
+}

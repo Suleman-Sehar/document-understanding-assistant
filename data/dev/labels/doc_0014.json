@@ -1,0 +1,54 @@
+{
+  "doc_id": "doc_0014",
+  "file": "doc_0014.docx",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Globex Corp",
+    "invoice_number": "INV-7619",
+    "invoice_date": "11/27/2024",
+    "due_date": "12/27/2024",
+    "currency": "USD",
+    "subtotal": 2844.46,
+    "tax": 227.56,
+    "total": 3072.02,
+    "line_items": [
+      {
+        "description": "Widget",
+        "quantity": 5,
+        "unit_price": 165.49,
+        "amount": 827.45
+      },
+      {
+        "description": "Service",
+        "quantity": 9,
+        "unit_price": 42.89,
+        "amount": 386.01
+      },
+      {
+        "description": "Service",
+        "quantity": 4,
+        "unit_price": 172.11,
+        "amount": 688.44
+      },
+      {
+        "description": "Gadget",
+        "quantity": 8,
+        "unit_price": 117.82,
+        "amount": 942.56
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": true,
+    "odd_number": true,
+    "multipage": false,
+    "layout": "kv_block"
+  }
+}

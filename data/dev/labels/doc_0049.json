@@ -1,0 +1,36 @@
+{
+  "doc_id": "doc_0049",
+  "file": "doc_0049.pdf",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Globex Corp",
+    "invoice_number": "INV-9443",
+    "invoice_date": "01 August 2025",
+    "due_date": "31 August 2025",
+    "currency": "GBP",
+    "subtotal": 93.82,
+    "tax": 7.51,
+    "total": 101.33,
+    "line_items": [
+      {
+        "description": "Service",
+        "quantity": 1,
+        "unit_price": 93.82,
+        "amount": 93.82
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": true,
+    "multipage": false,
+    "layout": "two_column"
+  }
+}

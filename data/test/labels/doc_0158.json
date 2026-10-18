@@ -1,0 +1,54 @@
+{
+  "doc_id": "doc_0158",
+  "file": "doc_0158.docx",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Acme Supplies",
+    "invoice_number": "INV-7274",
+    "invoice_date": "25/10/2025",
+    "due_date": "24/11/2025",
+    "currency": "USD",
+    "subtotal": 2564.98,
+    "tax": 205.2,
+    "total": 2770.18,
+    "line_items": [
+      {
+        "description": "Gadget",
+        "quantity": 5,
+        "unit_price": 6.16,
+        "amount": 30.8
+      },
+      {
+        "description": "Service",
+        "quantity": 5,
+        "unit_price": 164.92,
+        "amount": 824.6
+      },
+      {
+        "description": "Widget",
+        "quantity": 6,
+        "unit_price": 196.24,
+        "amount": 1177.44
+      },
+      {
+        "description": "Widget",
+        "quantity": 6,
+        "unit_price": 88.69,
+        "amount": 532.14
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": true,
+    "odd_number": false,
+    "multipage": true,
+    "layout": "narrative"
+  }
+}

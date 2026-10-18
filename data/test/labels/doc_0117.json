@@ -1,0 +1,58 @@
+{
+  "doc_id": "doc_0117",
+  "file": "doc_0117.docx",
+  "doc_type": "purchase_order",
+  "fields": {
+    "buyer_name": "Arrowstack Corp",
+    "po_number": "PO-4863",
+    "issue_date": "06/06/2024",
+    "vendor_name": "Acme Supplies",
+    "currency": "EUR",
+    "total": 4067.42,
+    "line_items": [
+      {
+        "description": "Consulting",
+        "quantity": 3,
+        "unit_price": 11.72,
+        "amount": 35.16
+      },
+      {
+        "description": "Consulting",
+        "quantity": 1,
+        "unit_price": 49.16,
+        "amount": 49.16
+      },
+      {
+        "description": "Cables",
+        "quantity": 9,
+        "unit_price": 129.14,
+        "amount": 1162.26
+      },
+      {
+        "description": "Bolts",
+        "quantity": 19,
+        "unit_price": 138.09,
+        "amount": 2623.71
+      },
+      {
+        "description": "Bolts",
+        "quantity": 3,
+        "unit_price": 65.71,
+        "amount": 197.13
+      }
+    ],
+    "delivery_date": "06/20/2024"
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": true,
+    "odd_number": true,
+    "multipage": true,
+    "layout": "table"
+  }
+}

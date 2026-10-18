@@ -1,0 +1,54 @@
+{
+  "doc_id": "doc_0188",
+  "file": "doc_0188.pdf",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Initech LLC",
+    "invoice_number": "INV-7320",
+    "invoice_date": "2025-03-27",
+    "due_date": "2025-04-26",
+    "currency": "GBP",
+    "subtotal": 3047.4700000000003,
+    "tax": 243.8,
+    "total": 3291.27,
+    "line_items": [
+      {
+        "description": "Service",
+        "quantity": 7,
+        "unit_price": 128.13,
+        "amount": 896.91
+      },
+      {
+        "description": "Service",
+        "quantity": 4,
+        "unit_price": 152.2,
+        "amount": 608.8
+      },
+      {
+        "description": "Widget",
+        "quantity": 8,
+        "unit_price": 24.59,
+        "amount": 196.72
+      },
+      {
+        "description": "Service",
+        "quantity": 8,
+        "unit_price": 168.13,
+        "amount": 1345.04
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": true,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": false,
+    "multipage": false,
+    "layout": "table"
+  }
+}

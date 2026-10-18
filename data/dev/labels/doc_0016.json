@@ -1,0 +1,36 @@
+{
+  "doc_id": "doc_0016",
+  "file": "doc_0016.docx",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Globex Corp",
+    "invoice_number": "INV-6273",
+    "invoice_date": "2024-11-25",
+    "due_date": "2024-12-25",
+    "currency": "EUR",
+    "subtotal": 106.46,
+    "tax": 8.52,
+    "total": 114.98,
+    "line_items": [
+      {
+        "description": "Gadget",
+        "quantity": 2,
+        "unit_price": 53.23,
+        "amount": 106.46
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": false,
+    "multipage": false,
+    "layout": "table"
+  }
+}

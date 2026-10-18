@@ -1,0 +1,48 @@
+{
+  "doc_id": "doc_0226",
+  "file": "doc_0226.pdf",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Globex Corp",
+    "invoice_number": "INV-5048",
+    "invoice_date": "19/02/2025",
+    "due_date": null,
+    "currency": "USD",
+    "subtotal": 1834.91,
+    "tax": 146.79,
+    "total": 1981.7,
+    "line_items": [
+      {
+        "description": "Service",
+        "quantity": 1,
+        "unit_price": 191.23,
+        "amount": 191.23
+      },
+      {
+        "description": "Widget",
+        "quantity": 8,
+        "unit_price": 130.53,
+        "amount": 1044.24
+      },
+      {
+        "description": "Service",
+        "quantity": 8,
+        "unit_price": 74.93,
+        "amount": 599.44
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": true,
+    "odd_date": true,
+    "odd_number": false,
+    "multipage": false,
+    "layout": "heldout_a"
+  }
+}

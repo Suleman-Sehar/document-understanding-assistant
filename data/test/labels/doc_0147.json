@@ -1,0 +1,42 @@
+{
+  "doc_id": "doc_0147",
+  "file": "doc_0147.pdf",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Acme Supplies",
+    "invoice_number": "INV-8532",
+    "invoice_date": "09 April 2024",
+    "due_date": "09 May 2024",
+    "currency": "USD",
+    "subtotal": 2359.04,
+    "tax": 188.72,
+    "total": 2547.76,
+    "line_items": [
+      {
+        "description": "Gadget",
+        "quantity": 8,
+        "unit_price": 148.39,
+        "amount": 1187.12
+      },
+      {
+        "description": "Widget",
+        "quantity": 8,
+        "unit_price": 146.49,
+        "amount": 1171.92
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": true,
+    "multipage": false,
+    "layout": "narrative"
+  }
+}

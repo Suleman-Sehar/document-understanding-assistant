@@ -1,0 +1,18 @@
+{
+  "doc_id": "doc_0149",
+  "file": "doc_0149.pdf",
+  "doc_type": "invoice",
+  "fields": {},
+  "meta": {
+    "injection": false,
+    "pii": true,
+    "empty": false,
+    "garbled": true,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": false,
+    "multipage": false,
+    "layout": null
+  }
+}

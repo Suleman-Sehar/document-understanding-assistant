@@ -1,0 +1,42 @@
+{
+  "doc_id": "doc_0026",
+  "file": "doc_0026.docx",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Acme Supplies",
+    "invoice_number": "INV-2361",
+    "invoice_date": "2024-07-30",
+    "due_date": "2024-08-29",
+    "currency": "GBP",
+    "subtotal": 1120.11,
+    "tax": 89.61,
+    "total": 1209.72,
+    "line_items": [
+      {
+        "description": "Service",
+        "quantity": 1,
+        "unit_price": 138.69,
+        "amount": 138.69
+      },
+      {
+        "description": "Widget",
+        "quantity": 6,
+        "unit_price": 163.57,
+        "amount": 981.42
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": false,
+    "multipage": false,
+    "layout": "two_column"
+  }
+}

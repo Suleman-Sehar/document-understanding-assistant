@@ -1,0 +1,36 @@
+{
+  "doc_id": "doc_0202",
+  "file": "doc_0202.docx",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Globex Corp",
+    "invoice_number": "INV-1360",
+    "invoice_date": "06/04/2025",
+    "due_date": "06/05/2025",
+    "currency": "USD",
+    "subtotal": 39.55,
+    "tax": 3.16,
+    "total": 42.71,
+    "line_items": [
+      {
+        "description": "Gadget",
+        "quantity": 7,
+        "unit_price": 5.65,
+        "amount": 39.55
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": true,
+    "odd_number": false,
+    "multipage": false,
+    "layout": "kv_block"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "doc_id": "doc_0206",
+  "file": "doc_0206.docx",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Globex Corp",
+    "invoice_number": "INV-2637",
+    "invoice_date": "2024-04-30",
+    "due_date": "2024-05-30",
+    "currency": "GBP",
+    "subtotal": 830.85,
+    "tax": 66.47,
+    "total": 897.32,
+    "line_items": [
+      {
+        "description": "Service",
+        "quantity": 5,
+        "unit_price": 166.17,
+        "amount": 830.85
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": true,
+    "multipage": true,
+    "layout": "narrative"
+  }
+}

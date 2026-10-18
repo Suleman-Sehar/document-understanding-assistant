@@ -1,0 +1,34 @@
+{
+  "doc_id": "doc_0228",
+  "file": "doc_0228.docx",
+  "doc_type": "purchase_order",
+  "fields": {
+    "buyer_name": "Arrowstack Corp",
+    "po_number": "PO-4097",
+    "issue_date": "November 02, 2024",
+    "vendor_name": "Acme Supplies",
+    "currency": "EUR",
+    "total": 666.23,
+    "line_items": [
+      {
+        "description": "Cables",
+        "quantity": 17,
+        "unit_price": 39.19,
+        "amount": 666.23
+      }
+    ],
+    "delivery_date": "November 16, 2024"
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": true,
+    "odd_date": false,
+    "odd_number": false,
+    "multipage": true,
+    "layout": "heldout_a"
+  }
+}

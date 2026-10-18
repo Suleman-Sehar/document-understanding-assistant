@@ -1,0 +1,42 @@
+{
+  "doc_id": "doc_0043",
+  "file": "doc_0043.docx",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Acme Supplies",
+    "invoice_number": "INV-7499",
+    "invoice_date": "2024-03-08",
+    "due_date": "2024-04-07",
+    "currency": "USD",
+    "subtotal": 1371.4299999999998,
+    "tax": 109.71,
+    "total": 1481.14,
+    "line_items": [
+      {
+        "description": "Widget",
+        "quantity": 9,
+        "unit_price": 103.77,
+        "amount": 933.93
+      },
+      {
+        "description": "Widget",
+        "quantity": 5,
+        "unit_price": 87.5,
+        "amount": 437.5
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": true,
+    "multipage": true,
+    "layout": "kv_block"
+  }
+}

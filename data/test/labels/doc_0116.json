@@ -1,0 +1,46 @@
+{
+  "doc_id": "doc_0116",
+  "file": "doc_0116.pdf",
+  "doc_type": "purchase_order",
+  "fields": {
+    "buyer_name": "Arrowstack Corp",
+    "po_number": "PO-7667",
+    "issue_date": "27 April 2025",
+    "vendor_name": "Globex Corp",
+    "currency": "EUR",
+    "total": 3437.59,
+    "line_items": [
+      {
+        "description": "Bolts",
+        "quantity": 18,
+        "unit_price": 113.01,
+        "amount": 2034.18
+      },
+      {
+        "description": "Consulting",
+        "quantity": 9,
+        "unit_price": 27.32,
+        "amount": 245.88
+      },
+      {
+        "description": "Consulting",
+        "quantity": 11,
+        "unit_price": 105.23,
+        "amount": 1157.53
+      }
+    ],
+    "delivery_date": "11 May 2025"
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": true,
+    "multipage": false,
+    "layout": "narrative"
+  }
+}

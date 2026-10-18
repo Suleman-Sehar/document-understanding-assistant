@@ -1,0 +1,42 @@
+{
+  "doc_id": "doc_0250",
+  "file": "doc_0250.pdf",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Initech LLC",
+    "invoice_number": "INV-3343",
+    "invoice_date": "2025-01-03",
+    "due_date": "2025-02-02",
+    "currency": "GBP",
+    "subtotal": 806.4399999999999,
+    "tax": 64.52,
+    "total": 870.96,
+    "line_items": [
+      {
+        "description": "Gadget",
+        "quantity": 10,
+        "unit_price": 68.28,
+        "amount": 682.8
+      },
+      {
+        "description": "Widget",
+        "quantity": 2,
+        "unit_price": 61.82,
+        "amount": 123.64
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": true,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": true,
+    "odd_date": false,
+    "odd_number": false,
+    "multipage": true,
+    "layout": "heldout_a"
+  }
+}

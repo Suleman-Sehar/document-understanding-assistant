@@ -1,0 +1,48 @@
+{
+  "doc_id": "doc_0031",
+  "file": "doc_0031.pdf",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Globex Corp",
+    "invoice_number": "INV-9171",
+    "invoice_date": "2025-06-24",
+    "due_date": "2025-07-24",
+    "currency": "USD",
+    "subtotal": 1197.95,
+    "tax": 95.84,
+    "total": 1293.79,
+    "line_items": [
+      {
+        "description": "Gadget",
+        "quantity": 2,
+        "unit_price": 44.6,
+        "amount": 89.2
+      },
+      {
+        "description": "Service",
+        "quantity": 8,
+        "unit_price": 89.6,
+        "amount": 716.8
+      },
+      {
+        "description": "Service",
+        "quantity": 5,
+        "unit_price": 78.39,
+        "amount": 391.95
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": true,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": false,
+    "multipage": false,
+    "layout": "kv_block"
+  }
+}

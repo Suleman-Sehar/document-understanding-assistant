@@ -1,0 +1,36 @@
+{
+  "doc_id": "doc_0048",
+  "file": "doc_0048.pdf",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Globex Corp",
+    "invoice_number": "INV-6707",
+    "invoice_date": "April 14, 2025",
+    "due_date": "May 14, 2025",
+    "currency": "GBP",
+    "subtotal": 489.4,
+    "tax": 39.15,
+    "total": 528.55,
+    "line_items": [
+      {
+        "description": "Gadget",
+        "quantity": 5,
+        "unit_price": 97.88,
+        "amount": 489.4
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": true,
+    "multipage": false,
+    "layout": "table"
+  }
+}

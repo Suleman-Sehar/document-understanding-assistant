@@ -1,0 +1,29 @@
+{
+  "doc_id": "doc_0111",
+  "file": "doc_0111.pdf",
+  "doc_type": "short_contract",
+  "fields": {
+    "parties": [
+      "Arrowstack Corp",
+      "Initech Partners"
+    ],
+    "effective_date": "2024-01-01",
+    "term_months": 24,
+    "value": 90429.56,
+    "currency": "EUR",
+    "termination_clause": null,
+    "governing_law": "Delaware"
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": true,
+    "multipage": false,
+    "layout": "kv_block"
+  }
+}

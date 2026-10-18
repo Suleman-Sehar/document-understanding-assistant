@@ -1,0 +1,52 @@
+{
+  "doc_id": "doc_0244",
+  "file": "doc_0244.pdf",
+  "doc_type": "purchase_order",
+  "fields": {
+    "buyer_name": "Arrowstack Corp",
+    "po_number": "PO-9202",
+    "issue_date": "September 27, 2025",
+    "vendor_name": null,
+    "currency": "EUR",
+    "total": 2178.05,
+    "line_items": [
+      {
+        "description": "Bolts",
+        "quantity": 15,
+        "unit_price": 64.3,
+        "amount": 964.5
+      },
+      {
+        "description": "Cables",
+        "quantity": 7,
+        "unit_price": 43.7,
+        "amount": 305.9
+      },
+      {
+        "description": "Consulting",
+        "quantity": 9,
+        "unit_price": 63.8,
+        "amount": 574.2
+      },
+      {
+        "description": "Cables",
+        "quantity": 3,
+        "unit_price": 111.15,
+        "amount": 333.45
+      }
+    ],
+    "delivery_date": "October 11, 2025"
+  },
+  "meta": {
+    "injection": false,
+    "pii": true,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": true,
+    "odd_date": false,
+    "odd_number": false,
+    "multipage": false,
+    "layout": "heldout_a"
+  }
+}

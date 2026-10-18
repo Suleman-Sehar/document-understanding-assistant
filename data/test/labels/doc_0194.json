@@ -1,0 +1,48 @@
+{
+  "doc_id": "doc_0194",
+  "file": "doc_0194.pdf",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Acme Supplies",
+    "invoice_number": "INV-9472",
+    "invoice_date": "21 October 2024",
+    "due_date": "20 November 2024",
+    "currency": "GBP",
+    "subtotal": 4174.16,
+    "tax": 333.93,
+    "total": 4508.09,
+    "line_items": [
+      {
+        "description": "Service",
+        "quantity": 10,
+        "unit_price": 180.77,
+        "amount": 1807.7
+      },
+      {
+        "description": "Service",
+        "quantity": 2,
+        "unit_price": 187.28,
+        "amount": 374.56
+      },
+      {
+        "description": "Widget",
+        "quantity": 10,
+        "unit_price": 199.19,
+        "amount": 1991.9
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": false,
+    "multipage": true,
+    "layout": "two_column"
+  }
+}

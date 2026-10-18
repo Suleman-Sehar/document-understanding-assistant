@@ -1,0 +1,36 @@
+{
+  "doc_id": "doc_0185",
+  "file": "doc_0185.pdf",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Globex Corp",
+    "invoice_number": "INV-4241",
+    "invoice_date": "02/05/2024",
+    "due_date": "01/06/2024",
+    "currency": "USD",
+    "subtotal": 406.14,
+    "tax": 32.49,
+    "total": 438.63,
+    "line_items": [
+      {
+        "description": "Service",
+        "quantity": 7,
+        "unit_price": 58.02,
+        "amount": 406.14
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": true,
+    "odd_number": false,
+    "multipage": true,
+    "layout": "two_column"
+  }
+}

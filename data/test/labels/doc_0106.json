@@ -1,0 +1,36 @@
+{
+  "doc_id": "doc_0106",
+  "file": "doc_0106.docx",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Initech LLC",
+    "invoice_number": "INV-3685",
+    "invoice_date": "2024-09-01",
+    "due_date": "2024-10-01",
+    "currency": "USD",
+    "subtotal": 235.12,
+    "tax": 18.81,
+    "total": 253.93,
+    "line_items": [
+      {
+        "description": "Gadget",
+        "quantity": 2,
+        "unit_price": 117.56,
+        "amount": 235.12
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": false,
+    "multipage": false,
+    "layout": "two_column"
+  }
+}

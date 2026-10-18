@@ -1,0 +1,42 @@
+{
+  "doc_id": "doc_0144",
+  "file": "doc_0144.docx",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Initech LLC",
+    "invoice_number": "INV-6211",
+    "invoice_date": "05/24/2024",
+    "due_date": "06/23/2024",
+    "currency": "GBP",
+    "subtotal": 1621.65,
+    "tax": 129.73,
+    "total": 1751.38,
+    "line_items": [
+      {
+        "description": "Widget",
+        "quantity": 10,
+        "unit_price": 74.37,
+        "amount": 743.7
+      },
+      {
+        "description": "Service",
+        "quantity": 9,
+        "unit_price": 97.55,
+        "amount": 877.95
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": true,
+    "odd_number": false,
+    "multipage": true,
+    "layout": "narrative"
+  }
+}

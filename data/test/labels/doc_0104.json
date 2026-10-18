@@ -1,0 +1,29 @@
+{
+  "doc_id": "doc_0104",
+  "file": "doc_0104.docx",
+  "doc_type": "short_contract",
+  "fields": {
+    "parties": [
+      "Arrowstack Corp",
+      "Globex Inc"
+    ],
+    "effective_date": "11/05/2025",
+    "term_months": 12,
+    "value": 11925.39,
+    "currency": "EUR",
+    "termination_clause": null,
+    "governing_law": "Delaware"
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": true,
+    "odd_number": true,
+    "multipage": true,
+    "layout": "two_column"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "doc_id": "doc_0135",
+  "file": "doc_0135.pdf",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Acme Supplies",
+    "invoice_number": "INV-8906",
+    "invoice_date": "07 September 2024",
+    "due_date": "07 October 2024",
+    "currency": "EUR",
+    "subtotal": 2842.91,
+    "tax": 227.43,
+    "total": 3070.34,
+    "line_items": [
+      {
+        "description": "Gadget",
+        "quantity": 10,
+        "unit_price": 101.17,
+        "amount": 1011.7
+      },
+      {
+        "description": "Gadget",
+        "quantity": 10,
+        "unit_price": 106.45,
+        "amount": 1064.5
+      },
+      {
+        "description": "Gadget",
+        "quantity": 7,
+        "unit_price": 109.53,
+        "amount": 766.71
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": false,
+    "multipage": false,
+    "layout": "two_column"
+  }
+}

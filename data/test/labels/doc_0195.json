@@ -1,0 +1,42 @@
+{
+  "doc_id": "doc_0195",
+  "file": "doc_0195.docx",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Initech LLC",
+    "invoice_number": "INV-8296",
+    "invoice_date": "16/12/2024",
+    "due_date": "15/01/2025",
+    "currency": "USD",
+    "subtotal": 2736.6800000000003,
+    "tax": 218.93,
+    "total": 2955.61,
+    "line_items": [
+      {
+        "description": "Service",
+        "quantity": 10,
+        "unit_price": 164.93,
+        "amount": 1649.3
+      },
+      {
+        "description": "Service",
+        "quantity": 7,
+        "unit_price": 155.34,
+        "amount": 1087.38
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": true,
+    "odd_number": false,
+    "multipage": false,
+    "layout": "table"
+  }
+}

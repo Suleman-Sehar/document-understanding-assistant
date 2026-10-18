@@ -1,0 +1,18 @@
+{
+  "doc_id": "doc_0011",
+  "file": "doc_0011.pdf",
+  "doc_type": "purchase_order",
+  "fields": {},
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": true,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": true,
+    "multipage": false,
+    "layout": null
+  }
+}

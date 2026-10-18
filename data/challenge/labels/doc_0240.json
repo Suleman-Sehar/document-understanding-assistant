@@ -1,0 +1,36 @@
+{
+  "doc_id": "doc_0240",
+  "file": "doc_0240.docx",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Initech LLC",
+    "invoice_number": "INV-8169",
+    "invoice_date": "03/08/2025",
+    "due_date": "02/09/2025",
+    "currency": "EUR",
+    "subtotal": null,
+    "tax": 71.06,
+    "total": 959.36,
+    "line_items": [
+      {
+        "description": "Widget",
+        "quantity": 10,
+        "unit_price": 88.83,
+        "amount": 888.3
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": true,
+    "odd_date": true,
+    "odd_number": true,
+    "multipage": false,
+    "layout": "heldout_b"
+  }
+}

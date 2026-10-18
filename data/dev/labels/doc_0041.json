@@ -1,0 +1,36 @@
+{
+  "doc_id": "doc_0041",
+  "file": "doc_0041.pdf",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Globex Corp",
+    "invoice_number": "INV-9123",
+    "invoice_date": "15 March 2024",
+    "due_date": "14 April 2024",
+    "currency": "EUR",
+    "subtotal": 1050.21,
+    "tax": 84.02,
+    "total": 1134.23,
+    "line_items": [
+      {
+        "description": "Widget",
+        "quantity": 9,
+        "unit_price": 116.69,
+        "amount": 1050.21
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": false,
+    "multipage": false,
+    "layout": "kv_block"
+  }
+}

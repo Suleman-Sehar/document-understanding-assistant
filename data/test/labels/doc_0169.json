@@ -1,0 +1,48 @@
+{
+  "doc_id": "doc_0169",
+  "file": "doc_0169.docx",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Initech LLC",
+    "invoice_number": "INV-1356",
+    "invoice_date": "May 31, 2024",
+    "due_date": "June 30, 2024",
+    "currency": "USD",
+    "subtotal": 1343.87,
+    "tax": 107.51,
+    "total": 1451.38,
+    "line_items": [
+      {
+        "description": "Gadget",
+        "quantity": 5,
+        "unit_price": 153.06,
+        "amount": 765.3
+      },
+      {
+        "description": "Widget",
+        "quantity": 2,
+        "unit_price": 16.95,
+        "amount": 33.9
+      },
+      {
+        "description": "Gadget",
+        "quantity": 7,
+        "unit_price": 77.81,
+        "amount": 544.67
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": true,
+    "multipage": true,
+    "layout": "footer_total"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "doc_id": "doc_0192",
+  "file": "doc_0192.pdf",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Initech LLC",
+    "invoice_number": "INV-7454",
+    "invoice_date": "21 October 2025",
+    "due_date": "20 November 2025",
+    "currency": "USD",
+    "subtotal": 490.31,
+    "tax": 39.22,
+    "total": 529.53,
+    "line_items": [
+      {
+        "description": "Widget",
+        "quantity": 1,
+        "unit_price": 111.02,
+        "amount": 111.02
+      },
+      {
+        "description": "Gadget",
+        "quantity": 1,
+        "unit_price": 94.99,
+        "amount": 94.99
+      },
+      {
+        "description": "Service",
+        "quantity": 5,
+        "unit_price": 56.86,
+        "amount": 284.3
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": false,
+    "multipage": false,
+    "layout": "footer_total"
+  }
+}

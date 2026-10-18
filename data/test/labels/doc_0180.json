@@ -1,0 +1,42 @@
+{
+  "doc_id": "doc_0180",
+  "file": "doc_0180.pdf",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Globex Corp",
+    "invoice_number": "INV-5995",
+    "invoice_date": "2025-03-22",
+    "due_date": "2025-04-21",
+    "currency": "EUR",
+    "subtotal": 1510.67,
+    "tax": 120.85,
+    "total": 1631.52,
+    "line_items": [
+      {
+        "description": "Service",
+        "quantity": 1,
+        "unit_price": 35.15,
+        "amount": 35.15
+      },
+      {
+        "description": "Service",
+        "quantity": 8,
+        "unit_price": 184.44,
+        "amount": 1475.52
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": false,
+    "multipage": false,
+    "layout": "kv_block"
+  }
+}

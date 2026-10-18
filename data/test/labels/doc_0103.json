@@ -1,0 +1,36 @@
+{
+  "doc_id": "doc_0103",
+  "file": "doc_0103.docx",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Initech LLC",
+    "invoice_number": "INV-4705",
+    "invoice_date": "March 09, 2025",
+    "due_date": "April 08, 2025",
+    "currency": "GBP",
+    "subtotal": 1334.7,
+    "tax": 106.78,
+    "total": 1441.48,
+    "line_items": [
+      {
+        "description": "Service",
+        "quantity": 10,
+        "unit_price": 133.47,
+        "amount": 1334.7
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": false,
+    "multipage": false,
+    "layout": "narrative"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "doc_id": "doc_0059",
+  "file": "doc_0059.docx",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Globex Corp",
+    "invoice_number": "INV-8677",
+    "invoice_date": "September 01, 2025",
+    "due_date": "October 01, 2025",
+    "currency": "EUR",
+    "subtotal": 720.11,
+    "tax": 57.61,
+    "total": 777.72,
+    "line_items": [
+      {
+        "description": "Widget",
+        "quantity": 4,
+        "unit_price": 94.64,
+        "amount": 378.56
+      },
+      {
+        "description": "Service",
+        "quantity": 3,
+        "unit_price": 113.85,
+        "amount": 341.55
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": false,
+    "multipage": true,
+    "layout": "kv_block"
+  }
+}

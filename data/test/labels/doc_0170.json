@@ -1,0 +1,54 @@
+{
+  "doc_id": "doc_0170",
+  "file": "doc_0170.docx",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Initech LLC",
+    "invoice_number": "INV-3723",
+    "invoice_date": "29 June 2025",
+    "due_date": "29 July 2025",
+    "currency": "EUR",
+    "subtotal": 1474.9199999999998,
+    "tax": 117.99,
+    "total": 1592.91,
+    "line_items": [
+      {
+        "description": "Service",
+        "quantity": 8,
+        "unit_price": 116.47,
+        "amount": 931.76
+      },
+      {
+        "description": "Widget",
+        "quantity": 6,
+        "unit_price": 26.34,
+        "amount": 158.04
+      },
+      {
+        "description": "Service",
+        "quantity": 3,
+        "unit_price": 94.42,
+        "amount": 283.26
+      },
+      {
+        "description": "Widget",
+        "quantity": 2,
+        "unit_price": 50.93,
+        "amount": 101.86
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": false,
+    "multipage": false,
+    "layout": "narrative"
+  }
+}

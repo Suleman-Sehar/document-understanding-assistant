@@ -1,0 +1,42 @@
+{
+  "doc_id": "doc_0128",
+  "file": "doc_0128.docx",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Globex Corp",
+    "invoice_number": "INV-3402",
+    "invoice_date": "August 08, 2025",
+    "due_date": "September 07, 2025",
+    "currency": "GBP",
+    "subtotal": 904.8599999999999,
+    "tax": 72.39,
+    "total": 977.25,
+    "line_items": [
+      {
+        "description": "Widget",
+        "quantity": 4,
+        "unit_price": 144.45,
+        "amount": 577.8
+      },
+      {
+        "description": "Widget",
+        "quantity": 3,
+        "unit_price": 109.02,
+        "amount": 327.06
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": false,
+    "multipage": true,
+    "layout": "table"
+  }
+}

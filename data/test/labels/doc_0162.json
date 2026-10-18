@@ -1,0 +1,42 @@
+{
+  "doc_id": "doc_0162",
+  "file": "doc_0162.docx",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Initech LLC",
+    "invoice_number": "INV-8729",
+    "invoice_date": "08 September 2024",
+    "due_date": "08 October 2024",
+    "currency": "USD",
+    "subtotal": 434.95,
+    "tax": 34.8,
+    "total": 469.75,
+    "line_items": [
+      {
+        "description": "Widget",
+        "quantity": 1,
+        "unit_price": 147.99,
+        "amount": 147.99
+      },
+      {
+        "description": "Widget",
+        "quantity": 2,
+        "unit_price": 143.48,
+        "amount": 286.96
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": false,
+    "multipage": false,
+    "layout": "narrative"
+  }
+}

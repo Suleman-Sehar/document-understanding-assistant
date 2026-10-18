@@ -1,0 +1,48 @@
+{
+  "doc_id": "doc_0196",
+  "file": "doc_0196.pdf",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Globex Corp",
+    "invoice_number": "INV-9514",
+    "invoice_date": "26 November 2025",
+    "due_date": "26 December 2025",
+    "currency": "USD",
+    "subtotal": 359.81,
+    "tax": 28.78,
+    "total": 388.59,
+    "line_items": [
+      {
+        "description": "Service",
+        "quantity": 3,
+        "unit_price": 43.71,
+        "amount": 131.13
+      },
+      {
+        "description": "Service",
+        "quantity": 6,
+        "unit_price": 17.08,
+        "amount": 102.48
+      },
+      {
+        "description": "Gadget",
+        "quantity": 5,
+        "unit_price": 25.24,
+        "amount": 126.2
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": false,
+    "odd_number": false,
+    "multipage": false,
+    "layout": "kv_block"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "doc_id": "doc_0069",
+  "file": "doc_0069.docx",
+  "doc_type": "invoice",
+  "fields": {
+    "vendor_name": "Globex Corp",
+    "invoice_number": "INV-4778",
+    "invoice_date": "02/03/2024",
+    "due_date": "03/04/2024",
+    "currency": "GBP",
+    "subtotal": 2326.5800000000004,
+    "tax": 186.13,
+    "total": 2512.71,
+    "line_items": [
+      {
+        "description": "Widget",
+        "quantity": 7,
+        "unit_price": 181.29,
+        "amount": 1269.03
+      },
+      {
+        "description": "Widget",
+        "quantity": 7,
+        "unit_price": 141.61,
+        "amount": 991.27
+      },
+      {
+        "description": "Gadget",
+        "quantity": 4,
+        "unit_price": 16.57,
+        "amount": 66.28
+      }
+    ],
+    "po_reference": null
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": true,
+    "odd_number": true,
+    "multipage": true,
+    "layout": "kv_block"
+  }
+}

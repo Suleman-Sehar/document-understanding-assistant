@@ -1,0 +1,40 @@
+{
+  "doc_id": "doc_0007",
+  "file": "doc_0007.pdf",
+  "doc_type": "purchase_order",
+  "fields": {
+    "buyer_name": "Arrowstack Corp",
+    "po_number": "PO-8352",
+    "issue_date": "03/04/2024",
+    "vendor_name": "Acme Supplies",
+    "currency": "USD",
+    "total": 2406.64,
+    "line_items": [
+      {
+        "description": "Consulting",
+        "quantity": 17,
+        "unit_price": 124.8,
+        "amount": 2121.6
+      },
+      {
+        "description": "Consulting",
+        "quantity": 2,
+        "unit_price": 142.52,
+        "amount": 285.04
+      }
+    ],
+    "delivery_date": "03/18/2024"
+  },
+  "meta": {
+    "injection": false,
+    "pii": false,
+    "empty": false,
+    "garbled": false,
+    "nonbiz": false,
+    "hard": false,
+    "odd_date": true,
+    "odd_number": true,
+    "multipage": false,
+    "layout": "kv_block"
+  }
+}
