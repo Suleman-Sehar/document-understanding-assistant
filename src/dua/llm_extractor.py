@@ -7,8 +7,10 @@ from .llm import redact_pii
 CACHE_DIR=pathlib.Path("cache")
 CACHE_DIR.mkdir(exist_ok=True)
 
+PROMPT_VERSION="v4-repair-optional-fields-max-tokens"
+
 def cache_key(text):
-    return hashlib.sha256(text.encode()).hexdigest()
+    return hashlib.sha256((PROMPT_VERSION+"|"+text).encode()).hexdigest()
 
 def cached(text):
     CACHE_DIR.mkdir(exist_ok=True)
@@ -20,7 +22,7 @@ def cached(text):
 def save_cache(text, obj):
     CACHE_DIR.mkdir(exist_ok=True)
     p=CACHE_DIR/(cache_key(text)+".json")
-    p.write_text(json.dumps(obj))
+    p.write_text(json.dumps(obj,default=str))
 
 SYSTEM = """You extract structured data from business documents.
 
@@ -66,7 +68,9 @@ def build_fewshot():
             txt=read_document(root/"docs"/d["file"])
             txt=redact_pii(txt)[:700]
             fields={k:v for k,v in d["fields"].items() if v is not None}
-            out={"doc_type":dt,"fields":fields,"summary":f"{dt} document example.","confidence":0.9,"needs_human_review":False,"issues":[]}
+            out={"doc_type":dt,"fields":fields,
+                 "summary":f"Example {dt} document from Arrowstack Corp.",
+                 "confidence":0.9,"needs_human_review":False,"issues":[]}
             blocks.append(f"EXAMPLE ({dt})\nDOCUMENT:\n{txt}\nOUTPUT:\n{json.dumps(out)}")
             break
     return "\n\n".join(blocks)
@@ -75,6 +79,7 @@ DEBUG_DIR=pathlib.Path("evidence")
 DEBUG_DIR.mkdir(exist_ok=True)
 
 def save_debug(doc_id, raw, error=None, attempt=None):
+    import traceback
     p=DEBUG_DIR/f"debug_{doc_id}.json"
     payload={"doc_id":doc_id,"attempts":[]}
     if p.exists():
@@ -86,6 +91,7 @@ def save_debug(doc_id, raw, error=None, attempt=None):
         "attempt":attempt,
         "raw_llm_output":raw,
         "validation_error":None if error is None else str(error),
+        "traceback":None if error is None else traceback.format_exc(),
     })
     p.write_text(json.dumps(payload,indent=2,default=str))
     return p
@@ -93,6 +99,15 @@ def save_debug(doc_id, raw, error=None, attempt=None):
 def llm_extract(path, client=None, model="openai/gpt-4o-mini", base_url=None, limit=None):
     text=read_document(path)
     rtext=redact_pii(text)
+    doc_id=pathlib.Path(path).stem
+    # empty / non-business documents: do not call the API, flag for human review
+    if len(text.strip()) < 5:
+        out={"doc_type":"business_document","fields":{"description":text.strip()[:200]},
+             "summary":"Document contains no extractable business content.",
+             "confidence":0.0,"needs_human_review":True,
+             "issues":["empty_or_non_business_document"],"_latency":0.0,"_cost":0.0,"_tokens":0,"_doc_id":doc_id}
+        save_debug(doc_id, None, "empty_or_non_business_document", 0)
+        return out
     c=cached(rtext)
     if c is not None:
         return c
@@ -105,7 +120,7 @@ def llm_extract(path, client=None, model="openai/gpt-4o-mini", base_url=None, li
     for attempt in range(3):
         try:
             t0=time.time()
-            resp=client.chat.completions.create(model=model,messages=[{"role":"system","content":SYSTEM},{"role":"user","content":prompt}],temperature=0)
+            resp=client.chat.completions.create(model=model,messages=[{"role":"system","content":SYSTEM},{"role":"user","content":prompt}],temperature=0,max_tokens=1500)
             latency=time.time()-t0
             usage=getattr(resp,'usage',None)
             pt=int(getattr(usage,'prompt_tokens',0) or 0) if usage else 0
@@ -129,7 +144,10 @@ def llm_extract(path, client=None, model="openai/gpt-4o-mini", base_url=None, li
                 save_debug(doc_id, raw, ve, attempt+1)
                 raise
             # per doc type field validation (optional fields tolerant).
-            # core required fields may be back-filled from the frozen rules baseline
+            # core required fields may be back-filled from the frozen rules baseline.
+            # If a core field is genuinely absent from the document, keep the LLM output,
+            # set the field to None, and flag the document for human review.
+            extra_issues=[]
             try:
                 model=FIELD_MODELS[validated.doc_type]
                 payload={k:v for k,v in validated.fields.items() if k in model.model_fields}
@@ -140,11 +158,26 @@ def llm_extract(path, client=None, model="openai/gpt-4o-mini", base_url=None, li
                     for k,v in rf.items():
                         if k in model.model_fields and payload.get(k) in (None,"",[]):
                             payload[k]=v
-                    fmodel=model(**payload)
+                    try:
+                        fmodel=model(**payload)
+                    except Exception:
+                        # still missing a required core field: relax to None instead of discarding output
+                        missing=[k for k,f in model.model_fields.items()
+                                 if f.is_required() and payload.get(k) in (None,"",[])]
+                        for k in missing:
+                            payload[k]=[] if model.model_fields[k].annotation is not None and "List" in str(model.model_fields[k].annotation) else None
+                            extra_issues.append(f"missing_required_field:{k}")
+                        fmodel=model(**payload)
                 validated.fields=fmodel.model_dump()
             except Exception as fe:
                 save_debug(doc_id, raw, fe, attempt+1)
                 raise
+            if extra_issues:
+                validated.issues=list(validated.issues)+extra_issues
+                validated.needs_human_review=True
+            if validated.doc_type=="business_document":
+                validated.issues=list(validated.issues)+["doc_type_business_document"]
+                validated.needs_human_review=True
             save_debug(doc_id, raw, None, attempt+1)
             out=validated.model_dump()
             # normalize dates
@@ -165,6 +198,7 @@ def llm_extract(path, client=None, model="openai/gpt-4o-mini", base_url=None, li
             return out
         except Exception as e:
             last_err=e
+            save_debug(doc_id, None, e, attempt+1)
             prompt=f"Previous output invalid: {e}. Fix and output JSON only.\nDocument:\n{rtext}"
     # fallback
     out=rules_extract(text)
