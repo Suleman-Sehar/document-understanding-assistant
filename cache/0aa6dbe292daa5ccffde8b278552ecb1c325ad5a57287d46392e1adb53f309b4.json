@@ -1,0 +1,1 @@
+{"doc_type": "invoice", "fields": {"items": [{"item": "Gadget", "qty": 2, "price": 53.23, "amount": 106.46}], "total": 114.98}, "summary": "Invoice summary with total amount.", "confidence": 0.95, "needs_human_review": false, "issues": []}
