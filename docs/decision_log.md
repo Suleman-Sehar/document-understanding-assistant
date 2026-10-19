@@ -9,3 +9,5 @@
 - Full dev run: LLM 53/100 schema-valid, cost $0.008641, avg latency 1.53s. Baseline doc-type 0.86 vs LLM 0.27; LLM worse on most fields.
 ## 2026-10-19
 - Root cause of 47/100 schema failures: silent fallback with no logging (raw LLM output discarded); optional fields were too strict; doc_type values were under-specified in prompt. Fixes: persist raw LLM JSON + pydantic error to evidence/debug_<doc_id>.json (separate commit); optional fields with None default, explicit ALLOWED_DOC_TYPES, post-validation doc_type repair (separate commit). Dev split only for few-shot. No test/challenge data used.
+
+- 5-doc diagnostic after fixes: schema-valid 5/5, 0 fallbacks, cost \.00103, avg latency 3.25s. Extra fixes: missing core field relaxes to None + needs_human_review instead of discarding LLM output; empty/short documents skip the API and return an issue flag; max_tokens=1500 (OpenRouter 402 on credit); prompt version bumped so the cache invalidates when the prompt changes.
