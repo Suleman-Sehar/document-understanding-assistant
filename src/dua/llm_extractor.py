@@ -1,4 +1,4 @@
-import os, json, hashlib, time, pathlib
+import os, json, hashlib, time, pathlib, re
 from openai import OpenAI
 from .schemas import DocResult
 from .baseline import extract as rules_extract, read_document
@@ -34,11 +34,29 @@ def llm_extract(path, client=None, model="openai/gpt-4o-mini", base_url=None, li
     last_err=None
     for attempt in range(3):
         try:
+            t0=time.time()
             resp=client.chat.completions.create(model=model,messages=[{"role":"system","content":SYSTEM},{"role":"user","content":prompt}],temperature=0)
+            latency=time.time()-t0
+            usage=getattr(resp,'usage',None)
+            cost = (usage.prompt_tokens*0.00000015 + usage.completion_tokens*0.0000006) if usage else 0.0
             raw=resp.choices[0].message.content
             obj=json.loads(raw)
             validated=DocResult(**obj)
             out=validated.model_dump()
+            # normalize dates
+            from .baseline import norm_date
+            for k,v in list(out.get('fields',{}).items()):
+                if 'date' in k and isinstance(v,str):
+                    out['fields'][k]=norm_date(v)
+            m=re.search(r'Effective\s+(.+?)\s+for\s+(\d+)\s*months', text, re.I)
+            if m:
+                out['fields']['effective_date']=norm_date(m.group(1))
+                out['fields']['term_months']=int(m.group(2))
+            out["_latency"]=latency
+            out["_cost"]=cost
+            out["_tokens"]= (usage.prompt_tokens+usage.completion_tokens) if usage else 0
+            save_cache(rtext,out)
+            return out
             save_cache(rtext,out)
             return out
         except Exception as e:

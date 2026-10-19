@@ -121,12 +121,17 @@ def extract(text):
                 fields["parties"]=[x.strip().strip("[]'\"") for x in p.split(",") if x.strip()]
         else:
             fields["parties"]=[]
-        fields["effective_date"]=norm_date(get("effective_date","effective"))
         tm=get("term_months","term")
-        if tm:
-            m=re.search(r"(\d+)",str(tm)); fields["term_months"]=int(m.group(1)) if m else None
+        m2=re.search(r"Effective\s+(.+?)\s+for\s+(\d+)\s*months", text, re.I)
+        if m2:
+            fields["effective_date"]=norm_date(m2.group(1))
+            fields["term_months"]=int(m2.group(2))
         else:
-            fields["term_months"]=None
+            fields["effective_date"]=norm_date(get("effective_date","effective"))
+            if tm:
+                m=re.search(r"(\d+)",str(tm)); fields["term_months"]=int(m.group(1)) if m else None
+            else:
+                fields["term_months"]=None
         fields["value"]=norm_num(get("value"))
         fields["currency"]=get("currency")
         fields["termination_clause"]=get("termination_clause","termination")
