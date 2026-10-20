@@ -1,0 +1,29 @@
+{
+  "doc_id": "doc_probe",
+  "attempts": [
+    {
+      "attempt": 1,
+      "model": "openai/gpt-4o-mini",
+      "served_model": "openai/gpt-4o-mini-2024-07-18",
+      "raw_llm_output": "{\"doc_type\": \"invoice\", \"fields\": {\"vendor_name\": \"Acme\", \"invoice_number\": \"1\"}, \"summary\": \"s\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "model": "openai/gpt-4o-mini",
+      "served_model": "openai/gpt-4o-mini-2024-07-18",
+      "raw_llm_output": "{\"doc_type\": \"invoice\", \"fields\": {\"vendor_name\": \"Acme\", \"invoice_number\": \"1\"}, \"summary\": \"s\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "model": "openai/gpt-4o-mini",
+      "served_model": "openai/gpt-4o-mini-2024-07-18",
+      "raw_llm_output": "{\"doc_type\": \"invoice\", \"fields\": {\"vendor_name\": \"Acme\", \"invoice_number\": \"1\"}, \"summary\": \"s\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    }
+  ]
+}

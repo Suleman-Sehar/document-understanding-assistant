@@ -1,1 +1,0 @@
-{"doc_type": "business_document", "fields": {"effective_date": "2025-08-07", "term_months": 24, "value": 68923.39}, "summary": "This document records the effective date, term months, and value.", "confidence": 0.95, "needs_human_review": false, "issues": [], "_latency": 2.767549514770508, "_cost": 0.000105, "_tokens": 442}

@@ -1,0 +1,18 @@
+{
+  "split": "dev",
+  "docs": 100,
+  "model": "openai/gpt-4o-mini",
+  "base_url": "https://openrouter.ai/api/v1",
+  "served_models": {
+    "openai/gpt-4o-mini": 48,
+    "not-recorded": 52
+  },
+  "api_calls": 48,
+  "cache_hits": 0,
+  "schema_valid": 52,
+  "rules_fallbacks": 48,
+  "total_cost_usd": 0.011075,
+  "total_tokens": 49911,
+  "avg_latency_s": 3.65,
+  "wall_clock_s": 227.0
+}

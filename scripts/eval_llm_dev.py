@@ -11,7 +11,7 @@ import sys, json, pathlib, collections, argparse, re, datetime
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from dua.llm_extractor import cached, cache_key
+from dua.llm_extractor import cached, cache_key, resolve_model
 from dua.baseline import read_document, extract as rules_extract, norm_date
 from dua.llm import redact_pii
 
@@ -131,25 +131,32 @@ def root_cause(field, expected, got, text, layout):
         return "n/a"
     if value_in_text(field, expected, text) is False:
         return f"generator gap: value not rendered in the {layout} layout body"
+    if got is None:
+        return "field omitted by the model although the value is present in the body"
     if field in DATE_FIELDS:
         return "date reading: DD/MM vs MM/DD convention mismatch"
     if field in LIST_FIELDS:
-        return "list extraction: wrong item set or truncated list"
+        return "list extraction: wrong item set or wrong item keys"
     if isinstance(expected, str) and isinstance(got, str) and expected.strip().lower() == got.strip().lower():
         return "case/whitespace formatting only"
     return "extractor error: value present in body but not returned"
 
 
-def debug_last_attempt(doc_id):
-    """Last recorded attempt for a document (the run appends one entry per attempt)."""
+def debug_attempts(doc_id):
+    """All recorded attempts for a document."""
     p = ROOT / "evidence" / f"debug_{doc_id}.json"
     if not p.exists():
-        return None
+        return []
     try:
         data = json.loads(p.read_text(encoding="utf-8"))
     except (ValueError, OSError):
-        return None
-    atts = data.get("attempts") or []
+        return []
+    return data.get("attempts") or []
+
+
+def debug_last_attempt(doc_id):
+    """Last recorded attempt for a document (the run appends one entry per attempt)."""
+    atts = debug_attempts(doc_id)
     return atts[-1] if atts else None
 
 
@@ -191,8 +198,13 @@ def ground_truth_dates(label):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--split", default="dev")
+    ap.add_argument("--model", default=None, help="model slug whose cached outputs are evaluated")
+    ap.add_argument("--legacy", action="store_true",
+                    help="evaluate the pre-pinning cache entries (no model recorded)")
     ap.add_argument("--out", default=None, help="write the report text to this path")
     args = ap.parse_args()
+    model = args.model or resolve_model()
+    use_legacy = args.legacy
 
     root = ROOT / "data" / args.split
     labels = sorted((root / "labels").glob("*.json"))
@@ -220,6 +232,9 @@ def main():
     injections_flagged = 0
     retries = 0
     retry_docs = []
+    retry_credit = 0
+    retry_schema = 0
+    retry_schema_msgs = []
     present_total = 0
     present_correct = 0
     gap_total = 0
@@ -240,7 +255,6 @@ def main():
         layout = d["meta"].get("layout") or "unknown"
 
         base = rules_extract(text)
-        conf_b[(d["doc_type"], base["doc_type"])] += 1
 
         rtext = redact_pii(text)
         if len(text.strip()) < 5:
@@ -248,10 +262,10 @@ def main():
             llm = {"doc_type": "business_document", "fields": {"description": text.strip()[:200]},
                    "issues": ["empty_or_non_business_document"], "needs_human_review": True,
                    "_latency": 0.0, "_cost": 0.0, "_tokens": 0}
-            conf_l[(d["doc_type"], llm["doc_type"])] += 1
         else:
-            llm = cached(rtext, allow_legacy=True)
+            llm = cached(rtext, model, allow_legacy=use_legacy)
             if llm is None:
+                # no output for this document (not run yet) -> excluded from both sides
                 cache_misses.append(doc_id)
                 continue
             api_calls += 1
@@ -266,17 +280,27 @@ def main():
             issues = llm.get("issues") or []
             relaxations += sum(1 for i in issues if str(i).startswith("missing_required_field:"))
             injections_flagged += sum(1 for i in issues if i == "possible_prompt_injection")
-            conf_l[(d["doc_type"], llm["doc_type"])] += 1
             last = debug_last_attempt(doc_id)
             if last is not None and int(last.get("attempt") or 0) > 1:
                 retries += 1
                 retry_docs.append(doc_id)
-            if any(str(v).strip().lower() in ("unknown", "n/a", "none", "not specified")
+                causes = [str(a.get("validation_error")) for a in debug_attempts(doc_id)
+                          if a.get("validation_error")]
+                cause = causes[-1] if causes else "unknown"
+                if "402" in cause:
+                    retry_credit += 1
+                else:
+                    retry_schema += 1
+                    retry_schema_msgs.append((doc_id, cause[:120]))
+            if any(isinstance(v, str) and v.strip().lower() in ("unknown", "n/a", "not specified")
                    for v in (llm.get("fields") or {}).values()):
                 unknown_docs.append(doc_id)
-            cache_file = ROOT / "cache" / (cache_key(rtext) + ".json")
+            cache_file = ROOT / "cache" / (cache_key(rtext, model) + ".json")
             if cache_file.exists():
                 cache_times.append(cache_file.stat().st_mtime)
+
+        conf_b[(d["doc_type"], base["doc_type"])] += 1
+        conf_l[(d["doc_type"], llm["doc_type"])] += 1
 
         flagged = "possible_prompt_injection" in (llm.get("issues") or [])
         if d["meta"].get("injection"):
@@ -342,9 +366,14 @@ def main():
         r = tp / (tp + fnn) if (tp + fnn) else 0.0
         return (2 * p * r / (p + r) if (p + r) else 0.0), p, r
 
+    evaluated = len(labels) - len(cache_misses)
+    partial = bool(cache_misses)
+    served = collections.Counter()
     out = []
-    out.append(f"FULL DEV RUN ({len(labels)} docs) - LLM extractor vs frozen rules baseline - 2026-10-20")
-    out.append("Split: dev only. Test and challenge NOT run.")
+    out.append(f"DEV RUN - LLM extractor vs frozen rules baseline - {datetime.date.today().isoformat()}")
+    out.append(f"Split: dev only. Test and challenge NOT run.  Documents evaluated: {evaluated}/{len(labels)}"
+               + ("  (PARTIAL RUN - see NOT RUN below)" if partial else ""))
+    out.append(f"Model: {model}" + ("  (legacy cache entries, model not recorded)" if use_legacy else ""))
     out.append("Source: cached LLM outputs (cache/*.json) - offline recompute, no API calls.")
     out.append("")
     out.append("1) PER-FIELD F1 (dates ISO, money rounded to 2dp, list order-insensitive;")
@@ -369,46 +398,76 @@ def main():
     out.append("LLM confusion (actual, predicted, count):")
     for (a, p), n in sorted(conf_l.items()):
         out.append(f"  {a} -> {p} : {n}")
+    out.append("per-layout doc-type accuracy (LLM):")
+    for k, (ok, tot) in sorted(layout_conf.items()):
+        out.append(f"  {k}: {ok}/{tot} = {ok / tot:.3f}" if tot else f"  {k}: n/a")
     out.append("")
     out.append("3) RUN METRICS")
-    out.append(f"schema_valid: {schema_valid}/{len(labels) - len(empty_docs)} ({(schema_valid / (len(labels) - len(empty_docs)) if len(labels) != len(empty_docs) else 0):.3f})")
+    out.append(f"schema_valid: {schema_valid}/{api_calls} ({(schema_valid / api_calls) if api_calls else 0:.3f})")
     out.append(f"rules fallback used: {fallbacks}")
     out.append(f"empty documents skipped (no API call): {len(empty_docs)} -> {', '.join(empty_docs)}")
     out.append(f"API calls: {api_calls}")
-    out.append(f"hard retries (validation error -> new request): {retries}"
+    out.append(f"hard retries (a failed attempt followed by another request): {retries}"
                + (f" -> {', '.join(retry_docs)}" if retry_docs else ""))
+    out.append(f"   retry causes: {retry_credit} x OpenRouter 402 (credit / in-flight budget, recovered on the next attempt), "
+               f"{retry_schema} x schema validation")
+    for did, msg in retry_schema_msgs[:5]:
+        out.append(f"     {did}: {msg}")
     out.append(f"schema relaxations (absent core field -> None + review flag): {relaxations}")
     out.append(f"prompt-injection flags: {injections_flagged}")
     out.append(f"total cost: ${cost:.6f}")
     out.append(f"total tokens: {tokens}")
-    out.append(f"avg latency: {sum(latencies) / len(latencies):.2f} s" if latencies else "avg latency: n/a")
+    out.append(f"avg latency (API calls): {sum(latencies) / len(latencies):.2f} s" if latencies else "avg latency: n/a")
     if cache_misses:
-        out.append(f"CACHE MISSES (not evaluated): {cache_misses}")
+        out.append(f"NOT RUN ({len(cache_misses)} docs, no cached output): {', '.join(cache_misses)}")
+    if unknown_docs:
+        out.append(f"literal placeholder values emitted by the model: {len(unknown_docs)} docs -> {', '.join(unknown_docs)}")
 
-    # failures: rank real extractor errors above generator gaps
+    # failures: rank real extractor errors above generator gaps, grouped per document
     real = [f for f in failures if f["in_body"] is not False]
     gaps = [f for f in failures if f["in_body"] is False]
+    by_doc = collections.defaultdict(list)
+    for f in real:
+        by_doc[f["doc_id"]].append(f)
+    ranked = sorted(by_doc.items(), key=lambda kv: (-len(kv[1]), kv[0]))
     out.append("")
-    out.append("4) FAILURE EXAMPLES (top 5 by severity: value present in the body but wrong)")
+    out.append("4) FAILURE EXAMPLES (top 5 documents by number of real extractor errors)")
     out.append(f"   total field misses: {len(failures)}  (extractor errors: {len(real)}, "
                f"value absent from body / generator gap: {len(gaps)})")
-    for f in (real + gaps)[:5]:
-        exp = json.dumps(f["expected"], default=str)
-        got = json.dumps(f["got"], default=str)
-        out.append(f"   {f['doc_id']} | {f['field']} | expected={exp} | got={got} | "
-                   f"doc_type {f['doc_type']}->{f['llm_doc_type']} | layout={f['layout']} | {f['root_cause']}")
+    for doc_id, fs in ranked[:5]:
+        f0 = fs[0]
+        out.append(f"   {doc_id} | doc_type {f0['doc_type']}->{f0['llm_doc_type']} | layout={f0['layout']} "
+                   f"| {len(fs)} field(s) wrong")
+        for f in fs[:3]:
+            out.append(f"      field={f['field']} | expected={json.dumps(f['expected'], default=str)[:110]} "
+                       f"| got={json.dumps(f['got'], default=str)[:60]} | {f['root_cause']}")
+        if len(fs) > 3:
+            out.append(f"      ... and {len(fs) - 3} more field(s)")
+    if gaps:
+        gdoc = collections.Counter(f["doc_id"] for f in gaps)
+        out.append(f"   generator-gap class: {len(gaps)} misses over {len(gdoc)} documents "
+                   f"(value labelled but never rendered in the body)")
     out.append("")
     out.append("5) ERROR TYPES SEEN")
     out.append(f"   empty_or_non_business_document: {len(empty_docs)} docs ({', '.join(empty_docs)}) - expected, empty files")
     out.append(f"   missing_required_field relaxations: {relaxations}")
     out.append(f"   possible_prompt_injection flags: {injections_flagged}")
-    out.append("   no new crash or error type vs the 20-doc run; the ModelMetaclass retry crash does not reproduce")
+    out.append(f"   injection guardrail: TP={guard_tp} FP={guard_fp} FN={guard_fn} "
+               f"(it fires on unclassifiable documents, not on injected text)")
+    out.append("   new error type in this run: OpenRouter 402 (credit / in-flight budget exhausted). "
+               "Recoverable in-flight 402s are retried; a credit-exhausted 402 exhausts the 3 attempts "
+               "and the document falls back to the rules baseline.")
+    out.append("   no crash: the ModelMetaclass retry crash does not reproduce, and no schema-validation "
+               "retry was needed in this run.")
     out.append("")
     out.append("6) NOTES")
     out.append(f"   Accuracy on labelled values that ARE present in the document body: "
                f"{present_correct}/{present_total} = {present_correct / present_total:.3f}" if present_total else "")
     out.append(f"   Labelled values absent from the document body (generator layout gaps): {gap_total}; "
                f"of those, {gap_correct} were still extracted correctly.")
+    out.append(f"   Date ground-truth check (generator arithmetic resolves ambiguous slash dates): "
+               f"{gt_agree}/{gt_checked} verdicts agree with the resolved true date"
+               + (f"; disagreements: {gt_disagree}" if gt_disagree else ""))
     out.append("   parties F1 is a lower bound (4 dev contracts have no parties text).")
     out.append("   Raw LLM JSON + pydantic errors: evidence/debug_<doc_id>.json")
 

@@ -1,0 +1,50 @@
+{
+  "doc_id": "doc_0011",
+  "attempts": [
+    {
+      "attempt": 1,
+      "raw_llm_output": "{\"doc_type\": \"business_document\", \"fields\": {\"description\": \"This document outlines the terms and conditions for the partnership between Acme Corp and Beta LLC.\"}, \"summary\": \"business_document outlining partnership terms.\", \"confidence\": 0.8, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null
+    },
+    {
+      "attempt": 0,
+      "raw_llm_output": null,
+      "validation_error": "empty_or_non_business_document",
+      "traceback": "NoneType: None\n"
+    },
+    {
+      "attempt": 0,
+      "raw_llm_output": null,
+      "validation_error": "empty_or_non_business_document",
+      "traceback": "NoneType: None\n"
+    },
+    {
+      "attempt": 0,
+      "raw_llm_output": null,
+      "validation_error": "empty_or_non_business_document",
+      "traceback": "NoneType: None\n"
+    },
+    {
+      "attempt": 0,
+      "raw_llm_output": null,
+      "validation_error": "empty_or_non_business_document",
+      "traceback": "NoneType: None\n"
+    },
+    {
+      "attempt": 0,
+      "model": "openai/gpt-4o-mini",
+      "served_model": null,
+      "raw_llm_output": null,
+      "validation_error": "empty_or_non_business_document",
+      "traceback": "NoneType: None\n"
+    },
+    {
+      "attempt": 0,
+      "model": "openai/gpt-4o-mini",
+      "served_model": null,
+      "raw_llm_output": null,
+      "validation_error": "empty_or_non_business_document",
+      "traceback": "NoneType: None\n"
+    }
+  ]
+}

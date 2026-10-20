@@ -1,0 +1,39 @@
+{
+  "doc_id": "doc_0019",
+  "attempts": [
+    {
+      "attempt": 1,
+      "raw_llm_output": "{\"doc_type\": \"invoice\", \"fields\": {\"vendor_name\": \"Initech LLC\", \"invoice_number\": \"INV-8532\", \"invoice_date\": \"2025-08-31\", \"due_date\": \"2025-09-30\", \"currency\": \"GBP\", \"subtotal\": 1266.25, \"tax\": 101.3, \"total\": 1367.55, \"line_items\": [{\"description\": \"Gadget\", \"quantity\": 5, \"unit_price\": 79.61, \"amount\": 398.05}, {\"description\": \"Widget\", \"quantity\": 6, \"unit_price\": 144.7, \"amount\": 868.2}]}, \"summary\": \"Invoice document from Initech LLC.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "raw_llm_output": "{\"doc_type\": \"invoice\", \"fields\": {\"vendor_name\": \"Initech LLC\", \"invoice_number\": \"INV-8532\", \"invoice_date\": \"2025-08-31\", \"due_date\": \"2025-09-30\", \"currency\": \"GBP\", \"subtotal\": 1266.25, \"tax\": 101.3, \"total\": 1367.55, \"line_items\": [{\"description\": \"Gadget\", \"quantity\": 5, \"unit_price\": 79.61, \"amount\": 398.05}, {\"description\": \"Widget\", \"quantity\": 6, \"unit_price\": 144.7, \"amount\": 868.2}]}, \"summary\": \"Invoice document from Initech LLC.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "raw_llm_output": "{\"doc_type\": \"invoice\", \"fields\": {\"vendor_name\": \"Initech LLC\", \"invoice_number\": \"INV-8532\", \"invoice_date\": \"2025-08-31\", \"due_date\": \"2025-09-30\", \"currency\": \"GBP\", \"subtotal\": 1266.25, \"tax\": 101.3, \"total\": 1367.55, \"line_items\": [{\"description\": \"Gadget\", \"quantity\": 5, \"unit_price\": 79.61, \"amount\": 398.05}, {\"description\": \"Widget\", \"quantity\": 6, \"unit_price\": 144.7, \"amount\": 868.2}]}, \"summary\": \"Invoice document from Initech LLC.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "model": "openai/gpt-4o-mini",
+      "served_model": "openai/gpt-4o-mini",
+      "raw_llm_output": "{\"doc_type\": \"invoice\", \"fields\": {\"vendor_name\": \"Initech LLC\", \"invoice_number\": \"INV-8532\", \"invoice_date\": \"2025-08-31\", \"due_date\": \"2025-09-30\", \"currency\": \"GBP\", \"subtotal\": 1266.25, \"tax\": 101.3, \"total\": 1367.55, \"line_items\": [{\"description\": \"Gadget\", \"quantity\": 5, \"unit_price\": 79.61, \"amount\": 398.05}, {\"description\": \"Widget\", \"quantity\": 6, \"unit_price\": 144.7, \"amount\": 868.2}]}, \"summary\": \"Invoice document from Initech LLC.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "model": "openai/gpt-4o-mini",
+      "served_model": "openai/gpt-4o-mini",
+      "raw_llm_output": "{\"doc_type\": \"invoice\", \"fields\": {\"vendor_name\": \"Initech LLC\", \"invoice_number\": \"INV-8532\", \"invoice_date\": \"2025-08-31\", \"due_date\": \"2025-09-30\", \"currency\": \"GBP\", \"subtotal\": 1266.25, \"tax\": 101.3, \"total\": 1367.55, \"line_items\": [{\"description\": \"Gadget\", \"quantity\": 5, \"unit_price\": 79.61, \"amount\": 398.05}, {\"description\": \"Widget\", \"quantity\": 6, \"unit_price\": 144.7, \"amount\": 868.2}]}, \"summary\": \"Invoice document from Initech LLC.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    }
+  ]
+}

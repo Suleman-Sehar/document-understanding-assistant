@@ -1,0 +1,39 @@
+{
+  "doc_id": "doc_0014",
+  "attempts": [
+    {
+      "attempt": 1,
+      "raw_llm_output": "{\"doc_type\": \"invoice\", \"fields\": {\"vendor_name\": \"Globex Corp\", \"invoice_number\": \"INV-7619\", \"invoice_date\": \"2024-11-27\", \"due_date\": \"2024-12-27\", \"currency\": \"USD\", \"subtotal\": 2844.46, \"tax\": 227.56, \"total\": 3072.02, \"line_items\": [{\"description\": \"Widget\", \"quantity\": 5, \"unit_price\": 165.49, \"amount\": 827.45}, {\"description\": \"Service\", \"quantity\": 9, \"unit_price\": 42.89, \"amount\": 386.01}, {\"description\": \"Service\", \"quantity\": 4, \"unit_price\": 172.11, \"amount\": 688.44}, {\"description\": \"Gadget\", \"quantity\": 8, \"unit_price\": 117.82, \"amount\": 942.56}]}, \"summary\": \"Invoice document from Globex Corp.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "raw_llm_output": "{\"doc_type\": \"invoice\", \"fields\": {\"vendor_name\": \"Globex Corp\", \"invoice_number\": \"INV-7619\", \"invoice_date\": \"2024-11-27\", \"due_date\": \"2024-12-27\", \"currency\": \"USD\", \"subtotal\": 2844.46, \"tax\": 227.56, \"total\": 3072.02, \"line_items\": [{\"description\": \"Widget\", \"quantity\": 5, \"unit_price\": 165.49, \"amount\": 827.45}, {\"description\": \"Service\", \"quantity\": 9, \"unit_price\": 42.89, \"amount\": 386.01}, {\"description\": \"Service\", \"quantity\": 4, \"unit_price\": 172.11, \"amount\": 688.44}, {\"description\": \"Gadget\", \"quantity\": 8, \"unit_price\": 117.82, \"amount\": 942.56}]}, \"summary\": \"Invoice document from Globex Corp.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "raw_llm_output": "{\"doc_type\": \"invoice\", \"fields\": {\"vendor_name\": \"Globex Corp\", \"invoice_number\": \"INV-7619\", \"invoice_date\": \"2024-11-27\", \"due_date\": \"2024-12-27\", \"currency\": \"USD\", \"subtotal\": 2844.46, \"tax\": 227.56, \"total\": 3072.02, \"line_items\": [{\"description\": \"Widget\", \"quantity\": 5, \"unit_price\": 165.49, \"amount\": 827.45}, {\"description\": \"Service\", \"quantity\": 9, \"unit_price\": 42.89, \"amount\": 386.01}, {\"description\": \"Service\", \"quantity\": 4, \"unit_price\": 172.11, \"amount\": 688.44}, {\"description\": \"Gadget\", \"quantity\": 8, \"unit_price\": 117.82, \"amount\": 942.56}]}, \"summary\": \"Invoice document from Globex Corp.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "model": "openai/gpt-4o-mini",
+      "served_model": "openai/gpt-4o-mini",
+      "raw_llm_output": "{\"doc_type\": \"invoice\", \"fields\": {\"vendor_name\": \"Globex Corp\", \"invoice_number\": \"INV-7619\", \"invoice_date\": \"2024-11-27\", \"due_date\": \"2024-12-27\", \"currency\": \"USD\", \"subtotal\": 2844.46, \"tax\": 227.56, \"total\": 3072.02, \"line_items\": [{\"description\": \"Widget\", \"quantity\": 5, \"unit_price\": 165.49, \"amount\": 827.45}, {\"description\": \"Service\", \"quantity\": 9, \"unit_price\": 42.89, \"amount\": 386.01}, {\"description\": \"Service\", \"quantity\": 4, \"unit_price\": 172.11, \"amount\": 688.44}, {\"description\": \"Gadget\", \"quantity\": 8, \"unit_price\": 117.82, \"amount\": 942.56}]}, \"summary\": \"Invoice document from Globex Corp.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "model": "openai/gpt-4o-mini",
+      "served_model": "openai/gpt-4o-mini",
+      "raw_llm_output": "{\"doc_type\": \"invoice\", \"fields\": {\"vendor_name\": \"Globex Corp\", \"invoice_number\": \"INV-7619\", \"invoice_date\": \"2024-11-27\", \"due_date\": \"2024-12-27\", \"currency\": \"USD\", \"subtotal\": 2844.46, \"tax\": 227.56, \"total\": 3072.02, \"line_items\": [{\"description\": \"Widget\", \"quantity\": 5, \"unit_price\": 165.49, \"amount\": 827.45}, {\"description\": \"Service\", \"quantity\": 9, \"unit_price\": 42.89, \"amount\": 386.01}, {\"description\": \"Service\", \"quantity\": 4, \"unit_price\": 172.11, \"amount\": 688.44}, {\"description\": \"Gadget\", \"quantity\": 8, \"unit_price\": 117.82, \"amount\": 942.56}]}, \"summary\": \"Invoice document from Globex Corp.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    }
+  ]
+}

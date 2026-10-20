@@ -1,0 +1,31 @@
+{
+  "doc_id": "doc_0001",
+  "attempts": [
+    {
+      "attempt": 1,
+      "raw_llm_output": "{\"doc_type\": \"invoice\", \"fields\": {\"vendor_name\": \"Acme Supplies\", \"invoice_number\": \"INV-9842\", \"invoice_date\": \"2025-04-06\", \"due_date\": \"2025-04-07\", \"currency\": \"USD\", \"subtotal\": 1557.44, \"tax\": 124.6, \"total\": 1682.04, \"line_items\": [{\"description\": \"Widget\", \"quantity\": 2, \"unit_price\": 19.82, \"amount\": 39.64}, {\"description\": \"Widget\", \"quantity\": 10, \"unit_price\": 151.78, \"amount\": 1517.8}]}, \"summary\": \"Invoice document from Acme Supplies.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "raw_llm_output": "{\"doc_type\": \"invoice\", \"fields\": {\"vendor_name\": \"Acme Supplies\", \"invoice_number\": \"INV-9842\", \"invoice_date\": \"2025-04-06\", \"due_date\": \"2025-04-07\", \"currency\": \"USD\", \"subtotal\": 1557.44, \"tax\": 124.6, \"total\": 1682.04, \"line_items\": [{\"description\": \"Widget\", \"quantity\": 2, \"unit_price\": 19.82, \"amount\": 39.64}]}, \"summary\": \"Invoice document from Acme Supplies.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "raw_llm_output": "{\"doc_type\": \"invoice\", \"fields\": {\"vendor_name\": \"Acme Supplies\", \"invoice_number\": \"INV-9842\", \"invoice_date\": \"2025-04-06\", \"due_date\": \"2025-04-07\", \"currency\": \"USD\", \"subtotal\": 1557.44, \"tax\": 124.6, \"total\": 1682.04, \"line_items\": [{\"description\": \"Widget\", \"quantity\": 2, \"unit_price\": 19.82, \"amount\": 39.64}, {\"description\": \"Widget\", \"quantity\": 10, \"unit_price\": 151.78, \"amount\": 1517.8}]}, \"summary\": \"Invoice document from Acme Supplies.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "model": "openai/gpt-4o-mini",
+      "served_model": "openai/gpt-4o-mini",
+      "raw_llm_output": "{\"doc_type\": \"invoice\", \"fields\": {\"vendor_name\": \"Acme Supplies\", \"invoice_number\": \"INV-9842\", \"invoice_date\": \"2025-04-06\", \"due_date\": \"2025-04-07\", \"currency\": \"USD\", \"subtotal\": 1557.44, \"tax\": 124.6, \"total\": 1682.04, \"line_items\": [{\"description\": \"Widget\", \"quantity\": 2, \"unit_price\": 19.82, \"amount\": 39.64}]}, \"summary\": \"Invoice document from Acme Supplies.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    }
+  ]
+}

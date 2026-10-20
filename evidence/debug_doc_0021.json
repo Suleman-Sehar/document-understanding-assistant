@@ -1,0 +1,27 @@
+{
+  "doc_id": "doc_0021",
+  "attempts": [
+    {
+      "attempt": 1,
+      "raw_llm_output": "{\"doc_type\": \"purchase_order\", \"fields\": {\"buyer_name\": \"Arrowstack Corp\", \"po_number\": \"PO-7842\", \"issue_date\": \"2025-03-19\", \"vendor_name\": \"Globex Corp\", \"currency\": \"USD\", \"total\": 1296.3, \"line_items\": [{\"description\": \"Cables\", \"quantity\": 5, \"unit_price\": 20.28, \"amount\": 101.4}, {\"description\": \"Bolts\", \"quantity\": 14, \"unit_price\": 85.35, \"amount\": 1194.9}], \"delivery_date\": \"2025-04-02\"}, \"summary\": \"Purchase order document from Arrowstack Corp.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "model": "openai/gpt-4o-mini",
+      "served_model": "openai/gpt-4o-mini",
+      "raw_llm_output": "{\"doc_type\": \"purchase_order\", \"fields\": {\"buyer_name\": \"Arrowstack Corp\", \"po_number\": \"PO-7842\", \"issue_date\": \"2025-03-19\", \"vendor_name\": \"Globex Corp\", \"currency\": \"USD\", \"total\": 1296.3, \"line_items\": [{\"description\": \"Cables\", \"quantity\": 5, \"unit_price\": 20.28, \"amount\": 101.4}, {\"description\": \"Bolts\", \"quantity\": 14, \"unit_price\": 85.35, \"amount\": 1194.9}], \"delivery_date\": \"2025-04-02\"}, \"summary\": \"Purchase order document from Arrowstack Corp.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "model": "openai/gpt-4o-mini",
+      "served_model": "openai/gpt-4o-mini",
+      "raw_llm_output": "{\"doc_type\": \"purchase_order\", \"fields\": {\"buyer_name\": \"Arrowstack Corp\", \"po_number\": \"PO-7842\", \"issue_date\": \"2025-03-19\", \"vendor_name\": \"Globex Corp\", \"currency\": \"USD\", \"total\": 1296.3, \"line_items\": [{\"description\": \"Cables\", \"quantity\": 5, \"unit_price\": 20.28, \"amount\": 101.4}, {\"description\": \"Bolts\", \"quantity\": 14, \"unit_price\": 85.35, \"amount\": 1194.9}], \"delivery_date\": \"2025-04-02\"}, \"summary\": \"Purchase order document from Arrowstack Corp.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    }
+  ]
+}

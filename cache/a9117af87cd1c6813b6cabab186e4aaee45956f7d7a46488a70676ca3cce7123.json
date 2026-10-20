@@ -1,1 +1,0 @@
-{"doc_type": "invoice", "fields": {"items": [{"item": "Bolts", "qty": 3, "price": 137.69, "amount": 413.07}, {"item": "Bolts", "qty": 20, "price": 9.78, "amount": 195.6}], "total": 608.67}, "summary": "Invoice summary with total amount.", "confidence": 0.95, "needs_human_review": false, "issues": [], "_latency": 2.014359712600708, "_cost": 0.00013979999999999998, "_tokens": 524}

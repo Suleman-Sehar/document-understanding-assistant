@@ -1,0 +1,42 @@
+{
+  "doc_id": "doc_0003",
+  "attempts": [
+    {
+      "attempt": 1,
+      "raw_llm_output": "{\"doc_type\": \"purchase_order\", \"fields\": {\"buyer_name\": \"Arrowstack Corp\", \"po_number\": \"PO-1359\", \"issue_date\": \"2024-05-16\", \"vendor_name\": \"Acme Supplies\", \"currency\": \"EUR\", \"total\": 1836.78, \"line_items\": [{\"description\": \"Bolts\", \"quantity\": 7, \"unit_price\": 7.58, \"amount\": 53.06}]}, \"summary\": \"purchase_order document example.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null
+    },
+    {
+      "attempt": 1,
+      "raw_llm_output": "{\"doc_type\": \"purchase_order\", \"fields\": {\"buyer_name\": \"Arrowstack Corp\", \"po_number\": \"PO-1359\", \"issue_date\": \"2024-05-16\", \"vendor_name\": \"Acme Supplies\", \"currency\": \"EUR\", \"total\": 1836.78, \"line_items\": [{\"description\": \"Bolts\", \"quantity\": 7, \"unit_price\": 7.58, \"amount\": 53.06}]}, \"summary\": \"purchase_order document example.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "raw_llm_output": "{\"doc_type\": \"purchase_order\", \"fields\": {\"buyer_name\": \"Arrowstack Corp\", \"po_number\": \"PO-1359\", \"issue_date\": \"2024-05-16\", \"vendor_name\": \"Acme Supplies\", \"currency\": \"EUR\", \"total\": 1836.78, \"line_items\": [{\"description\": \"Bolts\", \"quantity\": 7, \"unit_price\": 7.58, \"amount\": 53.06}]}, \"summary\": \"Purchase order document from Arrowstack Corp.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "raw_llm_output": "{\"doc_type\": \"purchase_order\", \"fields\": {\"buyer_name\": \"Arrowstack Corp\", \"po_number\": \"PO-1359\", \"issue_date\": \"2024-05-16\", \"vendor_name\": \"Acme Supplies\", \"currency\": \"EUR\", \"total\": 1836.78, \"line_items\": [{\"description\": \"Bolts\", \"quantity\": 7, \"unit_price\": 7.58, \"amount\": 53.06}]}, \"summary\": \"Purchase order document from Arrowstack Corp.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "raw_llm_output": "{\"doc_type\": \"purchase_order\", \"fields\": {\"buyer_name\": \"Arrowstack Corp\", \"po_number\": \"PO-1359\", \"issue_date\": \"2024-05-16\", \"vendor_name\": \"Acme Supplies\", \"currency\": \"EUR\", \"total\": 1836.78, \"line_items\": [{\"description\": \"Bolts\", \"quantity\": 7, \"unit_price\": 7.58, \"amount\": 53.06}, {\"description\": \"Cables\", \"quantity\": 12, \"unit_price\": 57.33, \"amount\": 687.96}, {\"description\": \"Consulting\", \"quantity\": 7, \"unit_price\": 116.23, \"amount\": 813.61}, {\"description\": \"Bolts\", \"quantity\": 3, \"unit_price\": 94.05, \"amount\": 282.15}], \"delivery_date\": \"2024-05-30\"}, \"summary\": \"Extracted purchase order document from Arrowstack Corp.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "model": "openai/gpt-4o-mini",
+      "served_model": "openai/gpt-4o-mini",
+      "raw_llm_output": "{\"doc_type\": \"purchase_order\", \"fields\": {\"buyer_name\": \"Arrowstack Corp\", \"po_number\": \"PO-1359\", \"issue_date\": \"2024-05-16\", \"vendor_name\": \"Acme Supplies\", \"currency\": \"EUR\", \"total\": 1836.78, \"line_items\": [{\"description\": \"Bolts\", \"quantity\": 7, \"unit_price\": 7.58, \"amount\": 53.06}]}, \"summary\": \"Purchase order document from Arrowstack Corp.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    }
+  ]
+}

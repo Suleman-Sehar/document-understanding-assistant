@@ -1,0 +1,1 @@
+{"doc_type": "short_contract", "fields": {"parties": ["A", "B"], "effective_date": null, "term_months": null, "value": null, "currency": null, "termination_clause": null, "governing_law": null}, "summary": "", "confidence": 0.8, "needs_human_review": false, "issues": [], "_latency": 0.001512765884399414, "_cost": 7.5e-07, "_tokens": 2}

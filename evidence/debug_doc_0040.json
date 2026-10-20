@@ -1,0 +1,43 @@
+{
+  "doc_id": "doc_0040",
+  "attempts": [
+    {
+      "attempt": 1,
+      "raw_llm_output": "{\"doc_type\": \"purchase_order\", \"fields\": {\"buyer_name\": \"Arrowstack Corp\", \"po_number\": \"PO-3987\", \"issue_date\": \"2024-10-12\", \"vendor_name\": \"Globex Corp\", \"currency\": \"USD\", \"total\": 2266.08, \"line_items\": [{\"description\": \"Cables\", \"quantity\": 16, \"unit_price\": 141.63, \"amount\": 2266.08}], \"delivery_date\": \"2024-10-26\"}, \"summary\": \"Purchase order document from Arrowstack Corp.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "model": "openai/gpt-4o-mini",
+      "served_model": null,
+      "raw_llm_output": null,
+      "validation_error": "Error code: 402 - {'error': {'message': 'This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.', 'code': 402, 'metadata': {'reason': 'in_flight_budget_exhausted', 'limit_source': 'openrouter_in_flight_budget', 'remedy_hint': 'Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.', 'headers': {'Retry-After': '120'}, 'provider_name': None}}, 'user_id': 'user_2yDZboWNm6v4LwD4stpG5ENBruP'}",
+      "traceback": "Traceback (most recent call last):\n  File \"D:\\Arrowstack Internship\\document-understanding-assistant\\src\\dua\\llm_extractor.py\", line 154, in llm_extract\n    resp=client.chat.completions.create(model=model,messages=[{\"role\":\"system\",\"content\":SYSTEM},{\"role\":\"user\",\"content\":prompt}],temperature=0,max_tokens=1500)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\Arrowstack Internship\\document-understanding-assistant\\.venv\\Lib\\site-packages\\openai\\_utils\\_utils.py\", line 298, in wrapper\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\Arrowstack Internship\\document-understanding-assistant\\.venv\\Lib\\site-packages\\openai\\resources\\chat\\completions\\completions.py\", line 1318, in create\n    return self._post(\n           ^^^^^^^^^^^\n  File \"D:\\Arrowstack Internship\\document-understanding-assistant\\.venv\\Lib\\site-packages\\openai\\_base_client.py\", line 1440, in post\n    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\Arrowstack Internship\\document-understanding-assistant\\.venv\\Lib\\site-packages\\openai\\_base_client.py\", line 1213, in request\n    raise self._make_status_error_from_response(err.response) from None\nopenai.APIStatusError: Error code: 402 - {'error': {'message': 'This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.', 'code': 402, 'metadata': {'reason': 'in_flight_budget_exhausted', 'limit_source': 'openrouter_in_flight_budget', 'remedy_hint': 'Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.', 'headers': {'Retry-After': '120'}, 'provider_name': None}}, 'user_id': 'user_2yDZboWNm6v4LwD4stpG5ENBruP'}\n"
+    },
+    {
+      "attempt": 1,
+      "model": "openai/gpt-4o-mini",
+      "served_model": null,
+      "raw_llm_output": null,
+      "validation_error": "Error code: 402 - {'error': {'message': 'This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.', 'code': 402, 'metadata': {'reason': 'in_flight_budget_exhausted', 'limit_source': 'openrouter_in_flight_budget', 'remedy_hint': 'Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.', 'headers': {'Retry-After': '120'}, 'provider_name': None}}, 'user_id': 'user_2yDZboWNm6v4LwD4stpG5ENBruP'}",
+      "traceback": "Traceback (most recent call last):\n  File \"D:\\Arrowstack Internship\\document-understanding-assistant\\src\\dua\\llm_extractor.py\", line 154, in llm_extract\n    resp=client.chat.completions.create(model=model,messages=[{\"role\":\"system\",\"content\":SYSTEM},{\"role\":\"user\",\"content\":prompt}],temperature=0,max_tokens=1500)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\Arrowstack Internship\\document-understanding-assistant\\.venv\\Lib\\site-packages\\openai\\_utils\\_utils.py\", line 298, in wrapper\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\Arrowstack Internship\\document-understanding-assistant\\.venv\\Lib\\site-packages\\openai\\resources\\chat\\completions\\completions.py\", line 1318, in create\n    return self._post(\n           ^^^^^^^^^^^\n  File \"D:\\Arrowstack Internship\\document-understanding-assistant\\.venv\\Lib\\site-packages\\openai\\_base_client.py\", line 1440, in post\n    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\Arrowstack Internship\\document-understanding-assistant\\.venv\\Lib\\site-packages\\openai\\_base_client.py\", line 1213, in request\n    raise self._make_status_error_from_response(err.response) from None\nopenai.APIStatusError: Error code: 402 - {'error': {'message': 'This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.', 'code': 402, 'metadata': {'reason': 'in_flight_budget_exhausted', 'limit_source': 'openrouter_in_flight_budget', 'remedy_hint': 'Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.', 'headers': {'Retry-After': '120'}, 'provider_name': None}}, 'user_id': 'user_2yDZboWNm6v4LwD4stpG5ENBruP'}\n"
+    },
+    {
+      "attempt": 2,
+      "model": "openai/gpt-4o-mini",
+      "served_model": "openai/gpt-4o-mini",
+      "raw_llm_output": "{\n  \"doc_type\": \"purchase_order\",\n  \"fields\": {\n    \"buyer_name\": \"Arrowstack Corp\",\n    \"po_number\": \"PO-3987\",\n    \"issue_date\": \"2024-10-12\",\n    \"vendor_name\": \"Globex Corp\",\n    \"currency\": \"USD\",\n    \"total\": 2266.08,\n    \"line_items\": [\n      {\n        \"description\": \"Cables\",\n        \"quantity\": 16,\n        \"unit_price\": 141.63,\n        \"amount\": 2266.08\n      }\n    ],\n    \"delivery_date\": \"2024-10-26\"\n  },\n  \"summary\": \"This is a purchase order from Arrowstack Corp to Globex Corp for cables.\",\n  \"confidence\": 1.0,\n  \"needs_human_review\": false,\n  \"issues\": []\n}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 2,
+      "model": "openai/gpt-4o-mini",
+      "served_model": "openai/gpt-4o-mini",
+      "raw_llm_output": "{\n  \"doc_type\": \"purchase_order\",\n  \"fields\": {\n    \"buyer_name\": \"Arrowstack Corp\",\n    \"po_number\": \"PO-3987\",\n    \"issue_date\": \"2024-10-12\",\n    \"vendor_name\": \"Globex Corp\",\n    \"currency\": \"USD\",\n    \"total\": 2266.08,\n    \"line_items\": [\n      {\n        \"description\": \"Cables\",\n        \"quantity\": 16,\n        \"unit_price\": 141.63,\n        \"amount\": 2266.08\n      }\n    ],\n    \"delivery_date\": \"2024-10-26\"\n  },\n  \"summary\": \"This is a purchase order from Arrowstack Corp to Globex Corp for cables.\",\n  \"confidence\": 1.0,\n  \"needs_human_review\": false,\n  \"issues\": []\n}",
+      "validation_error": null,
+      "traceback": null
+    }
+  ]
+}

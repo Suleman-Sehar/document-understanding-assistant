@@ -72,3 +72,22 @@ def test_legacy_cache_entry_is_not_used_for_a_new_model(tmp_path, monkeypatch):
     (cache_dir / f"{LX.legacy_cache_key(text)}.json").write_text(json.dumps({"fields": {}}))
     assert LX.cached(text, model="openai/gpt-4o-mini") is None
     assert LX.cached(text, model="openai/gpt-4o-mini", allow_legacy=True) is not None
+
+
+def test_corrupt_cache_entry_is_a_miss_not_a_crash(tmp_path, monkeypatch):
+    text = "corrupt entry"
+    cache_dir = tmp_path / "cache"
+    monkeypatch.setattr(LX, "CACHE_DIR", cache_dir)
+    cache_dir.mkdir(exist_ok=True)
+    (cache_dir / f"{LX.cache_key(text, 'openai/gpt-4o-mini')}.json").write_text('{"fields": {}}')
+    assert LX.cached(text, model="openai/gpt-4o-mini") is None
+
+
+def test_cache_is_written_under_the_requested_model_key(tmp_path, monkeypatch):
+    text = "model keyed write"
+    cache_dir = tmp_path / "cache"
+    monkeypatch.setattr(LX, "CACHE_DIR", cache_dir)
+    cache_dir.mkdir(exist_ok=True)
+    LX.save_cache(text, {"fields": {"a": 1}}, model="openai/gpt-4o-mini")
+    assert (cache_dir / f"{LX.cache_key(text, 'openai/gpt-4o-mini')}.json").exists()
+    assert LX.cached(text, model="openai/gpt-4o-mini")["fields"] == {"a": 1}

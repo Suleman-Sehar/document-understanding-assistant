@@ -1,0 +1,27 @@
+{
+  "doc_id": "doc_0060",
+  "attempts": [
+    {
+      "attempt": 0,
+      "raw_llm_output": null,
+      "validation_error": "empty_or_non_business_document",
+      "traceback": "NoneType: None\n"
+    },
+    {
+      "attempt": 0,
+      "model": "openai/gpt-4o-mini",
+      "served_model": null,
+      "raw_llm_output": null,
+      "validation_error": "empty_or_non_business_document",
+      "traceback": "NoneType: None\n"
+    },
+    {
+      "attempt": 0,
+      "model": "openai/gpt-4o-mini",
+      "served_model": null,
+      "raw_llm_output": null,
+      "validation_error": "empty_or_non_business_document",
+      "traceback": "NoneType: None\n"
+    }
+  ]
+}

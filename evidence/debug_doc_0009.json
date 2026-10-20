@@ -1,0 +1,101 @@
+{
+  "doc_id": "doc_0009",
+  "attempts": [
+    {
+      "attempt": 1,
+      "raw_llm_output": "{\"doc_type\": \"short_contract\", \"fields\": {\"effective_date\": \"2024-10-23\", \"term_months\": 24, \"value\": 86859.76}, \"summary\": \"short_contract document example.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": "1 validation error for ShortContractFields\nparties\n  Field required [type=missing, input_value={'effective_date': '2024-...59.76, 'currency': None}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/missing"
+    },
+    {
+      "attempt": 1,
+      "raw_llm_output": null,
+      "validation_error": "1 validation error for ShortContractFields\nparties\n  Field required [type=missing, input_value={'effective_date': '2024-...59.76, 'currency': None}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/missing"
+    },
+    {
+      "attempt": 2,
+      "raw_llm_output": null,
+      "validation_error": "Object of type ModelMetaclass is not JSON serializable"
+    },
+    {
+      "attempt": 3,
+      "raw_llm_output": null,
+      "validation_error": "Object of type ModelMetaclass is not JSON serializable"
+    },
+    {
+      "attempt": 1,
+      "raw_llm_output": "{\"doc_type\": \"short_contract\", \"fields\": {\"effective_date\": \"2024-10-23\", \"term_months\": 24, \"value\": 86859.76}, \"summary\": \"\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": "1 validation error for ShortContractFields\nparties\n  Field required [type=missing, input_value={'effective_date': '2024-...59.76, 'currency': None}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/missing"
+    },
+    {
+      "attempt": 1,
+      "raw_llm_output": null,
+      "validation_error": "1 validation error for ShortContractFields\nparties\n  Field required [type=missing, input_value={'effective_date': '2024-...59.76, 'currency': None}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/missing"
+    },
+    {
+      "attempt": 2,
+      "raw_llm_output": "{\"doc_type\": \"short_contract\", \"fields\": {\"effective_date\": \"2024-10-23\", \"term_months\": 24, \"value\": 86859.76}, \"summary\": \"\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": "1 validation error for ShortContractFields\nparties\n  Field required [type=missing, input_value={'effective_date': '2024-...59.76, 'currency': None}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/missing"
+    },
+    {
+      "attempt": 2,
+      "raw_llm_output": null,
+      "validation_error": "1 validation error for ShortContractFields\nparties\n  Field required [type=missing, input_value={'effective_date': '2024-...59.76, 'currency': None}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/missing"
+    },
+    {
+      "attempt": 3,
+      "raw_llm_output": "{\"doc_type\": \"short_contract\", \"fields\": {\"effective_date\": \"2024-10-23\", \"term_months\": 24, \"value\": 86859.76}, \"summary\": \"\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": "1 validation error for ShortContractFields\nparties\n  Field required [type=missing, input_value={'effective_date': '2024-...59.76, 'currency': None}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/missing"
+    },
+    {
+      "attempt": 3,
+      "raw_llm_output": null,
+      "validation_error": "1 validation error for ShortContractFields\nparties\n  Field required [type=missing, input_value={'effective_date': '2024-...59.76, 'currency': None}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/missing"
+    },
+    {
+      "attempt": 1,
+      "raw_llm_output": "{\"doc_type\": \"short_contract\", \"fields\": {\"effective_date\": \"2024-10-23\", \"term_months\": 24, \"value\": 86859.76}, \"summary\": \"\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "raw_llm_output": "{\"doc_type\": \"short_contract\", \"fields\": {\"effective_date\": \"2024-10-23\", \"term_months\": 24, \"value\": 86859.76}, \"summary\": \"short_contract document example.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "raw_llm_output": "{\"doc_type\": \"short_contract\", \"fields\": {\"effective_date\": \"2024-10-23\", \"term_months\": 24, \"value\": 86859.76}, \"summary\": \"This document outlines a short contract with an effective date and term details.\", \"confidence\": 0.8, \"needs_human_review\": true, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "raw_llm_output": "{\"doc_type\": \"short_contract\", \"fields\": {\"effective_date\": \"2024-10-23\", \"term_months\": 24, \"value\": 86859.76}, \"summary\": \"This document outlines a short contract with an effective date and term details.\", \"confidence\": 0.8, \"needs_human_review\": true, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "raw_llm_output": "{\"doc_type\": \"short_contract\", \"fields\": {\"effective_date\": \"2024-10-23\", \"term_months\": 24, \"value\": 86859.76}, \"summary\": \"This document outlines a short contract with an effective date and term details.\", \"confidence\": 0.8, \"needs_human_review\": true, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "model": "openai/gpt-4o-mini",
+      "served_model": "openai/gpt-4o-mini",
+      "raw_llm_output": "{\"doc_type\": \"short_contract\", \"fields\": {\"effective_date\": \"2024-10-23\", \"term_months\": 24, \"value\": 86859.76}, \"summary\": \"This document outlines a short contract with an effective date and term details.\", \"confidence\": 0.8, \"needs_human_review\": true, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "model": "openai/gpt-4o-mini",
+      "served_model": "openai/gpt-4o-mini",
+      "raw_llm_output": "{\"doc_type\": \"short_contract\", \"fields\": {\"effective_date\": \"2024-10-23\", \"term_months\": 24, \"value\": 86859.76}, \"summary\": \"This document outlines a short contract with an effective date and term details.\", \"confidence\": 0.8, \"needs_human_review\": true, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    }
+  ]
+}

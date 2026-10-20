@@ -36,19 +36,29 @@ def cached(text, model=None, allow_legacy=False):
     CACHE_DIR.mkdir(exist_ok=True)
     p=CACHE_DIR/(cache_key(text, model)+".json")
     if p.exists():
-        return json.loads(p.read_text())
+        try:
+            return json.loads(p.read_text())
+        except (ValueError, OSError):
+            # corrupt entry (truncated/partial write): treat it as a miss instead of
+            # crashing the whole run
+            return None
     if allow_legacy:
         lp=CACHE_DIR/(legacy_cache_key(text)+".json")
         if lp.exists():
-            out=json.loads(lp.read_text())
+            try:
+                out=json.loads(lp.read_text())
+            except (ValueError, OSError):
+                return None
             out["_legacy_cache"]=True
             return out
     return None
 
-def save_cache(text, obj):
+def save_cache(text, obj, model=None):
     CACHE_DIR.mkdir(exist_ok=True)
-    p=CACHE_DIR/(cache_key(text)+".json")
-    p.write_text(json.dumps(obj,default=str))
+    p=CACHE_DIR/(cache_key(text, model)+".json")
+    tmp=p.with_suffix(".json.tmp")
+    tmp.write_text(json.dumps(obj,default=str))
+    tmp.replace(p)   # atomic: a killed process can never leave a half-written entry
 
 SYSTEM = """You extract structured data from business documents.
 
@@ -232,7 +242,7 @@ def llm_extract(path, client=None, model=None, base_url=None, limit=None):
             out["_tokens"]= (pt+ct)
             out["_model"]=model
             out["_served_model"]=served_model
-            save_cache(rtext,out)
+            save_cache(rtext,out,model)
             return out
         except Exception as e:
             last_err=e

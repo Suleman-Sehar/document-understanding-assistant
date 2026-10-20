@@ -1,0 +1,31 @@
+{
+  "doc_id": "doc_0002",
+  "attempts": [
+    {
+      "attempt": 1,
+      "raw_llm_output": "{\"doc_type\": \"short_contract\", \"fields\": {\"parties\": [\"Arrowstack Corp\", \"Globex Inc\"], \"effective_date\": \"2024-10-28\", \"term_months\": 24, \"value\": 15211.76, \"currency\": \"EUR\", \"governing_law\": \"Delaware\"}, \"summary\": \"Contract between Arrowstack Corp and Globex Inc.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "raw_llm_output": "{\"doc_type\": \"short_contract\", \"fields\": {\"parties\": [\"Arrowstack Corp\", \"Globex Inc\"], \"effective_date\": \"2024-10-28\", \"term_months\": 24, \"value\": 15211.76, \"currency\": \"EUR\", \"governing_law\": \"Delaware\"}, \"summary\": \"Document outlining a short contract between Arrowstack Corp and Globex Inc.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "raw_llm_output": "{\"doc_type\": \"short_contract\", \"fields\": {\"parties\": [\"Arrowstack Corp\", \"Globex Inc\"], \"effective_date\": \"2024-10-28\", \"term_months\": 24, \"value\": 15211.76, \"currency\": \"EUR\", \"governing_law\": \"Delaware\"}, \"summary\": \"Contract between Arrowstack Corp and Globex Inc.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    },
+    {
+      "attempt": 1,
+      "model": "openai/gpt-4o-mini",
+      "served_model": "openai/gpt-4o-mini",
+      "raw_llm_output": "{\"doc_type\": \"short_contract\", \"fields\": {\"parties\": [\"Arrowstack Corp\", \"Globex Inc\"], \"effective_date\": \"2024-10-28\", \"term_months\": 24, \"value\": 15211.76, \"currency\": \"EUR\", \"governing_law\": \"Delaware\"}, \"summary\": \"Contract between Arrowstack Corp and Globex Inc.\", \"confidence\": 0.9, \"needs_human_review\": false, \"issues\": []}",
+      "validation_error": null,
+      "traceback": null
+    }
+  ]
+}
