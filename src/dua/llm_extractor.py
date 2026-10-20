@@ -1,6 +1,6 @@
 import os, json, hashlib, time, pathlib, re
 from openai import OpenAI
-from .schemas import DocResult, FIELD_MODELS, repair_doc_type
+from .schemas import DocResult, FIELD_MODELS, repair_doc_type, relaxed_model
 from .baseline import extract as rules_extract, read_document
 from .llm import redact_pii
 
@@ -149,25 +149,26 @@ def llm_extract(path, client=None, model="openai/gpt-4o-mini", base_url=None, li
             # set the field to None, and flag the document for human review.
             extra_issues=[]
             try:
-                model=FIELD_MODELS[validated.doc_type]
-                payload={k:v for k,v in validated.fields.items() if k in model.model_fields}
+                field_model=FIELD_MODELS[validated.doc_type]
+                payload={k:v for k,v in validated.fields.items() if k in field_model.model_fields}
                 try:
-                    fmodel=model(**payload)
+                    fmodel=field_model(**payload)
                 except Exception:
                     rf=rules_extract(text).get("fields",{})
                     for k,v in rf.items():
-                        if k in model.model_fields and payload.get(k) in (None,"",[]):
+                        if k in field_model.model_fields and payload.get(k) in (None,"",[]):
                             payload[k]=v
                     try:
-                        fmodel=model(**payload)
+                        fmodel=field_model(**payload)
                     except Exception:
-                        # still missing a required core field: relax to None instead of discarding output
-                        missing=[k for k,f in model.model_fields.items()
+                        # a required core field is genuinely absent from the document:
+                        # keep the LLM output, relax that field to None and flag for review
+                        missing=[k for k,f in field_model.model_fields.items()
                                  if f.is_required() and payload.get(k) in (None,"",[])]
                         for k in missing:
-                            payload[k]=[] if model.model_fields[k].annotation is not None and "List" in str(model.model_fields[k].annotation) else None
+                            payload[k]=[] if "List" in str(field_model.model_fields[k].annotation) else None
                             extra_issues.append(f"missing_required_field:{k}")
-                        fmodel=model(**payload)
+                        fmodel=relaxed_model(validated.doc_type)(**payload)
                 validated.fields=fmodel.model_dump()
             except Exception as fe:
                 save_debug(doc_id, raw, fe, attempt+1)

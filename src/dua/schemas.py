@@ -61,8 +61,19 @@ FIELD_MODELS = {
     "business_document": BusinessDocumentFields,
 }
 
-DOC_TYPE_ALIASES = {
-    "contract": "short_contract",
+def relaxed_model(doc_type):
+    """Return a model where every field is Optional (used when a required core field
+    is genuinely absent from the document; the document is flagged for review instead
+    of the whole LLM output being discarded)."""
+    from pydantic import create_model
+    base=FIELD_MODELS[doc_type]
+    fields={}
+    for name,finfo in base.model_fields.items():
+        ann=Optional[finfo.annotation] if not str(finfo.annotation).startswith("typing.List") else List[Any]
+        fields[name]=(ann, None)
+    return create_model(f"Relaxed{base.__name__}", **fields)
+
+DOC_TYPE_ALIASES = {    "contract": "short_contract",
     "agreement": "short_contract",
     "purchase order": "purchase_order",
     "purchaseorder": "purchase_order",

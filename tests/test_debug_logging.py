@@ -8,7 +8,7 @@ def test_raw_output_is_saved_on_validation_failure(tmp_path):
     p=pathlib.Path("evidence/debug_doc_9999.json")
     p.unlink(missing_ok=True)
     doc=tmp_path/"doc_9999.txt"; doc.write_text("Invoice Number: 1")
-    bad={"doc_type":"invoice","fields":{}}
+    bad={"doc_type":"invoice","fields":{"vendor_name":"A"},"summary":"","confidence":"high","needs_human_review":False,"issues":[]}
     with patch("dua.llm_extractor.OpenAI") as M:
         client=M.return_value
         client.chat.completions.create.return_value=MagicMock(choices=[MagicMock(message=MagicMock(content=json.dumps(bad)))])

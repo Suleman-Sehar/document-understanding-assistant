@@ -1,0 +1,50 @@
+Phase 3 — 20-doc DEV rerun (same 20 docs as the earlier 20-doc run, for before/after comparison)
+Date: 2026-10-20. Split: dev only. Test/challenge not touched.
+
+Dataset: first 20 dev labels (doc_0001..doc_0020), same set as the earlier 20-doc run.
+
+Run 1 (before the relaxed_model fix): 18/20 schema-valid, 2 rules fallbacks
+  (doc_0013, doc_0016 -> "Object of type ModelMetaclass is not JSON serializable",
+   caused by the retry prompt embedding a pydantic model class).
+Run 2 (after the fix): 20/20 schema-valid, 0 fallbacks.
+
+Final numbers (run 2, same 20 docs)
+  schema_valid: 20/20 = 1.00
+  rules fallback used: 0/20
+  API calls: 19 (doc_0011 is an empty file -> no API call, issue flag returned)
+  hard retries (validation error -> new request): 0
+  schema relaxations (required core field absent -> set None + issue flag): 1 (doc_0016 vendor_name)
+  doc_type accuracy: baseline 0.800, LLM 0.900
+  total cost: $0.004952
+  total tokens: 25344
+  avg latency: 3.45 s
+
+Per-field F1 (date fields compared after ISO normalisation on both sides)
+field | baseline F1 | LLM F1 | delta
+buyer_name | 0.667 | 0.909 | +0.242
+currency | 0.480 | 0.774 | +0.294
+delivery_date | 0.667 | 0.667 | +0.000
+due_date | 0.571 | 0.667 | +0.095
+effective_date | 0.769 | 0.933 | +0.164
+governing_law | 0.222 | 0.400 | +0.178
+invoice_date | 0.571 | 0.667 | +0.095
+invoice_number | 0.571 | 0.800 | +0.229
+issue_date | 0.667 | 0.800 | +0.133
+line_items | 0.250 | 0.706 | +0.456
+parties | 0.222 | 0.857 | +0.635
+po_number | 0.667 | 0.909 | +0.242
+po_reference | 0.000 | 0.000 | +0.000
+subtotal | 0.333 | 0.909 | +0.576
+tax | 0.571 | 0.800 | +0.229
+term_months | 0.857 | 1.000 | +0.143
+termination_clause | 0.000 | 0.000 | +0.000
+total | 0.706 | 1.000 | +0.294
+value | 0.000 | 0.667 | +0.667
+vendor_name | 0.625 | 0.900 | +0.275
+
+Notes
+- parties F1 is a lower bound: 4 dev contracts have no parties text (generator gap, see docs/error_analysis.md).
+- doc_0009 and doc_0015 -> issue missing_required_field:parties (field absent from document, not invented).
+- doc_0011 (empty file) -> issue empty_or_non_business_document, doc_type business_document, no API call.
+- doc_0013 -> LLM classified a purchase order as invoice and flagged its own missing fields (LLM-generated issues).
+- Raw LLM JSON + pydantic errors: evidence/debug_<doc_id>.json (persistent).
