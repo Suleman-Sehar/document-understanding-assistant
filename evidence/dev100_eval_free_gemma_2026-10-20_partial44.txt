@@ -59,12 +59,7 @@ rules fallback used: 0
 empty documents skipped (no API call): 4 -> doc_0011, doc_0025, doc_0050, doc_0060
 API calls: 40
 hard retries (a failed attempt followed by another request): 29 -> doc_0001, doc_0004, doc_0007, doc_0008, doc_0015, doc_0017, doc_0018, doc_0021, doc_0023, doc_0027, doc_0031, doc_0036, doc_0039, doc_0041, doc_0045, doc_0046, doc_0048, doc_0051, doc_0054, doc_0057, doc_0062, doc_0063, doc_0070, doc_0078, doc_0083, doc_0084, doc_0087, doc_0091, doc_0095
-   retry causes: 0 x OpenRouter 402 (credit / in-flight budget, recovered on the next attempt), 29 x schema validation
-     doc_0001: Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'google/gemma-4-31b-
-     doc_0004: Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'google/gemma-4-31b-
-     doc_0007: Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'google/gemma-4-31b-
-     doc_0008: Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'google/gemma-4-31b-
-     doc_0015: Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'google/gemma-4-31b-
+   retry causes: 29 x provider error (OpenRouter 402/429/5xx, recovered on the next attempt), 0 x schema validation
 schema relaxations (absent core field -> None + review flag): 4
 prompt-injection flags: 3
 total cost: $0.000000
@@ -86,8 +81,9 @@ NOT RUN (56 docs, no cached output): doc_0002, doc_0003, doc_0005, doc_0006, doc
    missing_required_field relaxations: 4
    possible_prompt_injection flags: 3
    injection guardrail: TP=1 FP=2 FN=5 (it fires on unclassifiable documents, not on injected text)
-   new error type in this run: OpenRouter 402 (credit / in-flight budget exhausted). Recoverable in-flight 402s are retried; a credit-exhausted 402 exhausts the 3 attempts and the document falls back to the rules baseline.
-   no crash: the ModelMetaclass retry crash does not reproduce, and no schema-validation retry was needed in this run.
+   provider errors seen (API status codes): 429 x180, 502 x2, 503 x5
+   a provider error is retried by the extractor's retry loop; three failed attempts end in a rules fallback for that document.
+   no crash: the ModelMetaclass retry crash does not reproduce.
 
 6) NOTES
    Accuracy on labelled values that ARE present in the document body: 226/229 = 0.987

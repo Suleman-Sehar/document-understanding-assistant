@@ -232,7 +232,7 @@ def main():
     injections_flagged = 0
     retries = 0
     retry_docs = []
-    retry_credit = 0
+    retry_provider = 0
     retry_schema = 0
     retry_schema_msgs = []
     present_total = 0
@@ -246,6 +246,7 @@ def main():
     gt_agree = 0
     gt_disagree = []
     cache_times = []
+    evaluated_docs = []
 
     for lp in labels:
         d = json.loads(lp.read_text())
@@ -269,6 +270,7 @@ def main():
                 cache_misses.append(doc_id)
                 continue
             api_calls += 1
+            evaluated_docs.append(doc_id)
             cost += float(llm.get("_cost") or 0)
             tokens += int(llm.get("_tokens") or 0)
             if llm.get("_latency") is not None:
@@ -280,15 +282,21 @@ def main():
             issues = llm.get("issues") or []
             relaxations += sum(1 for i in issues if str(i).startswith("missing_required_field:"))
             injections_flagged += sum(1 for i in issues if i == "possible_prompt_injection")
-            last = debug_last_attempt(doc_id)
+            # the debug file accumulates attempts of every run, so only the attempts
+            # of the evaluated model count
+            model_attempts = [a for a in debug_attempts(doc_id)
+                              if not use_legacy and a.get("model") not in (None, model)]
+            model_attempts = [a for a in debug_attempts(doc_id)
+                              if use_legacy or a.get("model") in (None, model)]
+            last = model_attempts[-1] if model_attempts else None
             if last is not None and int(last.get("attempt") or 0) > 1:
                 retries += 1
                 retry_docs.append(doc_id)
-                causes = [str(a.get("validation_error")) for a in debug_attempts(doc_id)
+                causes = [str(a.get("validation_error")) for a in model_attempts
                           if a.get("validation_error")]
                 cause = causes[-1] if causes else "unknown"
-                if "402" in cause:
-                    retry_credit += 1
+                if "Error code:" in cause or "429" in cause or "402" in cause:
+                    retry_provider += 1
                 else:
                     retry_schema += 1
                     retry_schema_msgs.append((doc_id, cause[:120]))
@@ -367,6 +375,15 @@ def main():
         return (2 * p * r / (p + r) if (p + r) else 0.0), p, r
 
     evaluated = len(labels) - len(cache_misses)
+    provider_errors = collections.Counter()
+    for doc_id in evaluated_docs:
+        for a in debug_attempts(doc_id):
+            if not use_legacy and a.get("model") not in (None, model):
+                continue
+            err = str(a.get("validation_error") or "")
+            m = re.search(r"Error code: (\d+)", err)
+            if m:
+                provider_errors[m.group(1)] += 1
     partial = bool(cache_misses)
     served = collections.Counter()
     out = []
@@ -409,7 +426,7 @@ def main():
     out.append(f"API calls: {api_calls}")
     out.append(f"hard retries (a failed attempt followed by another request): {retries}"
                + (f" -> {', '.join(retry_docs)}" if retry_docs else ""))
-    out.append(f"   retry causes: {retry_credit} x OpenRouter 402 (credit / in-flight budget, recovered on the next attempt), "
+    out.append(f"   retry causes: {retry_provider} x provider error (OpenRouter 402/429/5xx, recovered on the next attempt), "
                f"{retry_schema} x schema validation")
     for did, msg in retry_schema_msgs[:5]:
         out.append(f"     {did}: {msg}")
@@ -454,11 +471,12 @@ def main():
     out.append(f"   possible_prompt_injection flags: {injections_flagged}")
     out.append(f"   injection guardrail: TP={guard_tp} FP={guard_fp} FN={guard_fn} "
                f"(it fires on unclassifiable documents, not on injected text)")
-    out.append("   new error type in this run: OpenRouter 402 (credit / in-flight budget exhausted). "
-               "Recoverable in-flight 402s are retried; a credit-exhausted 402 exhausts the 3 attempts "
-               "and the document falls back to the rules baseline.")
-    out.append("   no crash: the ModelMetaclass retry crash does not reproduce, and no schema-validation "
-               "retry was needed in this run.")
+    if provider_errors:
+        out.append("   provider errors seen (API status codes): "
+                   + ", ".join(f"{code} x{n}" for code, n in sorted(provider_errors.items())))
+        out.append("   a provider error is retried by the extractor's retry loop; three failed attempts "
+                   "end in a rules fallback for that document.")
+    out.append("   no crash: the ModelMetaclass retry crash does not reproduce.")
     out.append("")
     out.append("6) NOTES")
     out.append(f"   Accuracy on labelled values that ARE present in the document body: "

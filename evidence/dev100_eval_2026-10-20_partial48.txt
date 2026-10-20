@@ -57,7 +57,7 @@ rules fallback used: 0
 empty documents skipped (no API call): 4 -> doc_0011, doc_0025, doc_0050, doc_0060
 API calls: 47
 hard retries (a failed attempt followed by another request): 24 -> doc_0024, doc_0026, doc_0027, doc_0029, doc_0030, doc_0031, doc_0032, doc_0033, doc_0034, doc_0035, doc_0036, doc_0037, doc_0038, doc_0039, doc_0040, doc_0041, doc_0042, doc_0043, doc_0044, doc_0045, doc_0046, doc_0047, doc_0048, doc_0049
-   retry causes: 24 x OpenRouter 402 (credit / in-flight budget, recovered on the next attempt), 0 x schema validation
+   retry causes: 24 x provider error (OpenRouter 402/429/5xx, recovered on the next attempt), 0 x schema validation
 schema relaxations (absent core field -> None + review flag): 3
 prompt-injection flags: 2
 total cost: $0.010980
@@ -86,8 +86,9 @@ literal placeholder values emitted by the model: 2 docs -> doc_0030, doc_0038
    missing_required_field relaxations: 3
    possible_prompt_injection flags: 2
    injection guardrail: TP=0 FP=2 FN=4 (it fires on unclassifiable documents, not on injected text)
-   new error type in this run: OpenRouter 402 (credit / in-flight budget exhausted). Recoverable in-flight 402s are retried; a credit-exhausted 402 exhausts the 3 attempts and the document falls back to the rules baseline.
-   no crash: the ModelMetaclass retry crash does not reproduce, and no schema-validation retry was needed in this run.
+   provider errors seen (API status codes): 402 x48
+   a provider error is retried by the extractor's retry loop; three failed attempts end in a rules fallback for that document.
+   no crash: the ModelMetaclass retry crash does not reproduce.
 
 6) NOTES
    Accuracy on labelled values that ARE present in the document body: 280/286 = 0.979
