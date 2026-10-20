@@ -1,11 +1,11 @@
-import json, pathlib, sys, shutil
+import json, pathlib, sys
 sys.path.insert(0,"src")
 from unittest.mock import patch, MagicMock
+import dua.llm_extractor as LX
 from dua.llm_extractor import llm_extract
 
 def test_raw_output_is_saved_on_validation_failure(tmp_path):
-    shutil.rmtree("cache",ignore_errors=True)
-    p=pathlib.Path("evidence/debug_doc_9999.json")
+    p=pathlib.Path(LX.DEBUG_DIR)/"debug_doc_9999.json"
     p.unlink(missing_ok=True)
     doc=tmp_path/"doc_9999.txt"; doc.write_text("Invoice Number: 1")
     bad={"doc_type":"invoice","fields":{"vendor_name":"A"},"summary":"","confidence":"high","needs_human_review":False,"issues":[]}

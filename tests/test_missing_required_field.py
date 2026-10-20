@@ -1,4 +1,4 @@
-import json, sys, shutil, pathlib
+import json, sys, pathlib
 sys.path.insert(0,"src")
 from unittest.mock import patch, MagicMock
 from dua.llm_extractor import llm_extract
@@ -9,7 +9,6 @@ from dua.llm_extractor import llm_extract
 # NOT invent a value: it must leave the field empty and flag the document for review.
 
 def test_absent_parties_is_flagged_not_invented(tmp_path):
-    shutil.rmtree("cache",ignore_errors=True)
     text=("This document records the following. effective_date is 23 October 2024. "
           "term_months is 24. value is 86859.76. \n--- PAGE 2 ---\nAdditional terms.")
     doc=tmp_path/"doc_noparties.txt"; doc.write_text(text)
@@ -22,7 +21,6 @@ def test_absent_parties_is_flagged_not_invented(tmp_path):
     assert out["fields"]["parties"] == []
     assert "missing_required_field:parties" in out["issues"]
     assert out["needs_human_review"] is True
-    pathlib.Path("evidence/debug_doc_noparties.json").unlink(missing_ok=True)
 
 def test_dev_contract_without_parties_text_is_confirmed_absent():
     root=pathlib.Path("data/dev")

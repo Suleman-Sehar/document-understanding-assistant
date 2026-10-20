@@ -1,4 +1,4 @@
-import json, sys, shutil
+import json, sys
 sys.path.insert(0,"src")
 from unittest.mock import patch, MagicMock
 from dua.llm_extractor import llm_extract
@@ -14,7 +14,6 @@ def test_repair_business_document_to_contract():
     assert repair_doc_type("contract", text) == "short_contract"
 
 def test_repair_applied_before_validation(tmp_path):
-    shutil.rmtree("cache",ignore_errors=True)
     doc=tmp_path/"doc_8888.txt"; doc.write_text("SHORT CONTRACT\nParties: A, B")
     obj={"doc_type":"business_document","fields":{"parties":["A","B"]},"summary":"","confidence":0.8,"needs_human_review":False,"issues":[]}
     with patch("dua.llm_extractor.OpenAI") as M:
@@ -23,4 +22,3 @@ def test_repair_applied_before_validation(tmp_path):
         out=llm_extract(doc, client=client, base_url="x")
     assert out["doc_type"] == "short_contract"
     import pathlib
-    pathlib.Path("evidence/debug_doc_8888.json").unlink(missing_ok=True)
