@@ -1,0 +1,84 @@
+SUPERSEDED - this was the report of the 10:03-10:10 dev run whose cached responses
+do not record which model produced them (pre-pinning). The verified run with the
+pinned model openai/gpt-4o-mini is evidence/dev100_eval_2026-10-20_partial48.txt
+(51/100 documents, the rest blocked by an OpenRouter 402 credit limit).
+The per-field numbers below also used a date normalisation that mis-scored correct
+DD/MM vs MM/DD readings; see docs/decision_log.md.
+
+FULL DEV RUN (100 docs) - LLM extractor vs frozen rules baseline - 2026-10-20
+Split: dev only (100 docs). Test and challenge NOT run.
+
+1) PER-FIELD F1 (dates normalised to ISO, money rounded to 2dp on both sides)
+field | baseline F1 | LLM F1 | delta | support
+buyer_name | 0.706 | 0.918 | +0.212 | 33
+currency | 0.657 | 0.864 | +0.207 | 92
+delivery_date | 0.706 | 0.653 | -0.053 | 33
+due_date | 0.731 | 0.828 | +0.097 | 33
+effective_date | 0.762 | 0.960 | +0.198 | 26
+governing_law | 0.471 | 0.700 | +0.229 | 26
+invoice_date | 0.731 | 0.828 | +0.097 | 33
+invoice_number | 0.731 | 0.921 | +0.190 | 33
+issue_date | 0.706 | 0.821 | +0.116 | 33
+line_items | 0.207 | 0.832 | +0.625 | 66
+parties | 0.323 | 0.917 | +0.594 | 26
+po_number | 0.706 | 0.918 | +0.212 | 33
+po_reference | 0.000 | 0.000 | +0.000 | 0
+subtotal | 0.533 | 0.909 | +0.376 | 33
+tax | 0.731 | 0.921 | +0.190 | 33
+term_months | 0.917 | 1.000 | +0.083 | 26
+termination_clause | 0.000 | 0.000 | +0.000 | 0
+total | 0.680 | 0.952 | +0.272 | 66
+value | 0.207 | 0.818 | +0.611 | 26
+vendor_name | 0.718 | 0.909 | +0.191 | 66
+
+2) DOC-TYPE ACCURACY
+baseline: 0.860   LLM: 0.850
+baseline confusion (actual, predicted, count):
+  invoice -> invoice : 36
+  non_business -> invoice : 1
+  purchase_order -> invoice : 9
+  purchase_order -> purchase_order : 28
+  short_contract -> invoice : 4
+  short_contract -> short_contract : 22
+LLM confusion (actual, predicted, count):
+  invoice -> business_document : 5
+  invoice -> invoice : 31
+  non_business -> business_document : 1
+  purchase_order -> business_document : 6
+  purchase_order -> invoice : 3
+  purchase_order -> purchase_order : 28
+  short_contract -> short_contract : 26
+
+3) RUN METRICS
+schema_valid: 100/100 (1.00)
+rules fallback used: 0
+validation errors / hard retries: 0
+API calls: 97 (3 empty files skipped, no API call)
+total cost (all 100 docs, incl. 20 cached from the earlier 20-doc run): $0.025913
+total tokens: 130505
+avg latency: 3.64 s
+fresh spend this run (80 new docs): $0.020875 / 105018 tokens
+
+4) FAILURE EXAMPLES (lowest delta / negative delta fields)
+field delivery_date: baseline 0.706 -> LLM 0.653 (-0.053), support 33
+    doc_0008 expected='2025-07-12' got=None layout=two_column
+    doc_0013 expected='2025-02-21' got=None layout=table
+    doc_0021 expected='2025-02-04' got='2025-04-02' layout=kv_block
+field po_reference: baseline 0.000 -> LLM 0.000 (+0.000), support 0
+field termination_clause: baseline 0.000 -> LLM 0.000 (+0.000), support 0
+field term_months: baseline 0.917 -> LLM 1.000 (+0.083), support 26
+field due_date: baseline 0.731 -> LLM 0.828 (+0.097), support 33
+    doc_0001 expected='2025-07-04' got='2025-04-07' layout=footer_total
+    doc_0016 expected='2024-12-25' got=None layout=table
+    doc_0023 expected='2025-06-05' got='2025-05-06' layout=kv_block
+
+5) ERROR TYPES SEEN
+  empty_or_non_business_document: 4 docs (doc_0011, doc_0025, doc_0050, doc_0060) - expected, empty files
+  no new crash or error type vs the 20-doc run; the ModelMetaclass retry crash does not reproduce
+
+6) NOTES
+  179 of 717 labelled field values are not rendered in the document body (generator layout gaps:
+  narrative/sections/table/footer_total drop some fields). 95 of those were correctly returned as empty.
+  Accuracy on values that ARE present in the document: 468/538 = 0.870.
+  parties F1 is a lower bound (4 dev contracts have no parties text).
+  Raw LLM JSON + pydantic errors: evidence/debug_<doc_id>.json
