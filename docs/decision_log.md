@@ -14,3 +14,5 @@
 
 - Injection guardrail: LLM doc_type business_document on a non-empty body now adds issue possible_prompt_injection and needs_human_review=true (separate commit). Tests: business_document on non-empty body flagged; empty document not flagged.
 - doc_0009 parties: confirmed the value is absent from the document body (narrative layout drops list-valued fields, so no parties text is rendered even though the label lists them). The extractor now leaves the field empty and flags missing_required_field:parties + needs_human_review rather than inventing a value; test added. NOTE: this is a generator gap, not an extractor bug - narrative layout omits list fields (affects 4 dev / 3 test contracts). Generator change deferred so the frozen baseline comparisons stay valid; to be raised before the final run.
+
+- Generator gap decision: Option B (no data changes). 7 contracts (4 dev, 3 test) have parties labeled but not rendered in document text; parties F1 is a lower bound. Documented in docs/error_analysis.md and docs/requirements.md. Frozen baseline-v1 comparisons stay valid.

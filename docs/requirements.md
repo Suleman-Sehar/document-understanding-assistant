@@ -55,6 +55,7 @@ Accounts-Payable Lead (fictional company: Arrowstack Corp). Goal: automate extra
 - Date/currency ambiguity -> mitigated by validation + review flag.
 - Cost overruns from paid calls -> budget cap and approval gate.
 - Synthetic data may not reflect real-world noise -> documented limitation.
+- 7 contracts (4 dev, 3 test) have a generator gap where parties is labeled but not rendered in document text; parties F1 is a lower bound. See docs/error_analysis.md.
 
 ## Proposed folder tree
 ```
