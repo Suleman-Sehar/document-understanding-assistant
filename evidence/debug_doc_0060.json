@@ -22,6 +22,38 @@
       "raw_llm_output": null,
       "validation_error": "empty_or_non_business_document",
       "traceback": "NoneType: None\n"
+    },
+    {
+      "attempt": 0,
+      "model": "google/gemma-4-31b-it:free",
+      "served_model": null,
+      "raw_llm_output": null,
+      "validation_error": "empty_or_non_business_document",
+      "traceback": "NoneType: None\n"
+    },
+    {
+      "attempt": 0,
+      "model": "google/gemma-4-31b-it:free",
+      "served_model": null,
+      "raw_llm_output": null,
+      "validation_error": "empty_or_non_business_document",
+      "traceback": "NoneType: None\n"
+    },
+    {
+      "attempt": 0,
+      "model": "google/gemma-4-31b-it:free",
+      "served_model": null,
+      "raw_llm_output": null,
+      "validation_error": "empty_or_non_business_document",
+      "traceback": "NoneType: None\n"
+    },
+    {
+      "attempt": 0,
+      "model": "google/gemma-4-31b-it:free",
+      "served_model": null,
+      "raw_llm_output": null,
+      "validation_error": "empty_or_non_business_document",
+      "traceback": "NoneType: None\n"
     }
   ]
 }

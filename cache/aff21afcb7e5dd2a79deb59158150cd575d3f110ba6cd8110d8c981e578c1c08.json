@@ -1,1 +1,0 @@
-{"doc_type": "business_document", "fields": {"description": "This is a personal note about weather and hobbies."}, "summary": "Personal note regarding weather and hobbies.", "confidence": 0.8, "needs_human_review": true, "issues": ["doc_type_business_document", "possible_prompt_injection"], "_latency": 2.6953933238983154, "_cost": 0.0002043, "_tokens": 1188}

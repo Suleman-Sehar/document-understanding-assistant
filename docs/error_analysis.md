@@ -34,3 +34,10 @@ The guardrail fires `possible_prompt_injection` when the model answers `business
 ## Cache integrity (2026-10-20)
 
 One cache entry (doc_0015) was written with a trailing byte and could not be parsed. A corrupt entry used to raise out of `cached()` and abort the whole run; it is now treated as a cache miss, and cache writes are atomic (temp file plus replace) so a killed process cannot leave a half-written entry.
+
+## Free model constraints on OpenRouter (2026-10-20)
+
+- `google/gemini-flash-1.5` is retired. `GET /api/v1/models/google/gemini-flash-1.5/endpoints` returns 0 providers, so the slug cannot be called at all. The run uses `google/gemma-4-31b-it:free` (Google AI Studio, price 0, one provider) instead.
+- Free models are limited to **50 requests per day per key** (`GET /api/v1/auth/key` -> `free_model_daily_requests.limit = 50`). A 100-document run needs roughly 100 requests, so it spans at least two days. Failed requests are not counted against the limit, but every successful document consumes one.
+- The upstream free pool is rate limited independently of the key limit: `429 ... temporarily rate-limited upstream` from Google AI Studio. The extractor's retry loop recovers most of them; on 2026-10-20 it recovered 9 of 40 documents on the second attempt.
+- Free models answer less consistently than gpt-4o-mini: answers arrive wrapped in ```json fences or with prose around the JSON (handled by `parse_llm_json`), sometimes with an empty content field, and the accuracy on the evaluated subset is slightly lower than gpt-4o-mini on the same fields.

@@ -79,7 +79,7 @@ def test_corrupt_cache_entry_is_a_miss_not_a_crash(tmp_path, monkeypatch):
     cache_dir = tmp_path / "cache"
     monkeypatch.setattr(LX, "CACHE_DIR", cache_dir)
     cache_dir.mkdir(exist_ok=True)
-    (cache_dir / f"{LX.cache_key(text, 'openai/gpt-4o-mini')}.json").write_text('{"fields": {}}')
+    (cache_dir / f"{LX.cache_key(text, 'openai/gpt-4o-mini')}.json").write_text('{"fields": {}}}')
     assert LX.cached(text, model="openai/gpt-4o-mini") is None
 
 

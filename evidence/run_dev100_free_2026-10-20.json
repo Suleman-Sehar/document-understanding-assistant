@@ -1,0 +1,18 @@
+{
+  "split": "dev",
+  "docs": 100,
+  "model": "google/gemma-4-31b-it:free",
+  "base_url": "https://openrouter.ai/api/v1",
+  "served_models": {
+    "google/gemma-4-31b-it:free": 40,
+    "not-recorded": 60
+  },
+  "api_calls": 40,
+  "cache_hits": 0,
+  "schema_valid": 44,
+  "rules_fallbacks": 56,
+  "total_cost_usd": 0.0,
+  "total_tokens": 44784,
+  "avg_latency_s": 8.87,
+  "wall_clock_s": 552.9
+}

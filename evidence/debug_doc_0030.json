@@ -49,6 +49,14 @@
       "raw_llm_output": "{\n  \"doc_type\": \"invoice\",\n  \"fields\": {\n    \"vendor_name\": \"Unknown Vendor\",\n    \"invoice_number\": \"Unknown\",\n    \"invoice_date\": \"2023-10-01\",\n    \"due_date\": \"2023-10-15\",\n    \"currency\": \"USD\",\n    \"subtotal\": 2009.71,\n    \"tax\": 0,\n    \"total\": 2009.71,\n    \"line_items\": [\n      {\n        \"description\": \"Widget\",\n        \"quantity\": 9,\n        \"price\": 84.78,\n        \"amount\": 763.02\n      },\n      {\n        \"description\": \"Widget\",\n        \"quantity\": 6,\n        \"price\": 5.61,\n        \"amount\": 33.66\n      },\n      {\n        \"description\": \"Gadget\",\n        \"quantity\": 9,\n        \"price\": 118.24,\n        \"amount\": 1064.16\n      }\n    ],\n    \"po_reference\": \"Unknown\"\n  },\n  \"summary\": \"Invoice with multiple line items totaling 2009.71.\",\n  \"confidence\": 0.8,\n  \"needs_human_review\": true,\n  \"issues\": []\n}",
       "validation_error": null,
       "traceback": null
+    },
+    {
+      "attempt": 1,
+      "model": "google/gemma-4-31b-it:free",
+      "served_model": "google/gemma-4-31b-it:free",
+      "raw_llm_output": "{\n  \"doc_type\": \"business_document\",\n  \"fields\": {\n    \"description\": \"A list of items including Widgets and Gadgets with quantities and prices, totaling 2009.71.\"\n  },\n  \"summary\": \"A simple itemized list of products and their total cost.\",\n  \"confidence\": 0.8,\n  \"needs_human_review\": true,\n  \"issues\": [\n    \"Missing vendor or buyer information to classify as invoice or purchase order\"\n  ]\n}",
+      "validation_error": null,
+      "traceback": null
     }
   ]
 }

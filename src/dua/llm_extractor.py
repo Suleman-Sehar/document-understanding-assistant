@@ -11,9 +11,28 @@ PROMPT_VERSION="v4-repair-optional-fields-max-tokens"
 
 # OpenRouter requires the provider-qualified model slug. An unprefixed slug
 # (e.g. "gpt-4o-mini") is auto-routed by OpenRouter and can be served by a
-# different provider, so the model is pinned to openai/gpt-4o-mini explicitly.
-DEFAULT_MODEL="openai/gpt-4o-mini"
+# different provider, so the model is always pinned to a named provider.
+#
+# Current default: google/gemma-4-31b-it:free - a Google-hosted free model.
+# The previously requested google/gemini-flash-1.5 was retired by OpenRouter and
+# now has 0 providers, so it cannot be called.
+DEFAULT_MODEL="google/gemma-4-31b-it:free"
 DEFAULT_BASE_URL="https://openrouter.ai/api/v1"
+
+# USD per token (prompt, completion). Models that are not listed here are reported as
+# "cost not priced" rather than as 0, so a paid model is never mistaken for a free one.
+PRICE_PER_TOKEN={
+    "openai/gpt-4o-mini": (0.00000015, 0.0000006),
+}
+
+def estimate_cost(model, prompt_tokens, completion_tokens):
+    """Cost in USD of one call, or None when the model has no known price."""
+    if model.endswith(":free") or model=="openrouter/free":
+        return 0.0
+    rate=PRICE_PER_TOKEN.get(model)
+    if rate is None:
+        return None
+    return prompt_tokens*rate[0] + completion_tokens*rate[1]
 
 def resolve_model(model=None):
     """Explicit argument > OPENAI_MODEL env > pinned default."""
@@ -114,6 +133,27 @@ def build_fewshot():
 DEBUG_DIR=pathlib.Path("evidence")
 DEBUG_DIR.mkdir(exist_ok=True)
 
+def parse_llm_json(raw):
+    """Parse the model answer. Some models wrap the JSON in a markdown code fence or
+    add prose around it, so the fence and any surrounding text are stripped before
+    the final attempt."""
+    if raw is None:
+        raise ValueError("empty response from the model")
+    text=raw.strip()
+    try:
+        return json.loads(text)
+    except ValueError:
+        pass
+    m=re.search(r"```(?:json)?\s*(.+?)```", text, re.S)
+    if m:
+        return json.loads(m.group(1).strip())
+    start=text.find("{")
+    end=text.rfind("}")
+    if start!=-1 and end>start:
+        return json.loads(text[start:end+1])
+    raise ValueError("no JSON object found in the model answer")
+
+
 def save_debug(doc_id, raw, error=None, attempt=None, model=None, served_model=None):
     import traceback
     p=DEBUG_DIR/f"debug_{doc_id}.json"
@@ -166,12 +206,12 @@ def llm_extract(path, client=None, model=None, base_url=None, limit=None):
             usage=getattr(resp,'usage',None)
             pt=int(getattr(usage,'prompt_tokens',0) or 0) if usage else 0
             ct=int(getattr(usage,'completion_tokens',0) or 0) if usage else 0
-            cost = (pt*0.00000015 + ct*0.0000006)
+            cost = estimate_cost(model, pt, ct)
             raw=resp.choices[0].message.content
             served_model=getattr(resp,"model",None)
             doc_id=pathlib.Path(path).stem
             try:
-                obj=json.loads(raw)
+                obj=parse_llm_json(raw)
             except Exception as je:
                 save_debug(doc_id, raw, je, attempt+1, model=model, served_model=served_model)
                 raise
@@ -239,6 +279,7 @@ def llm_extract(path, client=None, model=None, base_url=None, limit=None):
                 out['fields']['term_months']=int(m.group(2))
             out["_latency"]=latency
             out["_cost"]=cost
+            out["_cost_priced"]=cost is not None
             out["_tokens"]= (pt+ct)
             out["_model"]=model
             out["_served_model"]=served_model

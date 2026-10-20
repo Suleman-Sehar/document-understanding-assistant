@@ -38,6 +38,14 @@
       "raw_llm_output": "{\n  \"doc_type\": \"invoice\",\n  \"fields\": {\n    \"vendor_name\": \"Acme Supplies\",\n    \"invoice_number\": \"INV-1028\",\n    \"invoice_date\": \"2025-06-24\",\n    \"due_date\": \"2025-07-24\",\n    \"currency\": \"EUR\",\n    \"subtotal\": 944.85,\n    \"tax\": 75.59,\n    \"total\": 1020.44,\n    \"line_items\": [\n      {\n        \"description\": \"Gadget\",\n        \"quantity\": 9,\n        \"unit_price\": 12.44,\n        \"amount\": 111.96\n      },\n      {\n        \"description\": \"Gadget\",\n        \"quantity\": 1,\n        \"unit_price\": 76.92,\n        \"amount\": 76.92\n      },\n      {\n        \"description\": \"Service\",\n        \"quantity\": 3,\n        \"unit_price\": 199.05,\n        \"amount\": 597.15\n      },\n      {\n        \"description\": \"Service\",\n        \"quantity\": 3,\n        \"unit_price\": 52.94,\n        \"amount\": 158.82\n      }\n    ],\n    \"po_reference\": null\n  },\n  \"summary\": \"Invoice INV-1028 from Acme Supplies totaling EUR 1020.44 due on July 24, 2025.\",\n  \"confidence\": 1.0,\n  \"needs_human_review\": false,\n  \"issues\": []\n}",
       "validation_error": null,
       "traceback": null
+    },
+    {
+      "attempt": 1,
+      "model": "google/gemma-4-31b-it:free",
+      "served_model": "google/gemma-4-31b-it:free",
+      "raw_llm_output": "{\n  \"doc_type\": \"invoice\",\n  \"fields\": {\n    \"vendor_name\": \"Acme Supplies\",\n    \"invoice_number\": \"INV-1028\",\n    \"invoice_date\": \"2025-06-24\",\n    \"due_date\": \"2025-07-24\",\n    \"currency\": \"EUR\",\n    \"subtotal\": 944.85,\n    \"tax\": 75.59,\n    \"total\": 1020.44,\n    \"line_items\": [\n      {\n        \"description\": \"Gadget\",\n        \"quantity\": 9,\n        \"unit_price\": 12.44,\n        \"amount\": 111.96\n      },\n      {\n        \"description\": \"Gadget\",\n        \"quantity\": 1,\n        \"unit_price\": 76.92,\n        \"amount\": 76.92\n      },\n      {\n        \"description\": \"Service\",\n        \"quantity\": 3,\n        \"unit_price\": 199.05,\n        \"amount\": 597.15\n      },\n      {\n        \"description\": \"Service\",\n        \"quantity\": 3,\n        \"unit_price\": 52.94,\n        \"amount\": 158.82\n      }\n    ],\n    \"po_reference\": null\n  },\n  \"summary\": \"Invoice INV-1028 from Acme Supplies for gadgets and services totaling 1020.44 EUR.\",\n  \"confidence\": 1.0,\n  \"needs_human_review\": false,\n  \"issues\": []\n}",
+      "validation_error": null,
+      "traceback": null
     }
   ]
 }

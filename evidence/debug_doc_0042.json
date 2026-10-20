@@ -38,6 +38,14 @@
       "raw_llm_output": "{\n  \"doc_type\": \"business_document\",\n  \"fields\": {\n    \"description\": \"hjggjlddfffafjhfkhddhkas;hdkdhkskasjfg;kshdfgffsaalj;lhkgss;gga;aslgjflhflfkkdhhgfs;gdlakggkadss;adgdk;aalhajgslalkfalaksg;ddlsjlkhfkgkjdff;kksfsakaghlhg;jkfj;;slaghjjkgkghfs;kaddsaff;k;aaa;ajlslk;fh\"\n  },\n  \"summary\": \"The document contains a series of alphanumeric strings.\",\n  \"confidence\": 0.5,\n  \"needs_human_review\": true,\n  \"issues\": []\n}",
       "validation_error": null,
       "traceback": null
+    },
+    {
+      "attempt": 1,
+      "model": "google/gemma-4-31b-it:free",
+      "served_model": "google/gemma-4-31b-it:free",
+      "raw_llm_output": "```json\n{\n  \"doc_type\": \"business_document\",\n  \"fields\": {\n    \"description\": \"The document contains an unintelligible string of random characters and symbols.\"\n  },\n  \"summary\": \"The document consists of gibberish text with no identifiable business structure.\",\n  \"confidence\": 1.0,\n  \"needs_human_review\": true,\n  \"issues\": [\n    \"Document content is nonsensical/gibberish\"\n  ]\n}\n```",
+      "validation_error": null,
+      "traceback": null
     }
   ]
 }
