@@ -178,6 +178,11 @@ def llm_extract(path, client=None, model="openai/gpt-4o-mini", base_url=None, li
             if validated.doc_type=="business_document":
                 validated.issues=list(validated.issues)+["doc_type_business_document"]
                 validated.needs_human_review=True
+                # injection guardrail: a real business document (non-empty body) that the
+                # model could not classify is a likely prompt-injection / non-standard doc
+                if len(text.strip())>=5:
+                    validated.issues=list(validated.issues)+["possible_prompt_injection"]
+                    validated.needs_human_review=True
             save_debug(doc_id, raw, None, attempt+1)
             out=validated.model_dump()
             # normalize dates
