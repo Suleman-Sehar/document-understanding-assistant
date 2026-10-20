@@ -9,14 +9,40 @@ CACHE_DIR.mkdir(exist_ok=True)
 
 PROMPT_VERSION="v4-repair-optional-fields-max-tokens"
 
-def cache_key(text):
+# OpenRouter requires the provider-qualified model slug. An unprefixed slug
+# (e.g. "gpt-4o-mini") is auto-routed by OpenRouter and can be served by a
+# different provider, so the model is pinned to openai/gpt-4o-mini explicitly.
+DEFAULT_MODEL="openai/gpt-4o-mini"
+DEFAULT_BASE_URL="https://openrouter.ai/api/v1"
+
+def resolve_model(model=None):
+    """Explicit argument > OPENAI_MODEL env > pinned default."""
+    return model or os.getenv("OPENAI_MODEL") or DEFAULT_MODEL
+
+def resolve_base_url(base_url=None):
+    """Explicit argument > OPENAI_BASE_URL env > OpenRouter default."""
+    return base_url or os.getenv("OPENAI_BASE_URL") or DEFAULT_BASE_URL
+
+def cache_key(text, model=None):
+    """Cache key includes the model: changing the model must not silently reuse
+    responses produced by another model."""
+    return hashlib.sha256((PROMPT_VERSION+"|"+resolve_model(model)+"|"+text).encode()).hexdigest()
+
+def legacy_cache_key(text):
+    """Key of entries written before the model was pinned (no model recorded)."""
     return hashlib.sha256((PROMPT_VERSION+"|"+text).encode()).hexdigest()
 
-def cached(text):
+def cached(text, model=None, allow_legacy=False):
     CACHE_DIR.mkdir(exist_ok=True)
-    p=CACHE_DIR/(cache_key(text)+".json")
+    p=CACHE_DIR/(cache_key(text, model)+".json")
     if p.exists():
         return json.loads(p.read_text())
+    if allow_legacy:
+        lp=CACHE_DIR/(legacy_cache_key(text)+".json")
+        if lp.exists():
+            out=json.loads(lp.read_text())
+            out["_legacy_cache"]=True
+            return out
     return None
 
 def save_cache(text, obj):
@@ -78,7 +104,7 @@ def build_fewshot():
 DEBUG_DIR=pathlib.Path("evidence")
 DEBUG_DIR.mkdir(exist_ok=True)
 
-def save_debug(doc_id, raw, error=None, attempt=None):
+def save_debug(doc_id, raw, error=None, attempt=None, model=None, served_model=None):
     import traceback
     p=DEBUG_DIR/f"debug_{doc_id}.json"
     payload={"doc_id":doc_id,"attempts":[]}
@@ -89,6 +115,8 @@ def save_debug(doc_id, raw, error=None, attempt=None):
             pass
     payload.setdefault("attempts",[]).append({
         "attempt":attempt,
+        "model":model,
+        "served_model":served_model,
         "raw_llm_output":raw,
         "validation_error":None if error is None else str(error),
         "traceback":None if error is None else traceback.format_exc(),
@@ -96,7 +124,9 @@ def save_debug(doc_id, raw, error=None, attempt=None):
     p.write_text(json.dumps(payload,indent=2,default=str))
     return p
 
-def llm_extract(path, client=None, model="openai/gpt-4o-mini", base_url=None, limit=None):
+def llm_extract(path, client=None, model=None, base_url=None, limit=None):
+    model=resolve_model(model)
+    base_url=resolve_base_url(base_url)
     text=read_document(path)
     rtext=redact_pii(text)
     doc_id=pathlib.Path(path).stem
@@ -105,14 +135,15 @@ def llm_extract(path, client=None, model="openai/gpt-4o-mini", base_url=None, li
         out={"doc_type":"business_document","fields":{"description":text.strip()[:200]},
              "summary":"Document contains no extractable business content.",
              "confidence":0.0,"needs_human_review":True,
-             "issues":["empty_or_non_business_document"],"_latency":0.0,"_cost":0.0,"_tokens":0,"_doc_id":doc_id}
-        save_debug(doc_id, None, "empty_or_non_business_document", 0)
+             "issues":["empty_or_non_business_document"],"_latency":0.0,"_cost":0.0,"_tokens":0,"_doc_id":doc_id,
+             "_model":model,"_served_model":None}
+        save_debug(doc_id, None, "empty_or_non_business_document", 0, model=model)
         return out
-    c=cached(rtext)
+    c=cached(rtext, model)
     if c is not None:
         return c
     if client is None:
-        client=OpenAI(api_key=os.getenv("OPENAI_API_KEY"), base_url=base_url or os.getenv("OPENAI_BASE_URL"))
+        client=OpenAI(api_key=os.getenv("OPENAI_API_KEY"), base_url=base_url)
     fewshot=build_fewshot()
     prompt=f"{fewshot}\n\nNOW EXTRACT THIS DOCUMENT. Output JSON only.\nDOCUMENT:\n{rtext}"
     last_err=None
@@ -127,11 +158,12 @@ def llm_extract(path, client=None, model="openai/gpt-4o-mini", base_url=None, li
             ct=int(getattr(usage,'completion_tokens',0) or 0) if usage else 0
             cost = (pt*0.00000015 + ct*0.0000006)
             raw=resp.choices[0].message.content
+            served_model=getattr(resp,"model",None)
             doc_id=pathlib.Path(path).stem
             try:
                 obj=json.loads(raw)
             except Exception as je:
-                save_debug(doc_id, raw, je, attempt+1)
+                save_debug(doc_id, raw, je, attempt+1, model=model, served_model=served_model)
                 raise
             # post-validation repair: fix fixable doc_type before schema validation
             if isinstance(obj,dict):
@@ -141,7 +173,7 @@ def llm_extract(path, client=None, model="openai/gpt-4o-mini", base_url=None, li
             try:
                 validated=DocResult(**obj)
             except Exception as ve:
-                save_debug(doc_id, raw, ve, attempt+1)
+                save_debug(doc_id, raw, ve, attempt+1, model=model, served_model=served_model)
                 raise
             # per doc type field validation (optional fields tolerant).
             # core required fields may be back-filled from the frozen rules baseline.
@@ -171,7 +203,7 @@ def llm_extract(path, client=None, model="openai/gpt-4o-mini", base_url=None, li
                         fmodel=relaxed_model(validated.doc_type)(**payload)
                 validated.fields=fmodel.model_dump()
             except Exception as fe:
-                save_debug(doc_id, raw, fe, attempt+1)
+                save_debug(doc_id, raw, fe, attempt+1, model=model, served_model=served_model)
                 raise
             if extra_issues:
                 validated.issues=list(validated.issues)+extra_issues
@@ -184,7 +216,7 @@ def llm_extract(path, client=None, model="openai/gpt-4o-mini", base_url=None, li
                 if len(text.strip())>=5:
                     validated.issues=list(validated.issues)+["possible_prompt_injection"]
                     validated.needs_human_review=True
-            save_debug(doc_id, raw, None, attempt+1)
+            save_debug(doc_id, raw, None, attempt+1, model=model, served_model=served_model)
             out=validated.model_dump()
             # normalize dates
             from .baseline import norm_date
@@ -198,13 +230,13 @@ def llm_extract(path, client=None, model="openai/gpt-4o-mini", base_url=None, li
             out["_latency"]=latency
             out["_cost"]=cost
             out["_tokens"]= (pt+ct)
-            save_cache(rtext,out)
-            return out
+            out["_model"]=model
+            out["_served_model"]=served_model
             save_cache(rtext,out)
             return out
         except Exception as e:
             last_err=e
-            save_debug(doc_id, None, e, attempt+1)
+            save_debug(doc_id, None, e, attempt+1, model=model)
             prompt=f"Previous output invalid: {e}. Fix and output JSON only.\nDocument:\n{rtext}"
     # fallback
     out=rules_extract(text)
