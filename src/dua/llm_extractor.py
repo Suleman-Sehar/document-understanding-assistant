@@ -1,6 +1,6 @@
 import os, json, hashlib, time, pathlib, re
 from openai import OpenAI
-from .schemas import DocResult, FIELD_MODELS, repair_doc_type, relaxed_model
+from .schemas import DocResult, FIELD_MODELS, repair_doc_type, relaxed_model, normalize_doc_type
 from .baseline import extract as rules_extract, read_document
 from .llm import redact_pii
 
@@ -86,7 +86,9 @@ RULES:
 - Output JSON only. No markdown, no commentary.
 - doc_type MUST be exactly one of: invoice, purchase_order, short_contract, business_document.
 - Use business_document only when the document is not an invoice, purchase order, or contract.
+- A document containing a line-items table with quantities and prices is an invoice or purchase_order, never business_document. Only return business_document if the document has no recognizable structure.
 - Dates as YYYY-MM-DD. Numbers as plain numbers (no currency symbols). Currency as ISO code (USD, EUR, GBP).
+- Every line_items entry uses exactly these keys: description, quantity, unit_price, amount (never "price").
 
 OUTPUT STRUCTURE (exact keys):
 {
@@ -133,6 +135,51 @@ def build_fewshot():
 DEBUG_DIR=pathlib.Path("evidence")
 DEBUG_DIR.mkdir(exist_ok=True)
 
+# canonical keys of a line item; the model copies table headers such as PRICE into its
+# answer, so those aliases are renamed before the output is stored
+LINE_ITEM_KEY_ALIASES={
+    "price":"unit_price",
+    "unit price":"unit_price",
+    "unit_price":"unit_price",
+    "qty":"quantity",
+    "quantity":"quantity",
+    "item":"description",
+    "item_name":"description",
+    "product":"description",
+    "product_name":"description",
+    "line_total":"amount",
+    "total_price":"amount",
+}
+
+CANONICAL_LINE_ITEM_KEYS=("description","quantity","unit_price","amount")
+
+def normalize_line_items(fields):
+    """Rename the line item keys to the canonical names (price -> unit_price)."""
+    items=fields.get("line_items") if isinstance(fields,dict) else None
+    if not isinstance(items,list):
+        return fields
+    fixed=[]
+    for it in items:
+        if not isinstance(it,dict):
+            fixed.append(it)
+            continue
+        new={}
+        for k,v in it.items():          # canonical keys win over aliases
+            key=str(k).strip().lower()
+            if key in CANONICAL_LINE_ITEM_KEYS:
+                new[key]=v
+        for k,v in it.items():
+            key=str(k).strip().lower()
+            key=LINE_ITEM_KEY_ALIASES.get(key,key)
+            if key in CANONICAL_LINE_ITEM_KEYS:
+                if key not in new:
+                    new[key]=v
+            else:
+                new.setdefault(key,v)
+        fixed.append(new)
+    fields["line_items"]=fixed
+    return fields
+
 def parse_llm_json(raw):
     """Parse the model answer. Some models wrap the JSON in a markdown code fence or
     add prose around it, so the fence and any surrounding text are stripped before
@@ -173,6 +220,80 @@ def save_debug(doc_id, raw, error=None, attempt=None, model=None, served_model=N
     })
     p.write_text(json.dumps(payload,indent=2,default=str))
     return p
+
+def postprocess(obj, text, model=None, served_model=None, latency=0.0, cost=0.0, tokens=0):
+    """Turn a raw model answer into the validated output.
+
+    Shared by the live path and by the offline reprocessing of stored raw answers, so
+    a stored answer can be re-validated after a repair or schema change without
+    spending another API call. Raises on a validation failure."""
+    # post-validation repair: fix fixable doc_type before schema validation
+    raw_doc_type = obj.get("doc_type") if isinstance(obj,dict) else None
+    if isinstance(obj,dict):
+        fixed=repair_doc_type(obj.get("doc_type"), text)
+        if fixed and fixed!=obj.get("doc_type"):
+            obj["doc_type"]=fixed
+    validated=DocResult(**obj)
+    # per doc type field validation (optional fields tolerant).
+    # core required fields may be back-filled from the frozen rules baseline.
+    # If a core field is genuinely absent from the document, keep the LLM output,
+    # set the field to None, and flag the document for human review.
+    extra_issues=[]
+    try:
+        field_model=FIELD_MODELS[validated.doc_type]
+        payload={k:v for k,v in validated.fields.items() if k in field_model.model_fields}
+        try:
+            fmodel=field_model(**payload)
+        except Exception:
+            rf=rules_extract(text).get("fields",{})
+            for k,v in rf.items():
+                if k in field_model.model_fields and payload.get(k) in (None,"",[]):
+                    payload[k]=v
+            try:
+                fmodel=field_model(**payload)
+            except Exception:
+                # a required core field is genuinely absent from the document:
+                # keep the LLM output, relax that field to None and flag for review
+                missing=[k for k,f in field_model.model_fields.items()
+                         if f.is_required() and payload.get(k) in (None,"",[])]
+                for k in missing:
+                    payload[k]=[] if "List" in str(field_model.model_fields[k].annotation) else None
+                    extra_issues.append(f"missing_required_field:{k}")
+                fmodel=relaxed_model(validated.doc_type)(**payload)
+        validated.fields=fmodel.model_dump()
+    except Exception:
+        raise
+    if extra_issues:
+        validated.issues=list(validated.issues)+extra_issues
+        validated.needs_human_review=True
+    if validated.doc_type=="business_document":
+        validated.issues=list(validated.issues)+["doc_type_business_document"]
+        validated.needs_human_review=True
+    # injection guardrail: the model answered business_document for a real document
+    # (non-empty body), which is a likely prompt-injection / non-standard doc. The raw
+    # answer is checked, not the repaired doc_type, so the guardrail cannot be bypassed
+    # by the table repair.
+    if normalize_doc_type(raw_doc_type)=="business_document" and len(text.strip())>=5:
+        validated.issues=list(validated.issues)+["possible_prompt_injection"]
+        validated.needs_human_review=True
+    out=validated.model_dump()
+    # normalize dates
+    from .baseline import norm_date
+    for k,v in list(out.get('fields',{}).items()):
+        if 'date' in k and isinstance(v,str):
+            out['fields'][k]=norm_date(v)
+    m=re.search(r'Effective\s+(.+?)\s+for\s+(\d+)\s*months', text, re.I)
+    if m:
+        out['fields']['effective_date']=norm_date(m.group(1))
+        out['fields']['term_months']=int(m.group(2))
+    normalize_line_items(out.get('fields',{}))
+    out["_latency"]=latency
+    out["_cost"]=cost
+    out["_cost_priced"]=cost is not None
+    out["_tokens"]=tokens
+    out["_model"]=model
+    out["_served_model"]=served_model
+    return out
 
 def llm_extract(path, client=None, model=None, base_url=None, limit=None):
     model=resolve_model(model)
@@ -215,74 +336,13 @@ def llm_extract(path, client=None, model=None, base_url=None, limit=None):
             except Exception as je:
                 save_debug(doc_id, raw, je, attempt+1, model=model, served_model=served_model)
                 raise
-            # post-validation repair: fix fixable doc_type before schema validation
-            if isinstance(obj,dict):
-                fixed=repair_doc_type(obj.get("doc_type"), text)
-                if fixed and fixed!=obj.get("doc_type"):
-                    obj["doc_type"]=fixed
             try:
-                validated=DocResult(**obj)
+                out=postprocess(obj, text, model=model, served_model=served_model,
+                                latency=latency, cost=cost, tokens=(pt+ct))
             except Exception as ve:
                 save_debug(doc_id, raw, ve, attempt+1, model=model, served_model=served_model)
                 raise
-            # per doc type field validation (optional fields tolerant).
-            # core required fields may be back-filled from the frozen rules baseline.
-            # If a core field is genuinely absent from the document, keep the LLM output,
-            # set the field to None, and flag the document for human review.
-            extra_issues=[]
-            try:
-                field_model=FIELD_MODELS[validated.doc_type]
-                payload={k:v for k,v in validated.fields.items() if k in field_model.model_fields}
-                try:
-                    fmodel=field_model(**payload)
-                except Exception:
-                    rf=rules_extract(text).get("fields",{})
-                    for k,v in rf.items():
-                        if k in field_model.model_fields and payload.get(k) in (None,"",[]):
-                            payload[k]=v
-                    try:
-                        fmodel=field_model(**payload)
-                    except Exception:
-                        # a required core field is genuinely absent from the document:
-                        # keep the LLM output, relax that field to None and flag for review
-                        missing=[k for k,f in field_model.model_fields.items()
-                                 if f.is_required() and payload.get(k) in (None,"",[])]
-                        for k in missing:
-                            payload[k]=[] if "List" in str(field_model.model_fields[k].annotation) else None
-                            extra_issues.append(f"missing_required_field:{k}")
-                        fmodel=relaxed_model(validated.doc_type)(**payload)
-                validated.fields=fmodel.model_dump()
-            except Exception as fe:
-                save_debug(doc_id, raw, fe, attempt+1, model=model, served_model=served_model)
-                raise
-            if extra_issues:
-                validated.issues=list(validated.issues)+extra_issues
-                validated.needs_human_review=True
-            if validated.doc_type=="business_document":
-                validated.issues=list(validated.issues)+["doc_type_business_document"]
-                validated.needs_human_review=True
-                # injection guardrail: a real business document (non-empty body) that the
-                # model could not classify is a likely prompt-injection / non-standard doc
-                if len(text.strip())>=5:
-                    validated.issues=list(validated.issues)+["possible_prompt_injection"]
-                    validated.needs_human_review=True
             save_debug(doc_id, raw, None, attempt+1, model=model, served_model=served_model)
-            out=validated.model_dump()
-            # normalize dates
-            from .baseline import norm_date
-            for k,v in list(out.get('fields',{}).items()):
-                if 'date' in k and isinstance(v,str):
-                    out['fields'][k]=norm_date(v)
-            m=re.search(r'Effective\s+(.+?)\s+for\s+(\d+)\s*months', text, re.I)
-            if m:
-                out['fields']['effective_date']=norm_date(m.group(1))
-                out['fields']['term_months']=int(m.group(2))
-            out["_latency"]=latency
-            out["_cost"]=cost
-            out["_cost_priced"]=cost is not None
-            out["_tokens"]= (pt+ct)
-            out["_model"]=model
-            out["_served_model"]=served_model
             save_cache(rtext,out,model)
             return out
         except Exception as e:

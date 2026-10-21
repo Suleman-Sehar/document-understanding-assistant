@@ -1,3 +1,4 @@
+import re
 from pydantic import BaseModel, Field, field_validator
 from typing import List, Optional, Any
 
@@ -86,12 +87,51 @@ DOC_TYPE_ALIASES = {    "contract": "short_contract",
     "unknown": "business_document",
 }
 
-def repair_doc_type(doc_type, text):
-    """Fix a wrong/unknown doc_type when the document content makes it fixable."""
+def normalize_doc_type(doc_type):
+    """Map a model answer to one of the allowed doc types, without content inference.
+
+    Returns None when the answer cannot be mapped. Used to keep the injection
+    guardrail tied to what the model actually answered, before any repair."""
     if not doc_type:
         return None
     dt = str(doc_type).strip().lower().replace("-", "_").replace(" ", "_")
     if dt in ALLOWED_DOC_TYPES:
+        return dt
+    if dt in DOC_TYPE_ALIASES:
+        return DOC_TYPE_ALIASES[dt]
+    for alias, target in DOC_TYPE_ALIASES.items():
+        if alias.replace(" ", "_") == dt:
+            return target
+    return None
+
+def has_line_items_table(text):
+    """True when the body holds a line-items table: a header row naming quantities and
+    prices, or rows of 'name | qty | price | amount'.
+
+    Such a document is an invoice or a purchase order even when the body carries no
+    other type cue, so it must never end up as business_document."""
+    if not text:
+        return False
+    lines=[l for l in str(text).splitlines() if l.strip()]
+    for l in lines:
+        if (re.search(r"\b(qty|quantity)\b", l, re.I)
+                and re.search(r"\b(price|unit price)\b", l, re.I)
+                and re.search(r"\b(amount|total)\b", l, re.I)):
+            return True
+    rows=0
+    for l in lines:
+        parts=[p.strip() for p in l.split("|")]
+        if (len(parts)>=4 and re.fullmatch(r"\d+", parts[1])
+                and re.fullmatch(r"[\d.,]+", parts[2]) and re.fullmatch(r"[\d.,]+", parts[3])):
+            rows+=1
+    return rows>=2
+
+def repair_doc_type(doc_type, text):
+    """Fix a wrong/unknown doc_type when the document content makes it fixable."""
+    if not doc_type:
+        return None
+    dt = normalize_doc_type(doc_type)
+    if dt is not None:
         if dt == "business_document":
             # generic label, but content may clearly be one of our types
             t = text.lower()
@@ -101,12 +141,12 @@ def repair_doc_type(doc_type, text):
                 return "short_contract"
             if "invoice" in t:
                 return "invoice"
+            # a line-items table with quantities and prices is an invoice or a purchase
+            # order; without any other cue the body cannot tell which one, so the
+            # majority class of the dev split (purchase_order) is used
+            if has_line_items_table(text):
+                return "purchase_order"
         return dt
-    if dt in DOC_TYPE_ALIASES:
-        return DOC_TYPE_ALIASES[dt]
-    for alias, target in DOC_TYPE_ALIASES.items():
-        if alias.replace(" ", "_") == dt:
-            return target
     # last resort: infer from content
     t = text.lower()
     if "purchase order" in t or "po number" in t:
@@ -115,4 +155,6 @@ def repair_doc_type(doc_type, text):
         return "short_contract"
     if "invoice" in t:
         return "invoice"
+    if has_line_items_table(text):
+        return "purchase_order"
     return None
