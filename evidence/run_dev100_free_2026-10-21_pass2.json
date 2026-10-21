@@ -1,0 +1,26 @@
+{
+  "split": "dev",
+  "docs": 100,
+  "model": "google/gemma-4-31b-it:free",
+  "base_url": "https://openrouter.ai/api/v1",
+  "served_models": {
+    "google/gemma-4-31b-it:free": 1,
+    "not-recorded": 1
+  },
+  "api_calls": 0,
+  "cache_hits": 1,
+  "skipped_or_fallback": 1,
+  "schema_valid": 1,
+  "rules_fallbacks": 1,
+  "total_cost_usd": 0.0,
+  "total_tokens": 933,
+  "avg_latency_s": 11.1,
+  "wall_clock_s": 7396.1,
+  "stopped_reason": "wall-clock budget reached",
+  "documents_completed": [],
+  "documents_completed_count": 0,
+  "request_attempts": 6,
+  "quota_remaining_at_end": 42,
+  "quota_reads": 3,
+  "quota_read_errors": 0
+}

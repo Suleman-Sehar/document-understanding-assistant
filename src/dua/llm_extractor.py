@@ -56,11 +56,13 @@ def cached(text, model=None, allow_legacy=False):
     p=CACHE_DIR/(cache_key(text, model)+".json")
     if p.exists():
         try:
-            return json.loads(p.read_text())
+            out=json.loads(p.read_text())
         except (ValueError, OSError):
             # corrupt entry (truncated/partial write): treat it as a miss instead of
             # crashing the whole run
             return None
+        out["_cache_hit"]=True
+        return out
     if allow_legacy:
         lp=CACHE_DIR/(legacy_cache_key(text)+".json")
         if lp.exists():
@@ -69,6 +71,7 @@ def cached(text, model=None, allow_legacy=False):
             except (ValueError, OSError):
                 return None
             out["_legacy_cache"]=True
+            out["_cache_hit"]=True
             return out
     return None
 
@@ -295,7 +298,47 @@ def postprocess(obj, text, model=None, served_model=None, latency=0.0, cost=0.0,
     out["_served_model"]=served_model
     return out
 
-def llm_extract(path, client=None, model=None, base_url=None, limit=None):
+class RequestBudgetExhausted(BaseException):
+    """Raised when the caller runs out of API request budget.
+
+    Derived from BaseException on purpose: the retry loop catches Exception, and a
+    budget stop must not be swallowed into a rules fallback.
+    """
+
+
+def _retry_backoff():
+    """Waits between attempts, in seconds (DUA_RETRY_BACKOFF_S, e.g. "8,20")."""
+    raw = os.getenv("DUA_RETRY_BACKOFF_S", "8,20")
+    out = []
+    for part in str(raw).split(","):
+        part = part.strip()
+        if part:
+            try:
+                out.append(float(part))
+            except ValueError:
+                pass
+    return out or [8.0, 20.0]
+
+
+def _max_attempts():
+    """Attempts per document (DUA_MAX_ATTEMPTS)."""
+    try:
+        return max(1, int(os.getenv("DUA_MAX_ATTEMPTS", "3")))
+    except ValueError:
+        return 3
+
+
+def _is_provider_error(err):
+    """True for errors that a later attempt can fix (rate limit, provider outage)."""
+    status = getattr(err, "status_code", None)
+    if status in (408, 409, 425, 429, 500, 502, 503, 504):
+        return True
+    text = str(err)
+    return ("429" in text or "temporarily rate-limited" in text
+            or "Provider returned error" in text or "in-flight" in text)
+
+
+def llm_extract(path, client=None, model=None, base_url=None, limit=None, budget=None):
     model=resolve_model(model)
     base_url=resolve_base_url(base_url)
     text=read_document(path)
@@ -319,7 +362,10 @@ def llm_extract(path, client=None, model=None, base_url=None, limit=None):
     prompt=f"{fewshot}\n\nNOW EXTRACT THIS DOCUMENT. Output JSON only.\nDOCUMENT:\n{rtext}"
     last_err=None
     doc_id=pathlib.Path(path).stem
-    for attempt in range(3):
+    max_attempts = _max_attempts()
+    for attempt in range(max_attempts):
+        if budget is not None and not budget():
+            raise RequestBudgetExhausted(f"request budget exhausted before {doc_id}")
         try:
             t0=time.time()
             resp=client.chat.completions.create(model=model,messages=[{"role":"system","content":SYSTEM},{"role":"user","content":prompt}],temperature=0,max_tokens=1500)
@@ -348,6 +394,13 @@ def llm_extract(path, client=None, model=None, base_url=None, limit=None):
         except Exception as e:
             last_err=e
             save_debug(doc_id, None, e, attempt+1, model=model)
+            if attempt < max_attempts - 1 and _is_provider_error(e):
+                # the free pool is rate limited in bursts: three attempts without a
+                # wait all land in the same window and the document is lost for the
+                # day, so a provider error is retried after a growing pause
+                waits = _retry_backoff()
+                wait = waits[min(attempt, len(waits) - 1)]
+                time.sleep(wait)
             prompt=f"Previous output invalid: {e}. Fix and output JSON only.\nDocument:\n{rtext}"
     # fallback
     out=rules_extract(text)

@@ -1,0 +1,91 @@
+DEV RUN - LLM extractor vs frozen rules baseline - 2026-10-21
+Split: dev only. Test and challenge NOT run.  Documents evaluated: 52/100  (PARTIAL RUN - see NOT RUN below)
+Model: google/gemma-4-31b-it:free
+Source: cached LLM outputs (cache/*.json) - offline recompute, no API calls.
+
+1) PER-FIELD F1 (dates ISO, money rounded to 2dp, list order-insensitive;
+   slash dates accept either DD/MM or MM/DD reading of the rendered string)
+field | baseline F1 | LLM F1 | delta | support
+buyer_name | 0.667 | 0.933 | +0.267 | 16
+currency | 0.657 | 0.831 | +0.174 | 45
+delivery_date | 0.667 | 0.769 | +0.103 | 16
+due_date | 0.846 | 0.929 | +0.082 | 15
+effective_date | 0.727 | 1.000 | +0.273 | 14
+governing_law | 0.353 | 0.667 | +0.314 | 14
+invoice_date | 0.846 | 0.929 | +0.082 | 15
+invoice_number | 0.846 | 0.929 | +0.082 | 15
+issue_date | 0.667 | 0.897 | +0.230 | 16
+line_items | 0.229 | 0.808 | +0.579 | 31
+parties | 0.250 | 0.923 | +0.673 | 14
+po_number | 0.667 | 0.933 | +0.267 | 16
+po_reference | 0.000 | 0.000 | +0.000 | 0
+subtotal | 0.571 | 0.846 | +0.275 | 15
+tax | 0.846 | 0.929 | +0.082 | 15
+term_months | 0.923 | 1.000 | +0.077 | 14
+termination_clause | 0.000 | 0.000 | +0.000 | 0
+total | 0.708 | 0.967 | +0.258 | 31
+value | 0.133 | 0.783 | +0.649 | 14
+vendor_name | 0.760 | 0.893 | +0.133 | 31
+
+2) DOC-TYPE ACCURACY
+baseline: 0.827   LLM: 0.808
+baseline confusion (actual, predicted, count):
+  invoice -> invoice : 17
+  non_business -> invoice : 1
+  purchase_order -> invoice : 6
+  purchase_order -> purchase_order : 14
+  short_contract -> invoice : 2
+  short_contract -> short_contract : 12
+LLM confusion (actual, predicted, count):
+  invoice -> business_document : 2
+  invoice -> invoice : 14
+  invoice -> purchase_order : 1
+  non_business -> business_document : 1
+  purchase_order -> business_document : 4
+  purchase_order -> invoice : 2
+  purchase_order -> purchase_order : 14
+  short_contract -> short_contract : 14
+per-layout doc-type accuracy (LLM):
+  footer_total: 10/10 = 1.000
+  kv_block: 12/12 = 1.000
+  narrative: 7/7 = 1.000
+  sections: 5/5 = 1.000
+  table: 1/4 = 0.250
+  two_column: 7/7 = 1.000
+  unknown: 0/7 = 0.000
+
+3) RUN METRICS
+schema_valid: 48/48 (1.000)
+rules fallback used: 0
+empty documents skipped (no API call): 4 -> doc_0011, doc_0025, doc_0050, doc_0060
+API calls: 48
+hard retries (a failed attempt followed by another request): 36 -> doc_0001, doc_0004, doc_0007, doc_0008, doc_0009, doc_0012, doc_0015, doc_0017, doc_0018, doc_0019, doc_0021, doc_0023, doc_0027, doc_0031, doc_0036, doc_0039, doc_0041, doc_0045, doc_0046, doc_0047, doc_0048, doc_0051, doc_0053, doc_0054, doc_0057, doc_0062, doc_0063, doc_0070, doc_0078, doc_0082, doc_0083, doc_0084, doc_0087, doc_0089, doc_0091, doc_0095
+   retry causes: 36 x provider error (OpenRouter 402/429/5xx, recovered on the next attempt), 0 x schema validation
+schema relaxations (absent core field -> None + review flag): 6
+prompt-injection flags: 4
+total cost: $0.000000
+total tokens: 52851
+avg latency (API calls): 8.83 s
+NOT RUN (48 docs, no cached output): doc_0002, doc_0005, doc_0006, doc_0010, doc_0013, doc_0014, doc_0016, doc_0020, doc_0022, doc_0024, doc_0026, doc_0032, doc_0034, doc_0037, doc_0038, doc_0040, doc_0043, doc_0044, doc_0049, doc_0052, doc_0058, doc_0059, doc_0061, doc_0064, doc_0065, doc_0066, doc_0067, doc_0068, doc_0069, doc_0072, doc_0073, doc_0075, doc_0076, doc_0077, doc_0079, doc_0080, doc_0081, doc_0085, doc_0086, doc_0088, doc_0090, doc_0092, doc_0093, doc_0094, doc_0096, doc_0097, doc_0099, doc_0100
+
+4) FAILURE EXAMPLES (top 5 documents by number of real extractor errors)
+   total field misses: 70  (extractor errors: 1, value absent from body / generator gap: 69)
+   doc_0054 | doc_type invoice->invoice | layout=footer_total | 1 field(s) wrong
+      field=subtotal | expected=355.44 | got=null | field omitted by the model although the value is present in the body
+   generator-gap class: 69 misses over 21 documents (value labelled but never rendered in the body)
+
+5) ERROR TYPES SEEN
+   empty_or_non_business_document: 4 docs (doc_0011, doc_0025, doc_0050, doc_0060) - expected, empty files
+   missing_required_field relaxations: 6
+   possible_prompt_injection flags: 4
+   injection guardrail: TP=2 FP=2 FN=5 (it fires on unclassifiable documents, not on injected text)
+   provider errors seen (API status codes): 429 x292, 502 x3, 503 x6
+   a provider error is retried by the extractor's retry loop; three failed attempts end in a rules fallback for that document.
+   no crash: the ModelMetaclass retry crash does not reproduce.
+
+6) NOTES
+   Accuracy on labelled values that ARE present in the document body: 274/275 = 0.996
+   Labelled values absent from the document body (generator layout gaps): 72; of those, 3 were still extracted correctly.
+   Date ground-truth check (generator arithmetic resolves ambiguous slash dates): 58/62 verdicts agree with the resolved true date; disagreements: [('doc_0001', 'invoice_date', '04/06/2025', '2025-06-04', '2025-04-06'), ('doc_0001', 'due_date', '04/07/2025', '2025-07-04', '2025-04-07'), ('doc_0023', 'invoice_date', '04/06/2025', '2025-04-06', '2025-06-04'), ('doc_0023', 'due_date', '05/06/2025', '2025-05-06', '2025-06-05')]
+   parties F1 is a lower bound (4 dev contracts have no parties text).
+   Raw LLM JSON + pydantic errors: evidence/debug_<doc_id>.json
