@@ -1,0 +1,158 @@
+GENERATOR GAP ANALYSIS - dev split (100 documents)
+A gap is a labelled field whose value never appears in the rendered document body.
+labelled values present in the body : 587
+labelled values absent from the body : 130
+
+by layout:
+  table        55
+  narrative    30
+  sections     24
+  footer_total 11
+  two_column   10
+by field:
+  currency           23
+  line_items         17
+  delivery_date      13
+  governing_law      12
+  vendor_name        11
+  value              8
+  subtotal           7
+  issue_date         7
+  buyer_name         5
+  po_number          5
+  parties            4
+  invoice_number     4
+  invoice_date       4
+  due_date           4
+  tax                4
+  total              2
+by layout and field:
+  footer_total line_items         5
+  footer_total subtotal           6
+  narrative    currency           6
+  narrative    delivery_date      2
+  narrative    governing_law      4
+  narrative    issue_date         2
+  narrative    line_items         8
+  narrative    parties            4
+  narrative    total              2
+  narrative    vendor_name        2
+  sections     currency           8
+  sections     governing_law      8
+  sections     value              8
+  table        buyer_name         5
+  table        currency           9
+  table        delivery_date      5
+  table        due_date           4
+  table        invoice_date       4
+  table        invoice_number     4
+  table        issue_date         5
+  table        po_number          5
+  table        subtotal           1
+  table        tax                4
+  table        vendor_name        9
+  two_column   delivery_date      6
+  two_column   line_items         4
+documents with gaps:
+  doc_0030  7  currency, due_date, invoice_date, invoice_number, subtotal, tax, vendor_name
+  doc_0013  6  buyer_name, currency, delivery_date, issue_date, po_number, vendor_name
+  doc_0016  6  currency, due_date, invoice_date, invoice_number, tax, vendor_name
+  doc_0027  6  buyer_name, currency, delivery_date, issue_date, po_number, vendor_name
+  doc_0029  6  currency, delivery_date, issue_date, line_items, total, vendor_name
+  doc_0038  6  buyer_name, currency, delivery_date, issue_date, po_number, vendor_name
+  doc_0048  6  currency, due_date, invoice_date, invoice_number, tax, vendor_name
+  doc_0051  6  currency, delivery_date, issue_date, line_items, total, vendor_name
+  doc_0063  6  buyer_name, currency, delivery_date, issue_date, po_number, vendor_name
+  doc_0077  6  buyer_name, currency, delivery_date, issue_date, po_number, vendor_name
+  doc_0085  6  currency, due_date, invoice_date, invoice_number, tax, vendor_name
+  doc_0004  3  currency, governing_law, value
+  doc_0005  3  currency, governing_law, value
+  doc_0009  3  currency, governing_law, parties
+  doc_0010  3  currency, governing_law, value
+  doc_0015  3  currency, governing_law, parties
+  doc_0018  3  currency, governing_law, value
+  doc_0039  3  currency, governing_law, value
+  doc_0052  3  currency, governing_law, parties
+  doc_0064  3  currency, governing_law, parties
+  doc_0084  3  currency, governing_law, value
+  doc_0088  3  currency, governing_law, value
+  doc_0098  3  currency, governing_law, value
+  doc_0001  2  line_items, subtotal
+  doc_0008  2  delivery_date, line_items
+  doc_0055  2  delivery_date, line_items
+  doc_0062  2  line_items, subtotal
+  doc_0068  2  delivery_date, line_items
+  doc_0097  2  delivery_date, line_items
+  doc_0003  1  line_items
+  doc_0006  1  line_items
+  doc_0012  1  line_items
+  doc_0032  1  delivery_date
+  doc_0035  1  subtotal
+  doc_0044  1  subtotal
+  doc_0056  1  subtotal
+  doc_0061  1  line_items
+  doc_0073  1  line_items
+  doc_0076  1  line_items
+  doc_0080  1  subtotal
+  doc_0081  1  line_items
+  doc_0082  1  line_items
+  doc_0091  1  line_items
+  doc_0092  1  delivery_date
+
+by cause:
+  layout_omission  97
+  pdf_truncation   33
+
+cause by layout:
+  layout_omission  footer_total 6
+  layout_omission  narrative    12
+  layout_omission  sections     24
+  layout_omission  table        55
+  pdf_truncation   footer_total 5
+  pdf_truncation   narrative    18
+  pdf_truncation   two_column   10
+
+cause by field:
+  layout_omission  buyer_name         5
+  layout_omission  currency           17
+  layout_omission  delivery_date      5
+  layout_omission  due_date           4
+  layout_omission  governing_law      8
+  layout_omission  invoice_date       4
+  layout_omission  invoice_number     4
+  layout_omission  issue_date         5
+  layout_omission  line_items         8
+  layout_omission  parties            4
+  layout_omission  po_number          5
+  layout_omission  subtotal           7
+  layout_omission  tax                4
+  layout_omission  value              8
+  layout_omission  vendor_name        9
+  pdf_truncation   currency           6
+  pdf_truncation   delivery_date      8
+  pdf_truncation   governing_law      4
+  pdf_truncation   issue_date         2
+  pdf_truncation   line_items         9
+  pdf_truncation   total              2
+  pdf_truncation   vendor_name        2
+
+documents losing values to PDF line truncation (17):
+  doc_0001  line_items
+  doc_0003  line_items
+  doc_0008  delivery_date, line_items
+  doc_0009  currency, governing_law
+  doc_0015  currency, governing_law
+  doc_0029  currency, delivery_date, issue_date, total, vendor_name
+  doc_0032  delivery_date
+  doc_0051  currency, delivery_date, issue_date, total, vendor_name
+  doc_0052  currency, governing_law
+  doc_0055  delivery_date, line_items
+  doc_0062  line_items
+  doc_0064  currency, governing_law
+  doc_0068  delivery_date, line_items
+  doc_0073  line_items
+  doc_0081  line_items
+  doc_0092  delivery_date
+  doc_0097  delivery_date, line_items
+
+unexplained gaps (0):

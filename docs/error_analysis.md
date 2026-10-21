@@ -1,5 +1,28 @@
 # Error Analysis
 
+## Generator gap: labelled values that never reach the document body (2026-10-21)
+
+`scripts/analyze_gaps.py --split dev --explain` rebuilds the intended documents from the manifest seed (the generator is deterministic) and compares the source text with the rendered file. Of the 717 labelled values in the dev split, 130 never appear in a rendered document body, and every one of them is classified:
+
+| cause | values | docs | meaning |
+|---|---|---|---|
+| `layout_omission` | 97 | 30 | the layout template never writes the field (by design) |
+| `pdf_truncation` | 33 | 17 | the PDF renderer cuts every line at 110 characters |
+| `unexplained` | 0 | 0 | - |
+
+Full report: `evidence/generator_gap_analysis_dev_2026-10-21.txt`.
+
+**`layout_omission` (by design).** Each layout template renders a subset of the label: `table` writes only the item rows and `TOTAL:`, `sections` writes only `parties`, `effective_date` and `term_months`, `narrative` writes only scalar fields, `footer_total` writes only the total in the footer. The label carries the complete field set of the document type, so the fields a template does not render can never be recovered. This includes the previously documented `parties` case.
+
+**`pdf_truncation` (a real generator defect).** `scripts/generate_synthetic.py:123` draws every line as `line[:110]`. A `narrative` document puts the whole record on one line, and a `two_column` row puts two fields on one line, so the tail of those lines is silently dropped from the PDF while the label keeps the values. Example `doc_0009` (PDF, narrative): the source line is 181 characters and the rendered document stops after `value is 86859.76.`, so `currency` and `governing_law` are labelled but absent. The same document rendered as DOCX has no truncation, so two documents with the same label score differently depending on their file format. Affected dev documents: doc_0001, doc_0003, doc_0008, doc_0009, doc_0015, doc_0029, doc_0032, doc_0051, doc_0052, doc_0055, doc_0062, doc_0064, doc_0068, doc_0073, doc_0081, doc_0092, doc_0097.
+
+Fix-versus-document tradeoff:
+
+- *Fix now*: render the full line (wrap instead of truncate) and regenerate the dev split. That changes every document, invalidates the frozen rules baseline `baseline-v1`, and invalidates all 87 cached model outputs (40 free, 47 paid), so the 100-document run has to restart over two to three days of free-tier quota.
+- *Document*: keep the data as is, report the gap and report accuracy on the values that are actually present in the body.
+
+Decision: **document (Option B)**, the same decision as the `parties` gap of 2026-10-19. The frozen baseline stays valid and the partial run is not thrown away. Consequence for the report: per-field F1 over all labelled values is a lower bound, and the honest extractor quality is the accuracy on the values that are present in the body - 228/229 (0.996) for the free model and 285/286 (0.997) for `openai/gpt-4o-mini` on the evaluated subset. The fix is a one-line change in the generator and is scheduled before any test or challenge evaluation.
+
 ## Known data limitation: narrative layout drops list-valued fields (2026-10-20)
 
 7 contracts (4 dev, 3 test) have a generator gap where `parties` is labeled but not rendered in the document text. The `narrative` layout renders only scalar fields, so no "Parties: X and Y" text appears in the document body even though the label JSON lists the parties.

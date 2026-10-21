@@ -56,6 +56,7 @@ Accounts-Payable Lead (fictional company: Arrowstack Corp). Goal: automate extra
 - Cost overruns from paid calls -> budget cap and approval gate.
 - Synthetic data may not reflect real-world noise -> documented limitation.
 - 7 contracts (4 dev, 3 test) have a generator gap where parties is labeled but not rendered in document text; parties F1 is a lower bound. See docs/error_analysis.md.
+- 130 of the 717 dev labelled values never reach a rendered document body: 97 because the layout template does not render them, 33 because the PDF renderer truncates every line at 110 characters. Per-field F1 over all labelled values is therefore a lower bound; accuracy on the values that are present in the body is the honest extractor quality. See docs/error_analysis.md (2026-10-21).
 
 ## Proposed folder tree
 ```
