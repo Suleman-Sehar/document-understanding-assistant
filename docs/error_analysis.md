@@ -1,5 +1,14 @@
 # Error Analysis
 
+## Dev evaluation split across two models due to API credit exhaustion (2026-10-22)
+
+The 100-document dev split could not be evaluated with a single model:
+
+- **Paid model:** `openai/gpt-4o-mini` was used for 51 documents until OpenRouter credits were exhausted (402). Evidence: `evidence/dev100_eval_paid_gpt4omini_2026-10-21.txt`.
+- **Free model:** `google/gemma-4-31b-it:free` was used for 48 documents within the free daily quota (50 requests/day). Evidence: `evidence/dev100_eval_free_gemma_2026-10-21_batch.txt`.
+
+The remaining 1 document has a paid-model cache entry from an earlier partial run; no document was double-evaluated across models for the reported numbers. Results are reported **separately, not blended**. The test split is reserved for the final evaluation once credits are available or the quota allows. The frozen rules baseline (`baseline-v1`) comparisons remain valid for both subsets.
+
 ## Generator gap: labelled values that never reach the document body (2026-10-21)
 
 `scripts/analyze_gaps.py --split dev --explain` rebuilds the intended documents from the manifest seed (the generator is deterministic) and compares the source text with the rendered file. Of the 717 labelled values in the dev split, 130 never appear in a rendered document body, and every one of them is classified:
