@@ -1,4 +1,5 @@
 # Dev Evaluation Final (2026-10-21)
+Note: F1 figures are lower bounds. 130 labelled values (18.1% of dev) are absent from document text due to generator gaps (97 layout omissions + 33 PDF truncation). Accuracy on values present in body is reported separately per model.
 
 Dev split evaluated on 99/100 documents across two models (not blended). `doc_0002` excluded (mixed-model cache entry). Test and challenge not run.
 

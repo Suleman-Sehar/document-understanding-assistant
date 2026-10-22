@@ -9,6 +9,8 @@ The 100-document dev split could not be evaluated with a single model:
 
 The remaining 1 document has a paid-model cache entry from an earlier partial run; no document was double-evaluated across models for the reported numbers. Results are reported **separately, not blended**. The test split is reserved for the final evaluation once credits are available or the quota allows. The frozen rules baseline (`baseline-v1`) comparisons remain valid for both subsets.
 
+delivery_date: zero delta on gpt-4o-mini (baseline 0.714, LLM 0.714, 18 docs). Root cause TBD in Phase 5 test-split analysis. Possible cause: date format varies (YYYY-MM-DD vs DD/MM/YYYY) and the extractor normalizes inconsistently.
+
 ## Generator gap: labelled values that never reach the document body (2026-10-21)
 
 `scripts/analyze_gaps.py --split dev --explain` rebuilds the intended documents from the manifest seed (the generator is deterministic) and compares the source text with the rendered file. Of the 717 labelled values in the dev split, 130 never appear in a rendered document body, and every one of them is classified:
