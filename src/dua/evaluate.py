@@ -591,7 +591,7 @@ class LabelDataset(Dataset):
             body_text = data.get("body_text", "")
             if not body_text:
                 # best-effort: read the document file referenced by the label
-                doc_file = self.data_root / self.split / data.get("file", "")
+                doc_file = self.data_root / self.split / "docs" / data.get("file", "")
                 if doc_file.exists():
                     from dua.baseline import read_document
 
@@ -606,16 +606,23 @@ class LabelDataset(Dataset):
 
 
 class BaselineRunner(Runner):
-    """Rule-based runner using :func:`dua.baseline.extract` (no API calls)."""
+    """Rule-based runner using :func:`dua.baseline.extract` (no API calls).
+
+    The baseline is deterministic and carries no confidence score, so
+    ``raw`` sets ``confidence`` to ``None``. The evaluator excludes
+    ``None`` confidence from low-confidence review triggers.
+    """
 
     def predict(self, example: Example) -> Prediction:
         out = baseline_extract(example.body_text)
         fields = out.get("fields", {}) or {}
+        raw = dict(out)
+        raw["confidence"] = None
         return Prediction(
             doc_id=example.doc_id,
             doc_type=out.get("doc_type", ""),
             fields=fields,
-            raw=out,
+            raw=raw,
         )
 
 
