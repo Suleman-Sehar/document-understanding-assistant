@@ -1,0 +1,344 @@
+[
+  {
+    "doc_id": "doc_0001",
+    "issues": [
+      "source_truncated"
+    ],
+    "confidence": 0.7,
+    "reason": "source_truncated"
+  },
+  {
+    "doc_id": "doc_0003",
+    "issues": [
+      "source_truncated"
+    ],
+    "confidence": 0.7,
+    "reason": "source_truncated"
+  },
+  {
+    "doc_id": "doc_0004",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0007",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0008",
+    "issues": [
+      "source_truncated"
+    ],
+    "confidence": 0.7,
+    "reason": "source_truncated"
+  },
+  {
+    "doc_id": "doc_0009",
+    "issues": [
+      "Missing parties list",
+      "missing_required_field:parties"
+    ],
+    "confidence": 0.5,
+    "reason": "Missing parties list; missing_required_field:parties"
+  },
+  {
+    "doc_id": "doc_0012",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0015",
+    "issues": [
+      "Missing parties",
+      "Incomplete currency information",
+      "source_truncated",
+      "missing_required_field:parties"
+    ],
+    "confidence": 0.5,
+    "reason": "Missing parties; Incomplete currency information; source_truncated; missing_required_field:parties"
+  },
+  {
+    "doc_id": "doc_0017",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0018",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0019",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0021",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0023",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0027",
+    "issues": [
+      "Missing vendor_name",
+      "Missing invoice_number",
+      "Missing invoice_date",
+      "Missing currency",
+      "missing_required_field:vendor_name"
+    ],
+    "confidence": 0.5,
+    "reason": "Missing vendor_name; Missing invoice_number; Missing invoice_date; Missing currency; missing_required_field:vendor_name"
+  },
+  {
+    "doc_id": "doc_0028",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0029",
+    "issues": [
+      "source_truncated",
+      "Missing vendor_name, total, and line_items"
+    ],
+    "confidence": 0.7,
+    "reason": "source_truncated; Missing vendor_name, total, and line_items"
+  },
+  {
+    "doc_id": "doc_0030",
+    "issues": [
+      "Missing vendor or buyer information to classify as invoice or purchase order",
+      "missing_required_field:buyer_name",
+      "possible_prompt_injection"
+    ],
+    "confidence": 0.5,
+    "reason": "Missing vendor or buyer information to classify as invoice or purchase order; missing_required_field:buyer_name; possible_prompt_injection"
+  },
+  {
+    "doc_id": "doc_0031",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0033",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0035",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0036",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0039",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0041",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0042",
+    "issues": [
+      "Document content is nonsensical/gibberish",
+      "doc_type_business_document",
+      "possible_prompt_injection"
+    ],
+    "confidence": 0.7,
+    "reason": "Document content is nonsensical/gibberish; doc_type_business_document; possible_prompt_injection"
+  },
+  {
+    "doc_id": "doc_0045",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0046",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0047",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0048",
+    "issues": [
+      "Missing vendor_name",
+      "Missing currency",
+      "Missing invoice_number",
+      "missing_required_field:vendor_name"
+    ],
+    "confidence": 0.5,
+    "reason": "Missing vendor_name; Missing currency; Missing invoice_number; missing_required_field:vendor_name"
+  },
+  {
+    "doc_id": "doc_0051",
+    "issues": [
+      "incomplete_date"
+    ],
+    "confidence": 0.7,
+    "reason": "incomplete_date"
+  },
+  {
+    "doc_id": "doc_0053",
+    "issues": [
+      "Document content is gibberish",
+      "doc_type_business_document",
+      "possible_prompt_injection"
+    ],
+    "confidence": 0.7,
+    "reason": "Document content is gibberish; doc_type_business_document; possible_prompt_injection"
+  },
+  {
+    "doc_id": "doc_0054",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0055",
+    "issues": [
+      "source_truncated"
+    ],
+    "confidence": 0.7,
+    "reason": "source_truncated"
+  },
+  {
+    "doc_id": "doc_0056",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0057",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0062",
+    "issues": [
+      "source_truncated"
+    ],
+    "confidence": 0.7,
+    "reason": "source_truncated"
+  },
+  {
+    "doc_id": "doc_0063",
+    "issues": [
+      "Missing vendor_name",
+      "Missing invoice_number",
+      "Missing currency",
+      "missing_required_field:vendor_name"
+    ],
+    "confidence": 0.5,
+    "reason": "Missing vendor_name; Missing invoice_number; Missing currency; missing_required_field:vendor_name"
+  },
+  {
+    "doc_id": "doc_0070",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0071",
+    "issues": [
+      "doc_type_business_document",
+      "possible_prompt_injection"
+    ],
+    "confidence": 0.7,
+    "reason": "doc_type_business_document; possible_prompt_injection"
+  },
+  {
+    "doc_id": "doc_0074",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0078",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0082",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0083",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0084",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0087",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0089",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0091",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0095",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  },
+  {
+    "doc_id": "doc_0098",
+    "issues": [],
+    "confidence": 1.0,
+    "reason": "ok"
+  }
+]
