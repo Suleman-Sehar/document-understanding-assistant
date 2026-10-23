@@ -17,7 +17,7 @@ Five commands, run in one PowerShell session in a fresh clone on Windows:
 
 1. `python -m venv .venv`
 2. `.venv\Scripts\Activate.ps1`
-3. `pip install -r requirements.txt openai`
+3. `pip install -r requirements.txt`
 4. `copy .env.example .env`
 5. `$env:PYTHONPATH="src"; .venv\Scripts\python.exe src\dua\evaluate.py --split dev --limit 5`
 
@@ -61,7 +61,7 @@ Free model `google/gemma-4-31b-it:free`, evaluated subset.
 
 The test split is partial: only 13 of 120 test documents were evaluated before the daily free-tier quota (50 requests/day) was exhausted. Per-field F1 **gains** over baseline are not reported for test because the baseline comparison is incomplete on the partial split; the field F1 values above are raw scores on the evaluated subset, not gains.
 
-0 of the evaluated test docs had generator gaps (no `source_truncated` or `missing_required_field` in their issues). The 0.4643 vs dev 0.996 gap is because the free model was rate-limited (HTTP 429) on nearly every test doc and fell back to the rules baseline — an API/infrastructure issue, not a data gap — under investigation.
+0 of the evaluated test docs had generator gaps (no `source_truncated` or `missing_required_field` in their issues). The 0.4643 vs dev 0.996 gap is because the free model was rate-limited (HTTP 429) on nearly every test doc and fell back to the rules baseline. Warning: the 0.4643 accuracy figure reflects rules-baseline fallbacks, not LLM extraction. The free model (google/gemma-4-31b-it:free) was rate-limited (HTTP 429) on most of the 13 test docs, so the extractor fell back to the rules baseline. These numbers are not LLM results and should not be compared to the dev LLM results. A full LLM test evaluation requires either a paid API key or waiting for the free-tier daily quota to allow 120 uninterrupted requests.
 
 ## Project structure
 
