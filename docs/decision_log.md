@@ -48,3 +48,4 @@
 
 ## 2026-10-23
 - Phase 4 guardrails complete. src/dua/guardrails.py: PII redaction, injection detection, arithmetic check, missing core field, confidence score, review queue builder. review_queue.json generated (48 docs). Review rate 33% (missing_required_field 6, low_confidence 6, possible_prompt_injection 4, doc_type_business_document 3, arithmetic_inconsistency 0, source_truncated 7). No paid calls. 51 tests pass.
+- Test split evaluation paused at 13/120 docs (10 from batch 1 + 3 from batch 2). Daily free-tier quota exhausted (50/50 requests including retries). Resume tomorrow when quota resets at 00:00 UTC.
