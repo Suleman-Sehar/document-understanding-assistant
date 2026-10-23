@@ -32,7 +32,7 @@ def test_pii_false_positive_check():
 
 def test_injection_guardrail_already_in_place():
     # confirm existing behavior - import and check test still relevant
-    from tests.test_injection_guardrail import test_business_document_on_nonempty_body_flags_prompt_injection, test_empty_document_does_not_flag_prompt_injection
+    from test_injection_guardrail import test_business_document_on_nonempty_body_flags_prompt_injection, test_empty_document_does_not_flag_prompt_injection
     # they exist and pass as per current suite
 
 
