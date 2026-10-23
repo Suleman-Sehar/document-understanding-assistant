@@ -77,7 +77,10 @@ class ReviewTriggerBreakdown:
     low_confidence: int = 0
     schema_violation: int = 0
     missing_field: int = 0
-    other: int = 0
+    source_truncated: int = 0
+    llm_failure: int = 0
+    business_document: int = 0
+    prompt_injection: int = 0
 
 
 @dataclass
@@ -317,14 +320,26 @@ def compute_review_rate_and_breakdown(
             reasons.append("missing_field")
             breakdown.missing_field += 1
 
-        other_issues = [
+        non_missing_issues = [
             i for i in issues
             if not (isinstance(i, str) and "missing_required_field" in i)
         ]
-        if other_issues:
+        if non_missing_issues:
             triggered = True
-            reasons.append("other")
-            breakdown.other += 1
+            for issue in non_missing_issues:
+                low = str(issue).lower()
+                if "llm_failed" in low or "llm failure" in low:
+                    breakdown.llm_failure += 1
+                    reasons.append("llm_failure")
+                elif "truncat" in low or "incomplete" in low:
+                    breakdown.source_truncated += 1
+                    reasons.append("source_truncated")
+                elif "business_document" in low:
+                    breakdown.business_document += 1
+                    reasons.append("business_document")
+                elif "injection" in low:
+                    breakdown.prompt_injection += 1
+                    reasons.append("prompt_injection")
 
         if needs_review or triggered:
             reviewed += 1
@@ -521,7 +536,10 @@ class Evaluator:
         lines.append(f"- **Low confidence:** {rb.low_confidence}")
         lines.append(f"- **Schema violation:** {rb.schema_violation}")
         lines.append(f"- **Missing field:** {rb.missing_field}")
-        lines.append(f"- **Other:** {rb.other}")
+        lines.append(f"- **Source truncated:** {rb.source_truncated}")
+        lines.append(f"- **LLM failure:** {rb.llm_failure}")
+        lines.append(f"- **Business document:** {rb.business_document}")
+        lines.append(f"- **Prompt injection:** {rb.prompt_injection}")
         lines.append("")
         lines.append("## Field Metrics")
         lines.append("")
