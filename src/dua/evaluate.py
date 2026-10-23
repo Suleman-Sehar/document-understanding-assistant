@@ -16,6 +16,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Callable, Dict, Iterable, List, Optional, Sequence, Tuple
 
+from dotenv import load_dotenv
+
 from dua import schemas
 from dua.baseline import extract as baseline_extract
 from dua.guardrails import check_arithmetic, check_missing_core_fields
@@ -601,7 +603,7 @@ class LabelDataset(Dataset):
                 doc_type=data.get("doc_type", ""),
                 fields=fields,
                 body_text=body_text,
-                metadata=data.get("meta", {}),
+                metadata={**data.get("meta", {}), "file": data.get("file", "")},
             )
 
 
@@ -618,6 +620,74 @@ class BaselineRunner(Runner):
         fields = out.get("fields", {}) or {}
         raw = dict(out)
         raw["confidence"] = None
+        return Prediction(
+            doc_id=example.doc_id,
+            doc_type=out.get("doc_type", ""),
+            fields=fields,
+            raw=raw,
+        )
+
+
+class LLMRunner(Runner):
+    """LLM-backed runner using :func:`dua.llm_extractor.llm_extract`.
+
+    Routes every document through the model (with per-model caching).
+    A cache hit costs no API call; a cache miss makes one OpenRouter call.
+    The free model ``google/gemma-4-31b-it:free`` is the default.
+    Requires ``OPENAI_API_KEY`` in the environment for cache misses.
+    """
+
+    def __init__(self, model: str, dataset: Optional[Dataset] = None) -> None:
+        super().__init__(model)
+        self.dataset = dataset
+        self._client = None
+        self.cache_hits = 0
+        self.api_calls = 0
+
+    def _client_instance(self):
+        if self._client is None:
+            from openai import OpenAI
+            from dua.llm_extractor import resolve_base_url
+
+            self._client = OpenAI(
+                api_key=None,
+                base_url=resolve_base_url(),
+            )
+        return self._client
+
+    def predict(self, example: Example) -> Prediction:
+        from dua.llm_extractor import llm_extract, cached, read_document, redact_pii
+
+        file_name = example.metadata.get("file", "")
+        data_root = Path("data")
+        doc_path = data_root / self.dataset.split / "docs" / file_name
+        text = read_document(str(doc_path)) if doc_path.exists() else example.body_text
+        rtext = redact_pii(text)
+
+        # Check cache first (no API call on hit)
+        c = cached(rtext, self.model)
+        if c is not None:
+            self.cache_hits += 1
+            raw = dict(c)
+            raw.pop("_cache_hit", None)
+            raw.pop("_legacy_cache", None)
+            fields = c.get("fields", {}) or {}
+            return Prediction(
+                doc_id=example.doc_id,
+                doc_type=c.get("doc_type", ""),
+                fields=fields,
+                raw=raw,
+            )
+
+        # Cache miss: one API call
+        self.api_calls += 1
+        out = llm_extract(
+            str(doc_path),
+            client=self._client_instance(),
+            model=self.model,
+        )
+        fields = out.get("fields", {}) or {}
+        raw = dict(out)
         return Prediction(
             doc_id=example.doc_id,
             doc_type=out.get("doc_type", ""),
@@ -661,25 +731,39 @@ def build_parser() -> argparse.ArgumentParser:
         default="data",
         help="root directory containing data/<split>/labels",
     )
+    parser.add_argument(
+        "--runner",
+        default="baseline",
+        choices=["baseline", "llm"],
+        help="runner: baseline (rule-based, no API) or llm (OpenRouter API)",
+    )
     return parser
 
 
 def main(argv: Optional[Sequence[str]] = None) -> int:
     """Entry point: parse args, run evaluation, save evidence."""
+    load_dotenv()
     parser = build_parser()
     args = parser.parse_args(argv)
 
     dataset = LabelDataset(split=args.split, data_root=Path(args.data_root))
-    runner = BaselineRunner(model=args.model)
+
+    if args.runner == "llm":
+        runner = LLMRunner(model=args.model, dataset=dataset)
+    else:
+        runner = BaselineRunner(model=args.model)
 
     evaluator = Evaluator(dataset=dataset, runner=runner, output_dir=Path(args.output_dir))
     result = evaluator.run(limit=args.limit)
 
     md_path, json_path = evaluator.save(result)
     print(f"Evaluation complete: {result.split} split, {result.evaluated_examples} examples")
+    print(f"  runner: {args.runner}, model: {args.model}")
     print(f"  doc-type accuracy: {result.doc_type_accuracy}")
     print(f"  schema valid rate: {result.schema_valid_rate}")
     print(f"  review rate: {result.review_rate}")
+    if args.runner == "llm":
+        print(f"  cache hits: {runner.cache_hits}, API calls: {runner.api_calls}")
     print(f"  reports: {md_path}, {json_path}")
     return 0
 
